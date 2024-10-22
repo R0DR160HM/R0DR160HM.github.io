@@ -37,10 +37,10 @@ document.querySelector("#play-button").addEventListener("click", (e) => {
     .querySelector("#music-namer")
     .querySelector("small")
     .classList.toggle("d-none");
-  if (!audio) {
-    play();
-  } else {
+  if (audio) {
     audio.pause();
     audio = null;
+  } else {
+    play();
   }
 });
