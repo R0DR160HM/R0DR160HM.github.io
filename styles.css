@@ -1,0 +1,114 @@
+:root {
+    --purple: rgb(176, 21, 219);
+    --green: rgb(26, 216, 26);
+    --blue: rgb(0, 140, 255);
+    --red: rgb(212, 64, 64);
+    --orange: rgb(244, 163, 0);
+    --yellow: rgb(207, 213, 34);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background: linear-gradient(45deg, var(--blue), var(--blue), var(--purple), var(--red), var(--orange), var(--yellow), var(--green), var(--green));
+    background-size: 400% 100%;
+    animation: background-animation 60s ease infinite;
+    align-items: center;
+}
+
+@keyframes background-animation { 
+    0% {
+        background-position: 0%;
+    }
+    50% {
+        background-position: 100%;
+    }
+    100% {
+        background-position: 0%;
+    }
+}
+
+.row {
+    width: 100%;
+    text-align: center;
+}
+
+#card {
+    display: inline-block;
+    padding: 48px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .2);
+    box-shadow: rgba(0, 0, 0, .1) 0px 4px 12px !important;
+    color: white;
+    transition: 400ms;
+    max-width: 80vw;
+    text-align: left;
+    backdrop-filter: blur(8px);
+}
+
+#card:hover {
+    scale: 1.2;
+}
+
+#card a {
+    font-size: 24px;
+    display: block;
+    margin-top: 16px;
+    text-decoration: none;
+    color: white;
+    font-family: 'Fira Sans', Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font-family: Poppins, Arima, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-bottom: 32px;
+    margin-top: 0;
+    text-align: right;
+}
+
+@media (max-width: 768px) {
+    #card {
+        margin-top: 30vh !important;
+        padding: 24px;
+    }
+    h1 {
+        text-align: center;
+    }
+    #card:hover {
+        scale: 1;
+    }
+}
+
+img.icon {
+    margin-right: 8px;
+}
+
+#music-namer {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    font-size: 16px;
+    color: white;
+    font-family: 'Fira Sans', Arial, Helvetica, sans-serif;
+}
+
+#music-namer small a {
+    font-family: Arima, Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    display: inline;
+    font-size: 16px;
+    color: white;
+}
+
+.d-none {
+    display: none;
+}
+
+button#play-button {
+    border-radius: 100%;
+    padding: 6px;
+    border: solid 1px gray;
+    /* background: none; */
+}
