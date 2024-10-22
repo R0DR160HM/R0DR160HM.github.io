@@ -71,7 +71,6 @@ h1 {
 
 @media (max-width: 768px) {
     #card {
-        margin-top: 30vh !important;
         padding: 24px;
     }
     h1 {
@@ -110,5 +109,4 @@ button#play-button {
     border-radius: 100%;
     padding: 6px;
     border: solid 1px gray;
-    /* background: none; */
 }
