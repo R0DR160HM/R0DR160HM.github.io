@@ -3,6 +3,7 @@ const ALL_SONGS = [
   "Cold Colors and Nature's Call",
   "One Last Dance",
   "Whiskey Tears",
+  "Einsamkeit und Zweifel",
 ];
 
 const currentSongs = [...ALL_SONGS];
