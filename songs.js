@@ -24,7 +24,7 @@ function play() {
     .querySelector("#music-namer")
     .querySelector("a").innerText = `${randomSong}`;
   audio = new Audio(`./assets/songs/${randomSong}.mp3`);
-  audio.volume = 0.1;
+  audio.volume = 0.3;
   audio.play();
   audio.onended = () => {
     setTimeout(play, 1000);
