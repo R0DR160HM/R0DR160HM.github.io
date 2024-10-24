@@ -54,7 +54,7 @@ body {
 }
 
 #card a {
-    font-size: 24px;
+    font-size: 1.5rem;
     display: block;
     margin-top: 16px;
     text-decoration: none;
@@ -63,10 +63,12 @@ body {
 }
 
 h1 {
+    line-height: 2.2rem !important;
     font-family: Poppins, Arima, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin-bottom: 32px;
     margin-top: 0;
     text-align: right;
+    font-size: 2rem;
 }
 
 @media (max-width: 768px) {

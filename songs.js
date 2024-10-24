@@ -2,6 +2,7 @@ const ALL_SONGS = [
   "Chill in the Blue",
   "Cold Colors and Nature's Call",
   "Einsamkeit und Zweifel",
+  "Sunburnt Dreams",
 ];
 
 const currentSongs = [...ALL_SONGS];
