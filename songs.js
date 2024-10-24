@@ -1,8 +1,6 @@
 const ALL_SONGS = [
   "Chill in the Blue",
   "Cold Colors and Nature's Call",
-  "One Last Dance",
-  "Whiskey Tears",
   "Einsamkeit und Zweifel",
 ];
 
