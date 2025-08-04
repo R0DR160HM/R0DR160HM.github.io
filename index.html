@@ -1,63 +1,811 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rodrigo Heinzen de Moraes</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rodrigo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            cursor: none;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Arima:wght@100..700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
+        html, body {
+            height: 100%;
+            overflow: hidden; /* Prevent scrolling */
+        }
 
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <div class="row">
-      <div id="card">
-        <h1>OLÁ! 👋</h1>
-        <a
-          href="https://www.linkedin.com/in/rodrigo-heinzen-de-moraes-754b67193"
-          target="_blank"
-        >
-          <img
-            class="icon"
-            src="./assets/linkedin.png"
-            alt="LinkedIn"
-            width="24"
-          />
-          Rodrigo Heinzen de Moraes
-        </a>
-        <a href="https://github.com/R0DR160HM" target="_blank">
-          <img class="icon" src="./assets/github.png" alt="GitHub" width="24" />
-          R0DR160HM
-        </a>
-      </div>
+        body {
+            background: #030712;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+
+        .portfolio-container {
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Performance optimized mouse follower */
+        .mouse-follower {
+            position: fixed;
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(45deg, #fbbf24, #f59e0b);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            will-change: transform;
+            transform: scale(0) translate3d(0, 0, 0);
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Optimized fog background with reduced layers */
+        .fog-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .fog-layer {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.015) 0%, rgba(255, 255, 255, 0.008) 40%, transparent 70%);
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .deep-fog {
+            position: absolute;
+            width: 250%;
+            height: 250%;
+            background: radial-gradient(ellipse, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 30%, transparent 60%);
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+        }
+
+        /* Reduced fog layers for better performance */
+        .fog-1 { top: -50%; left: -50%; animation: drift 30s infinite linear; }
+        .fog-2 { top: -30%; right: -50%; animation: drift 35s infinite linear reverse; }
+        .fog-3 { bottom: -50%; left: -30%; animation: drift 40s infinite linear; }
+        .fog-4 { bottom: -30%; right: -30%; animation: drift 45s infinite linear reverse; }
+
+        .deep-fog-1 { top: -75%; left: -75%; animation: deepDrift 60s infinite linear; }
+        .deep-fog-2 { bottom: -75%; right: -75%; animation: deepDrift 70s infinite linear reverse; }
+
+        /* Main Content - Optimized for no scroll */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            overflow: hidden;
+        }
+
+        .content-wrapper {
+            width: 100%;
+            max-height: 100vh;
+            overflow: hidden;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: bold;
+            background: linear-gradient(45deg, #fbbf24, #f59e0b, #fbbf24);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            will-change: transform, opacity;
+            animation: slideUp 0.8s ease-out forwards;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: #d1d5db;
+            will-change: transform, opacity;
+            animation: slideUp 0.8s ease-out 0.2s forwards;
+            opacity: 0;
+            line-height: 1.2;
+        }
+
+        .hero-description {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            color: #9ca3af;
+            line-height: 1.4;
+            will-change: transform, opacity;
+            animation: slideUp 0.8s ease-out 0.4s forwards;
+            opacity: 0;
+        }
+
+        .social-links {
+            will-change: transform, opacity;
+            animation: fadeIn 0.8s ease-out 0.6s forwards;
+            opacity: 0;
+        }
+
+        .btn-custom {
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            background: transparent;
+            color: white;
+            padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(1rem, 3vw, 1.5rem);
+            border-radius: 0.5rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            will-change: transform;
+        }
+
+        .btn-custom:hover {
+            border-color: #fbbf24;
+            background: rgba(251, 191, 36, 0.1);
+            color: #fbbf24;
+            transform: scale(1.05) translate3d(0, 0, 0);
+        }
+
+        .stats-section {
+            will-change: transform, opacity;
+            animation: fadeIn 0.8s ease-out 0.8s forwards;
+            opacity: 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            will-change: transform;
+        }
+
+        .stat-item:hover {
+            transform: scale(1.1) translate3d(0, 0, 0);
+        }
+
+        .stat-number {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: bold;
+            color: #fbbf24;
+        }
+
+        .stat-label {
+            font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+            color: #9ca3af;
+        }
+
+        .projects-section {
+            background: rgba(17, 24, 39, 0.1);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            padding: clamp(1rem, 3vw, 2rem);
+            border: 1px solid rgba(31, 41, 55, 0.2);
+            transition: border-color 0.2s ease;
+            will-change: transform, opacity;
+            animation: fadeIn 0.8s ease-out 0.6s forwards;
+            opacity: 0;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .projects-section:hover {
+            border-color: rgba(251, 191, 36, 0.2);
+        }
+
+        .projects-title {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 600;
+            color: #fbbf24;
+            margin-bottom: 1rem;
+        }
+
+        .project-item {
+            background: rgba(31, 41, 55, 0.1);
+            border-radius: 0.75rem;
+            padding: clamp(1rem, 2vw, 1.5rem);
+            margin-bottom: 1rem;
+            border: 1px solid rgba(55, 65, 81, 0.2);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            will-change: transform;
+        }
+
+        .project-item:hover {
+            background: rgba(31, 41, 55, 0.2);
+            border-color: rgba(251, 191, 36, 0.3);
+            transform: scale(1.02) translate3d(0, 0, 0);
+        }
+
+        .project-name {
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            font-weight: 500;
+            color: #e5e7eb;
+            transition: color 0.2s ease;
+        }
+
+        .project-item:hover .project-name {
+            color: #fbbf24;
+        }
+
+        .project-tech {
+            color: #9ca3af;
+            margin-top: 0.25rem;
+            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+        }
+
+        .project-status {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        /* Optimized floating elements */
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            z-index: 5;
+            will-change: transform;
+        }
+
+        .float-1 {
+            top: 10%;
+            left: 10%;
+            width: 6px;
+            height: 6px;
+            background: #fbbf24;
+            opacity: 0.6;
+            animation: float1 8s ease-in-out infinite;
+        }
+
+        .float-2 {
+            top: 20%;
+            right: 15%;
+            width: 8px;
+            height: 8px;
+            background: #f59e0b;
+            opacity: 0.4;
+            animation: float2 10s ease-in-out infinite;
+        }
+
+        .float-3 {
+            bottom: 20%;
+            left: 20%;
+            width: 4px;
+            height: 4px;
+            background: #d97706;
+            opacity: 0.8;
+            animation: float3 9s ease-in-out infinite;
+        }
+
+        /* Optimized animations */
+        @keyframes drift {
+            0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+            25% { transform: translate3d(100px, -100px, 0) rotate(90deg); }
+            50% { transform: translate3d(-50px, 50px, 0) rotate(180deg); }
+            75% { transform: translate3d(-100px, -50px, 0) rotate(270deg); }
+            100% { transform: translate3d(0, 0, 0) rotate(360deg); }
+        }
+
+        @keyframes deepDrift {
+            0% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+            33% { transform: translate3d(150px, -100px, 0) rotate(120deg) scale(1.1); }
+            66% { transform: translate3d(-100px, 100px, 0) rotate(240deg) scale(0.9); }
+            100% { transform: translate3d(0, 0, 0) rotate(360deg) scale(1); }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translate3d(0, 100%, 0);
+                opacity: 0;
+            }
+            to {
+                transform: translate3d(0, 0, 0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 20px, 0);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        @keyframes float1 {
+            0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+            50% { transform: translate3d(0, -15px, 0) rotate(180deg); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+            50% { transform: translate3d(0, -20px, 0) rotate(-180deg); }
+        }
+
+        @keyframes float3 {
+            0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+            50% { transform: translate3d(0, -10px, 0) rotate(90deg); }
+        }
+
+        /* Landscape-specific styles */
+        @media (orientation: landscape) {
+            html, body {
+                overflow: hidden !important;
+                height: 100vh !important;
+                max-height: 100vh !important;
+            }
+            
+            .portfolio-container {
+                height: 100vh !important;
+                max-height: 100vh !important;
+            }
+            
+            .main-content {
+                height: 100vh !important;
+                max-height: 100vh !important;
+                padding: 0.5rem 1rem;
+            }
+            
+            .projects-section {
+                max-height: 80vh;
+            }
+        }
+
+        /* Mobile portrait adjustments */
+        @media (orientation: portrait) and (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+                overflow-y: auto;
+                height: auto;
+                min-height: 100vh;
+            }
+            
+            .projects-section {
+                max-height: none;
+            }
+            
+            html, body {
+                overflow-y: auto;
+            }
+        }
+
+        /* Tablet and small desktop */
+        @media (min-width: 769px) and (max-height: 600px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .projects-section {
+                max-height: 50vh;
+            }
+        }
+
+        /* Performance optimizations */
+        .fog-layer, .deep-fog, .floating-element {
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+
+        /* Reduce motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+            .fog-layer, .deep-fog, .floating-element {
+                animation: none;
+            }
+            
+            .mouse-follower {
+                display: none;
+            }
+            
+            * {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+            }
+        }
+
+        /* Selection */
+        ::selection {
+            background: rgba(251, 191, 36, 0.3);
+            color: #fbbf24;
+        }
+
+        /* Custom scrollbar for projects section */
+        .projects-section::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .projects-section::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .projects-section::-webkit-scrollbar-thumb {
+            background: #fbbf24;
+            border-radius: 2px;
+        }
+
+        .projects-section::-webkit-scrollbar-thumb:hover {
+            background: #f59e0b;
+        }
+    </style>
+</head>
+<body>
+    <div class="portfolio-container">
+        <!-- Mouse Follower -->
+        <div class="mouse-follower" id="mouseFollower"></div>
+
+        <!-- Optimized Fog Background -->
+        <div class="fog-container">
+            <div class="fog-layer fog-1"></div>
+            <div class="fog-layer fog-2"></div>
+            <div class="fog-layer fog-3"></div>
+            <div class="fog-layer fog-4"></div>
+            <div class="deep-fog deep-fog-1"></div>
+            <div class="deep-fog deep-fog-2"></div>
+        </div>
+
+        <!-- Floating Elements -->
+        <div class="floating-element float-1"></div>
+        <div class="floating-element float-2"></div>
+        <div class="floating-element float-3"></div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="container-fluid content-wrapper">
+                <div class="row align-items-center h-100">
+                    <!-- Left Side - Main Info -->
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <div class="hero-section">
+                            <h1 class="hero-title mb-2">Rodrigo <br> Heinzen de Moraes</h1>
+                            <h2 class="hero-subtitle mb-3">Software Developer</h2>
+                            <p class="hero-description mb-4">
+                                Crafting digital experiences with modern technologies. Always trying to build powerful, innovative and user-friendly solutions.
+                            </p>
+
+                            <!-- Social Links -->
+                            <div class="social-links mb-4">
+                                <a href="https://github.com/R0DR160HM" target="_blank" rel="noopener noreferrer" class="btn-custom">
+                                    <i class="fab fa-github"></i>
+                                    GitHub
+                                </a>
+                                <a href="https://www.linkedin.com/in/rodrigo-heinzen-de-moraes-754b67193/" target="_blank" rel="noopener noreferrer" class="btn-custom">
+                                    <i class="fab fa-linkedin"></i>
+                                    LinkedIn
+                                </a>
+                                <a href="mailto:rodrigo.heinzen.moraes@gmail.com" class="btn-custom">
+                                    <i class="fas fa-envelope"></i>
+                                    Contact
+                                </a>
+                            </div>
+
+                            <!-- Quick Stats -->
+                            <div class="stats-section">
+                                <div class="row text-center">
+                                    <div class="col-6">
+                                        <div class="stat-item">
+                                            <div class="stat-number">Over 5</div>
+                                            <div class="stat-label">Years of experience</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="stat-item">
+                                            <div class="stat-number">Multiple projects</div>
+                                            <div class="stat-label">Completed from start to finish</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Side - Projects -->
+                    <div class="col-lg-6">
+                        <div class="projects-section">
+                            <h3 class="projects-title">
+                                Recent projects I'm proud of
+                            </h3>
+                            <small class="d-block mb-3">
+                                Don't worry, only showing publicly available information. ;)
+                            </small>
+                            
+                            <div class="project-item">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="project-name">
+                                            <a href="https://buscaextrato.com.br">Busca Extrato</a>
+                                            <small class="font-italic ml-2">
+                                                (bank statement fetcher)
+                                            </small>
+                                        </div>
+                                        <div class="project-tech">Angular, Stripe, OpenFinance, AI Agents</div>
+                                    </div>
+                                    <span class="project-status">Live</span>
+                                </div>
+                            </div>
+
+                            <div class="project-item">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="project-name">
+                                            <a href="#">Mercúrio</a>
+                                            <small class="font-italic ml-2">(web-based distributed cache engined)</small>
+                                        </div>
+                                        <div class="project-tech">Gleam, ETS, IndexedDB, WebRTC</div>
+                                    </div>
+                                    <span class="project-status">
+                                        Coming public soon
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="project-item">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="project-name">
+                                            <a href="#">Atendimento ao Cliente</a>
+                                            <!-- <small class="font-italic ml-2">(Customer Service App)</small> -->
+                                            <small class="font-italic ml-2">(corporate messaging app with integrated customer service)</small>
+                                        </div>
+                                        <div class="project-tech">Angular, WebSockets, WhatsApp API</div>
+                                    </div>
+                                    <span class="project-status">Live</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="music-namer">
-      <small class="d-none">
-        Now playing
-        <a
-          href="https://github.com/R0DR160HM/R0DR160HM.github.io/blob/master/assets/songs"
-          target="_blank"
-        ></a>
-      </small>
-      <button title="Play" id="play-button">🎵</button>
-    </div>
 
-    <footer style="display: none">
-      <p>Ad maiorem Dei gloriam</p>
-    </footer>
-  </body>
+    <script>
+        // Performance optimized mouse follower
+        const mouseFollower = document.getElementById('mouseFollower');
+        let mouseX = 0;
+        let mouseY = 0;
+        let isMouseActive = false;
 
-  <script src="./texts.js"></script>
-  <script src="./songs.js"></script>
+        // Use requestAnimationFrame for smooth mouse following
+        function updateMouseFollower() {
+            if (isMouseActive) {
+                mouseFollower.style.transform = `translate3d(${mouseX - 12}px, ${mouseY - 12}px, 0) scale(1)`;
+            }
+            requestAnimationFrame(updateMouseFollower);
+        }
+
+        // Throttled mouse move handler
+        let mouseMoveTimeout;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            isMouseActive = true;
+            
+            clearTimeout(mouseMoveTimeout);
+            mouseMoveTimeout = setTimeout(() => {
+                isMouseActive = false;
+            }, 100);
+        });
+
+        document.addEventListener('mouseleave', () => {
+            mouseFollower.style.transform = 'translate3d(0, 0, 0) scale(0)';
+            isMouseActive = false;
+        });
+
+        // Start mouse follower animation loop
+        requestAnimationFrame(updateMouseFollower);
+
+        // Optimized hover effects
+        const interactiveElements = document.querySelectorAll('.btn-custom, .stat-item, .project-item');
+        
+        interactiveElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                if (isMouseActive) {
+                    mouseFollower.style.transform = `translate3d(${mouseX - 12}px, ${mouseY - 12}px, 0) scale(1.5)`;
+                }
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                if (isMouseActive) {
+                    mouseFollower.style.transform = `translate3d(${mouseX - 12}px, ${mouseY - 12}px, 0) scale(1)`;
+                }
+            });
+        });
+
+        // Optimized ripple effect with object pooling
+        const ripplePool = [];
+        const maxRipples = 5;
+
+        function createRipple() {
+            const ripple = document.createElement('div');
+            ripple.style.cssText = `
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(251, 191, 36, 0.3);
+                pointer-events: none;
+                transform: scale(0) translate3d(0, 0, 0);
+                will-change: transform, opacity;
+            `;
+            return ripple;
+        }
+
+        // Pre-create ripples
+        for (let i = 0; i < maxRipples; i++) {
+            ripplePool.push(createRipple());
+        }
+
+        interactiveElements.forEach(element => {
+            element.addEventListener('click', function(e) {
+                const ripple = ripplePool.shift();
+                if (!ripple) return;
+
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = size + 'px';
+                ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.opacity = '1';
+                ripple.style.transform = 'scale(0) translate3d(0, 0, 0)';
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                // Animate ripple
+                requestAnimationFrame(() => {
+                    ripple.style.transform = 'scale(2) translate3d(0, 0, 0)';
+                    ripple.style.opacity = '0';
+                    ripple.style.transition = 'transform 0.6s ease-out, opacity 0.6s ease-out';
+                });
+                
+                setTimeout(() => {
+                    if (ripple.parentNode) {
+                        ripple.parentNode.removeChild(ripple);
+                    }
+                    ripple.style.transition = '';
+                    ripplePool.push(ripple);
+                }, 600);
+            });
+        });
+
+        // Intersection Observer for performance
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '50px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                } else {
+                    entry.target.style.animationPlayState = 'paused';
+                }
+            });
+        }, observerOptions);
+
+        // Observe fog elements for performance
+        const fogElements = document.querySelectorAll('.fog-layer, .deep-fog, .floating-element');
+        fogElements.forEach(el => observer.observe(el));
+
+        // Prevent scrolling in landscape mode
+        function preventScroll(e) {
+            if (window.innerWidth > window.innerHeight) { // Landscape
+                e.preventDefault();
+                return false;
+            }
+        }
+
+        // Add scroll prevention for landscape
+        document.addEventListener('wheel', preventScroll, { passive: false });
+        document.addEventListener('touchmove', preventScroll, { passive: false });
+        document.addEventListener('keydown', (e) => {
+            if (window.innerWidth > window.innerHeight) {
+                const scrollKeys = [32, 33, 34, 35, 36, 37, 38, 39, 40];
+                if (scrollKeys.includes(e.keyCode)) {
+                    e.preventDefault();
+                    return false;
+                }
+            }
+        });
+
+        // Optimize for reduced motion preference
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const animatedElements = document.querySelectorAll('.fog-layer, .deep-fog, .floating-element');
+            animatedElements.forEach(el => {
+                el.style.animation = 'none';
+            });
+            mouseFollower.style.display = 'none';
+        }
+
+        // Performance monitoring and optimization
+        let lastFrameTime = performance.now();
+        let frameCount = 0;
+        let fps = 60;
+
+        function monitorPerformance() {
+            const now = performance.now();
+            frameCount++;
+            
+            if (now - lastFrameTime >= 1000) {
+                fps = Math.round((frameCount * 1000) / (now - lastFrameTime));
+                frameCount = 0;
+                lastFrameTime = now;
+                
+                // Reduce effects if FPS is low
+                if (fps < 30) {
+                    const fogElements = document.querySelectorAll('.fog-layer, .deep-fog');
+                    fogElements.forEach((el, index) => {
+                        if (index > 2) el.style.display = 'none';
+                    });
+                }
+            }
+            
+            requestAnimationFrame(monitorPerformance);
+        }
+
+        // Start performance monitoring
+        requestAnimationFrame(monitorPerformance);
+
+        // Optimized load handler
+        window.addEventListener('load', () => {
+            // Preload critical animations
+            const criticalElements = document.querySelectorAll('.hero-title, .hero-subtitle, .hero-description');
+            criticalElements.forEach((el, index) => {
+                el.style.animationDelay = (index * 0.2) + 's';
+            });
+            
+            // Enable hardware acceleration for smooth animations
+            const acceleratedElements = document.querySelectorAll('.mouse-follower, .fog-layer, .deep-fog, .floating-element');
+            acceleratedElements.forEach(el => {
+                el.style.transform += ' translate3d(0, 0, 0)';
+            });
+        });
+
+        // Handle orientation changes
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                if (window.innerWidth > window.innerHeight) {
+                    document.body.style.overflow = 'hidden';
+                    document.documentElement.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                    document.documentElement.style.overflow = '';
+                }
+            }, 100);
+        });
+    </script>
+</body>
 </html>
