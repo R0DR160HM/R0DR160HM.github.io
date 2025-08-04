@@ -16,7 +16,6 @@
 
         html, body {
             height: 100%;
-            overflow: hidden; /* Prevent scrolling */
         }
 
         body {
@@ -32,7 +31,6 @@
             height: 100vh;
             width: 100vw;
             position: relative;
-            overflow: hidden;
         }
 
         /* Performance optimized mouse follower */
@@ -96,7 +94,6 @@
             display: flex;
             align-items: center;
             padding: 1rem;
-            overflow: hidden;
         }
 
         .content-wrapper {
@@ -800,19 +797,6 @@
             acceleratedElements.forEach(el => {
                 el.style.transform += ' translate3d(0, 0, 0)';
             });
-        });
-
-        // Handle orientation changes
-        window.addEventListener('orientationchange', () => {
-            setTimeout(() => {
-                if (window.innerWidth > window.innerHeight) {
-                    document.body.style.overflow = 'hidden';
-                    document.documentElement.style.overflow = 'hidden';
-                } else {
-                    document.body.style.overflow = '';
-                    document.documentElement.style.overflow = '';
-                }
-            }, 100);
         });
     </script>
 </body>
