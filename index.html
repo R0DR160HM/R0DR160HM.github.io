@@ -14,10 +14,6 @@
             box-sizing: border-box;
         }
 
-        html, body {
-            min-height: 100%;
-        }
-
         body {
             background: #030712;
             color: white;
@@ -104,11 +100,9 @@
             font-size: clamp(2rem, 5vw, 4rem);
             font-weight: bold;
             background: linear-gradient(45deg, #fbbf24, aqua, #fbbf24);
-            /* background: linear(270deg, aqua, #fbbf24); */
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            /* will-change: transform, opacity; */
             background-size: 200% 100%;
             animation: gradient-title 16s ease infinite;
             line-height: 1.1;
@@ -364,14 +358,7 @@
 
         /* Landscape-specific styles */
         @media (orientation: landscape) {
-            /* .portfolio-container { */
-            /*     height: 100vh !important; */
-            /*     max-height: 100vh !important; */
-            /* } */
-            
             .main-content {
-                /* height: 100vh !important; */
-                /* max-height: 100vh !important; */
                 padding: 0.5rem 1rem;
             }
             
@@ -439,26 +426,7 @@
         /* Selection */
         ::selection {
             background: rgba(251, 191, 36, 0.3);
-            color: #fbbf24;
-        }
-
-        /* Custom scrollbar for projects section */
-        .projects-section::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .projects-section::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-        }
-
-        .projects-section::-webkit-scrollbar-thumb {
-            background: #fbbf24;
-            border-radius: 2px;
-        }
-
-        .projects-section::-webkit-scrollbar-thumb:hover {
-            background: #f59e0b;
+            color: aqua;
         }
     </style>
 </head>
