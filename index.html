@@ -377,12 +377,12 @@
             }
             
             .projects-section {
-                max-height: 80vh;
+                max-height: none; 
             }
         }
 
         /* Mobile portrait adjustments */
-        @media (orientation: portrait) and (max-width: 768px) {
+        @media (max-width: 768px) {
             .main-content {
                 padding: 1rem;
                 overflow-y: auto;
@@ -724,27 +724,6 @@
         // Observe fog elements for performance
         const fogElements = document.querySelectorAll('.fog-layer, .deep-fog, .floating-element');
         fogElements.forEach(el => observer.observe(el));
-
-        // Prevent scrolling in landscape mode
-        function preventScroll(e) {
-            if (window.innerWidth > window.innerHeight) { // Landscape
-                e.preventDefault();
-                return false;
-            }
-        }
-
-        // Add scroll prevention for landscape
-        document.addEventListener('wheel', preventScroll, { passive: false });
-        document.addEventListener('touchmove', preventScroll, { passive: false });
-        document.addEventListener('keydown', (e) => {
-            if (window.innerWidth > window.innerHeight) {
-                const scrollKeys = [32, 33, 34, 35, 36, 37, 38, 39, 40];
-                if (scrollKeys.includes(e.keyCode)) {
-                    e.preventDefault();
-                    return false;
-                }
-            }
-        });
 
         // Optimize for reduced motion preference
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
