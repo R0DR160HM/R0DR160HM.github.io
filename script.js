@@ -4,9 +4,9 @@ const mouseFollower = document.getElementById("mouseFollower");
   let mouseY = 0;
   let isMouseActive = false;
 
-  const MAX_RIPPLES = 10; // Increased max ripples for smoother effect
+  const MAX_RIPPLES = 20; // Increased max ripples for smoother effect
   const RIPPLE_DELAY = 100; // Milliseconds between ripples
-  const RIPPLE_DURATION = 2000; // Milliseconds for ripple animation
+  const RIPPLE_DURATION = 1600; // Milliseconds for ripple animation
 
   const ripplePool = [];
   let activeRipples = 0;
