@@ -93,28 +93,46 @@
 
       .ripple {
         position: absolute;
-        border: 2px solid rgba(251, 191, 36, 0.6);
+        border: 2px solid rgba(100, 200, 255, 0.8);
         border-radius: 50%;
         pointer-events: none;
         will-change: transform, opacity;
-        animation: ripple-expand 2s ease-out forwards;
-        opacity: 0; /* Hidden until activated */
-        transform: translate3d(-50%, -50%, 0) scale(0); /* Centered and hidden */
-      }
-
-      .ripple.active {
-        opacity: 1;
-        animation: ripple-expand 2s ease-out forwards;
+        box-shadow: 0 0 10px rgba(100, 200, 255, 0.6),
+                    inset 0 0 10px rgba(100, 200, 255, 0.3);
+        transform: translate3d(-50%, -50%, 0) scale(0);
+        opacity: 0;
       }
 
       @keyframes ripple-expand {
         0% {
           transform: translate3d(-50%, -50%, 0) scale(0);
           opacity: 1;
+          box-shadow: 0 0 20px rgba(100, 200, 255, 0.8),
+                      inset 0 0 20px rgba(100, 200, 255, 0.5);
+          border-width: 2px;
+        }
+        25% {
+          opacity: 0.7;
+          box-shadow: 0 0 18px rgba(100, 200, 255, 0.7),
+                      inset 0 0 16px rgba(100, 200, 255, 0.3);
+        }
+        50% {
+          opacity: 0.4;
+          box-shadow: 0 0 14px rgba(100, 200, 255, 0.4),
+                      inset 0 0 10px rgba(100, 200, 255, 0.15);
+        }
+        75% {
+          opacity: 0.15;
+          box-shadow: 0 0 8px rgba(100, 200, 255, 0.2),
+                      inset 0 0 5px rgba(100, 200, 255, 0.05);
+          border-width: 1px;
         }
         100% {
           transform: translate3d(-50%, -50%, 0) scale(1);
           opacity: 0;
+          box-shadow: 0 0 0px rgba(100, 200, 255, 0),
+                      inset 0 0 0px rgba(100, 200, 255, 0);
+          border-width: 1px;
         }
       }
 
@@ -178,50 +196,72 @@
         }
       }
 
-      /* Optimized fog background */
+      /* Water background */
       .fog-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        position: fixed;
+        top: -10%;
+        left: -10%;
+        width: 120%;
+        height: 120%;
         overflow: hidden;
         z-index: 1;
+        background: linear-gradient(135deg, #030712 0%, #0a1628 50%, #051220 100%);
+        pointer-events: none;
       }
 
       .fog-layer {
         position: absolute;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(
-          circle,
-          rgba(190, 220, 255, 0.02) 0%,
-          rgba(190, 220, 255, 0.01) 30%,
-          transparent 70%
-        );
+        width: 300%;
+        height: 300%;
         will-change: transform;
-        transform: translate3d(0, 0, 0);
+        filter: blur(2px);
       }
 
       .fog-1 {
         top: -50%;
         left: -50%;
-        animation: drift 30s infinite linear;
+        animation: wave 20s infinite linear;
+        background: radial-gradient(
+          ellipse 400px 60px at 50% 50%,
+          rgba(100, 200, 255, 0.12),
+          rgba(80, 180, 255, 0.04) 40%,
+          transparent 70%
+        );
       }
       .fog-2 {
         top: -30%;
-        right: -50%;
-        animation: drift 35s infinite linear reverse;
+        left: -50%;
+        animation: wave 28s infinite linear reverse;
+        background: radial-gradient(
+          ellipse 500px 80px at 50% 50%,
+          rgba(65, 180, 255, 0.08),
+          rgba(50, 150, 255, 0.02) 45%,
+          transparent 75%
+        );
+        filter: blur(3px);
       }
       .fog-3 {
-        bottom: -50%;
-        left: -30%;
-        animation: drift 40s infinite linear;
+        top: 20%;
+        left: -50%;
+        animation: wave 24s infinite linear;
+        background: radial-gradient(
+          ellipse 450px 70px at 50% 50%,
+          rgba(80, 190, 255, 0.1),
+          rgba(60, 160, 255, 0.03) 42%,
+          transparent 72%
+        );
       }
       .fog-4 {
-        bottom: -30%;
-        right: -30%;
-        animation: drift 45s infinite linear reverse;
+        top: 50%;
+        left: -50%;
+        animation: wave 32s infinite linear reverse;
+        background: radial-gradient(
+          ellipse 380px 65px at 50% 50%,
+          rgba(100, 200, 255, 0.06),
+          rgba(70, 170, 255, 0.01) 48%,
+          transparent 78%
+        );
+        filter: blur(4px);
       }
 
       /* Main Content */
@@ -407,36 +447,21 @@
       }
 
       /* Animations */
-      @keyframes drift {
+      @keyframes wave {
         0% {
-          transform: translate3d(0, 0, 0) rotate(0deg);
+          transform: translateX(0) translateY(0);
         }
         25% {
-          transform: translate3d(100px, -100px, 0) rotate(90deg);
+          transform: translateX(-30px) translateY(8px);
         }
         50% {
-          transform: translate3d(-50px, 50px, 0) rotate(180deg);
+          transform: translateX(-60px) translateY(0);
         }
         75% {
-          transform: translate3d(-100px, -50px, 0) rotate(270deg);
+          transform: translateX(-90px) translateY(-6px);
         }
         100% {
-          transform: translate3d(0, 0, 0) rotate(360deg);
-        }
-      }
-
-      @keyframes deepDrift {
-        0% {
-          transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
-        }
-        33% {
-          transform: translate3d(150px, -100px, 0) rotate(120deg) scale(1.1);
-        }
-        66% {
-          transform: translate3d(-100px, 100px, 0) rotate(240deg) scale(0.9);
-        }
-        100% {
-          transform: translate3d(0, 0, 0) rotate(360deg) scale(1);
+          transform: translateX(-120px) translateY(0);
         }
       }
 
@@ -459,33 +484,6 @@
         to {
           opacity: 1;
           transform: translate3d(0, 0, 0);
-        }
-      }
-
-      @keyframes float1 {
-        0%, 100% {
-          transform: translate3d(0, 0, 0) rotate(0deg);
-        }
-        50% {
-          transform: translate3d(0, -15px, 0) rotate(180deg);
-        }
-      }
-
-      @keyframes float2 {
-        0%, 100% {
-          transform: translate3d(0, 0, 0) rotate(0deg);
-        }
-        50% {
-          transform: translate3d(0, -20px, 0) rotate(-180deg);
-        }
-      }
-
-      @keyframes float3 {
-        0%, 100% {
-          transform: translate3d(0, 0, 0) rotate(0deg);
-        }
-        50% {
-          transform: translate3d(0, -10px, 0) rotate(90deg);
         }
       }
 
@@ -679,7 +677,7 @@
                   <div class="d-flex justify-content-between align-items-start">
                     <div>
                       <div class="project-name">
-                        <a href="#">Mercúrio</a>
+                        <a href="https://github.com/R0DR160HM/WebProxy">Mercúrio/WebProxy</a>
                         <small class="font-italic ml-2"
                           >(web-based distributed cache engine)</small
                         >
@@ -698,7 +696,7 @@
                       <div class="project-name">
                         <a
                           href="https://ottimizza.com.br/gestao-de-atendimento-ao-cliente/"
-                          >Atendimento ao Cliente</a
+                          >Atende+</a
                         >
                         <small class="font-italic ml-2"
                           >(corporate messaging app with integrated customer
