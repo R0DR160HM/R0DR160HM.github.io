@@ -83,7 +83,8 @@
 
       .portfolio-container {
         min-height: 100vh;
-        width: 100vw;
+        min-height: 100dvh;
+        width: 100%;
         position: relative;
         overflow: hidden;
       }
@@ -123,13 +124,16 @@
         position: relative;
         z-index: 10;
         min-height: 100vh;
+        min-height: 100dvh;
         display: flex;
-        align-items: center;
-        padding: 1rem;
+        padding: clamp(1rem, 3vw, 2rem);
       }
 
+      /* margin:auto centers vertically but, unlike align-items:center,
+         never clips the top when content is taller than the viewport */
       .content-wrapper {
         width: 100%;
+        margin: auto;
       }
 
       .hero-title {
@@ -443,31 +447,37 @@
       }
 
       /* Responsive adjustments */
-      @media (orientation: landscape) {
+
+      /* Below Bootstrap's lg breakpoint the two columns stack vertically */
+      @media (max-width: 991.98px) {
         .main-content {
-          padding: 0.5rem 1rem;
+          padding-top: clamp(1.5rem, 5vh, 3rem);
+          padding-bottom: clamp(2rem, 6vh, 3.5rem);
+        }
+
+        /* leave room for the cube's bob/tilt so it isn't flush against
+           the bottom edge of the stacked layout */
+        .cube-viewport {
+          margin-bottom: 1.5rem;
         }
       }
 
-      @media (max-width: 768px) {
-        .main-content {
-          padding: 1rem;
-          overflow-y: auto;
-          height: auto;
-          min-height: 100vh;
-        }
-        html,
-        body {
-          overflow-y: auto;
+      @media (max-width: 575.98px) {
+        .stat-item {
+          padding: 0 0.25rem;
         }
       }
 
-      @media (min-width: 769px) and (max-height: 600px) {
+      /* Short viewports (landscape phones, small laptop windows) */
+      @media (min-width: 992px) and (max-height: 600px) {
         .hero-title {
           font-size: 2.5rem;
         }
         .hero-subtitle {
           font-size: 1.3rem;
+        }
+        .cube-viewport {
+          width: min(100%, clamp(220px, 55vh, 320px));
         }
       }
 
