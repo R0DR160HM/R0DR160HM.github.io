@@ -19,32 +19,12 @@
         box-sizing: border-box;
       }
 
-      /* Improved cursor handling for better compatibility */
       body {
         background: #030712;
         color: white;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         width: 100%;
         min-height: 100%;
-        cursor: none; /* Hide default cursor */
-      }
-
-      /* Fallback for browsers that don't support cursor: none or for touch devices */
-      @media (hover: none) or (pointer: coarse) {
-        body {
-          cursor: default;
-        }
-        .mouse-follower {
-          display: none !important;
-        }
-      }
-      @supports not (cursor: none) {
-        body {
-          cursor: default;
-        }
-        .mouse-follower {
-          display: none !important;
-        }
       }
 
       .portfolio-container {
@@ -54,214 +34,34 @@
         overflow: hidden;
       }
 
-      /* Enhanced mouse follower with better compatibility */
-      .mouse-follower {
+      /* Lighthouse beam flash — brightens the whole page when the beam
+         sweeps across the camera */
+      .beam-flash {
         position: fixed;
-        width: 24px;
-        height: 24px;
-        background: linear-gradient(45deg, #fbbf24, #f59e0b);
-        border-radius: 50%;
+        inset: 0;
+        z-index: 10000;
         pointer-events: none;
-        z-index: 9999;
-        mix-blend-mode: difference;
-        will-change: transform, opacity;
-        transform: translate3d(-50%, -50%, 0) scale(0); /* Centered and hidden initially */
-        transition: transform 5ms ease-out, opacity;
         opacity: 0;
-      }
-
-      .mouse-follower.active {
-        opacity: 1;
-        transform: translate3d(-50%, -50%, 0) scale(1);
-      }
-
-      .mouse-follower.hover {
-        transform: translate3d(-50%, -50%, 0) scale(1.5);
-      }
-
-      /* Water ripple container */
-      .water-ripples {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 5;
-        overflow: hidden;
-      }
-
-      .ripple {
-        position: absolute;
-        border: 2px solid rgba(100, 200, 255, 0.8);
-        border-radius: 50%;
-        pointer-events: none;
-        will-change: transform, opacity;
-        box-shadow: 0 0 10px rgba(100, 200, 255, 0.6),
-                    inset 0 0 10px rgba(100, 200, 255, 0.3);
-        transform: translate3d(-50%, -50%, 0) scale(0);
-        opacity: 0;
-      }
-
-      @keyframes ripple-expand {
-        0% {
-          transform: translate3d(-50%, -50%, 0) scale(0);
-          opacity: 1;
-          box-shadow: 0 0 20px rgba(100, 200, 255, 0.8),
-                      inset 0 0 20px rgba(100, 200, 255, 0.5);
-          border-width: 2px;
-        }
-        25% {
-          opacity: 0.7;
-          box-shadow: 0 0 18px rgba(100, 200, 255, 0.7),
-                      inset 0 0 16px rgba(100, 200, 255, 0.3);
-        }
-        50% {
-          opacity: 0.4;
-          box-shadow: 0 0 14px rgba(100, 200, 255, 0.4),
-                      inset 0 0 10px rgba(100, 200, 255, 0.15);
-        }
-        75% {
-          opacity: 0.15;
-          box-shadow: 0 0 8px rgba(100, 200, 255, 0.2),
-                      inset 0 0 5px rgba(100, 200, 255, 0.05);
-          border-width: 1px;
-        }
-        100% {
-          transform: translate3d(-50%, -50%, 0) scale(1);
-          opacity: 0;
-          box-shadow: 0 0 0px rgba(100, 200, 255, 0),
-                      inset 0 0 0px rgba(100, 200, 255, 0);
-          border-width: 1px;
-        }
-      }
-
-      /* Floating leaves container */
-      .floating-leaves {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 3;
-        overflow: hidden;
-      }
-
-      .leaf {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        background: linear-gradient(45deg, #22c55e, #16a34a);
-        border-radius: 0 100% 0 100%; /* Leaf shape */
-        opacity: 0.7;
-        will-change: transform;
-      }
-
-      .leaf::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 1px;
-        height: 15px;
-        background: #16a34a;
-        transform: translate(-50%, -50%) rotate(45deg);
-      }
-
-      .leaf-1 {
-        top: 20%;
-        left: 10%;
-        animation: float-water 15s ease-in-out infinite;
-      }
-
-      .leaf-2 {
-        top: 60%;
-        left: 80%;
-        animation: float-water 18s ease-in-out infinite 2s;
-      }
-
-      @keyframes float-water {
-        0%, 100% {
-          transform: translate(0, 0) rotate(0deg);
-        }
-        25% {
-          transform: translate(50px, -20px) rotate(90deg);
-        }
-        50% {
-          transform: translate(100px, 10px) rotate(180deg);
-        }
-        75% {
-          transform: translate(30px, -15px) rotate(270deg);
-        }
-      }
-
-      /* Water background */
-      .fog-container {
-        position: fixed;
-        top: -10%;
-        left: -10%;
-        width: 120%;
-        height: 120%;
-        overflow: hidden;
-        z-index: 1;
-        background: linear-gradient(135deg, #030712 0%, #0a1628 50%, #051220 100%);
-        pointer-events: none;
-      }
-
-      .fog-layer {
-        position: absolute;
-        width: 300%;
-        height: 300%;
-        will-change: transform;
-        filter: blur(2px);
-      }
-
-      .fog-1 {
-        top: -50%;
-        left: -50%;
-        animation: wave 20s infinite linear;
+        mix-blend-mode: screen;
         background: radial-gradient(
-          ellipse 400px 60px at 50% 50%,
-          rgba(100, 200, 255, 0.12),
-          rgba(80, 180, 255, 0.04) 40%,
-          transparent 70%
-        );
-      }
-      .fog-2 {
-        top: -30%;
-        left: -50%;
-        animation: wave 28s infinite linear reverse;
-        background: radial-gradient(
-          ellipse 500px 80px at 50% 50%,
-          rgba(65, 180, 255, 0.08),
-          rgba(50, 150, 255, 0.02) 45%,
+          circle at var(--fx, 30%) var(--fy, 40%),
+          rgba(255, 240, 200, 0.9),
+          rgba(255, 230, 180, 0.35) 25%,
+          rgba(120, 160, 200, 0.15) 55%,
           transparent 75%
         );
-        filter: blur(3px);
+        will-change: opacity;
       }
-      .fog-3 {
-        top: 20%;
-        left: -50%;
-        animation: wave 24s infinite linear;
-        background: radial-gradient(
-          ellipse 450px 70px at 50% 50%,
-          rgba(80, 190, 255, 0.1),
-          rgba(60, 160, 255, 0.03) 42%,
-          transparent 72%
-        );
-      }
-      .fog-4 {
-        top: 50%;
-        left: -50%;
-        animation: wave 32s infinite linear reverse;
-        background: radial-gradient(
-          ellipse 380px 65px at 50% 50%,
-          rgba(100, 200, 255, 0.06),
-          rgba(70, 170, 255, 0.01) 48%,
-          transparent 78%
-        );
-        filter: blur(4px);
+
+      /* 3D ocean background */
+      .ocean-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
       }
 
       /* Main Content */
@@ -379,92 +179,193 @@
         color: #9ca3af;
       }
 
-      .projects-section {
-        background: rgba(17, 24, 39, 0.2);
-        backdrop-filter: blur(8px);
-        border-radius: 1rem;
-        padding: clamp(1rem, 3vw, 2rem);
-        border: 1px solid rgba(31, 41, 55, 0.2);
-        transition: border-color 0.2s ease;
+      /* 3D rotating projects cube */
+      .projects-heading {
+        text-align: center;
         will-change: transform, opacity;
         animation: fadeIn 0.8s ease-out 0.6s forwards;
         opacity: 0;
-        overflow-y: auto;
-      }
-
-      .projects-section:hover {
-        border-color: rgba(251, 191, 36, 0.2);
       }
 
       .projects-title {
         font-size: clamp(1.5rem, 3vw, 2rem);
         font-weight: 600;
         color: #fbbf24;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
       }
 
-      .project-item {
-        background: rgba(31, 41, 55, 0.1);
-        border-radius: 0.75rem;
-        padding: clamp(1rem, 2vw, 1.5rem);
-        margin-bottom: 1rem;
-        border: 1px solid rgba(55, 65, 81, 0.2);
-        transition: all 0.2s ease;
-        cursor: pointer;
+      .projects-hint {
+        color: #9ca3af;
+      }
+
+      .cube-viewport {
+        width: min(100%, clamp(260px, 40vh, 400px));
+        aspect-ratio: 1 / 1;
+        margin: 2rem auto 0;
+        perspective: 1600px;
+        position: relative;
+        will-change: transform, opacity;
+        animation: fadeIn 0.8s ease-out 0.8s forwards;
+        opacity: 0;
+        touch-action: pan-y;
+      }
+
+      .cube {
+        position: absolute;
+        inset: 0;
+        transform-style: preserve-3d;
         will-change: transform;
+        transform: rotateX(-12deg);
       }
 
-      .project-item:hover {
-        background: rgba(31, 41, 55, 0.2);
-        border-color: rgba(251, 191, 36, 0.3);
-        transform: scale(1.02) translate3d(0, 0, 0);
+      .cube-face {
+        position: absolute;
+        inset: 0;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        transform: rotateY(calc(var(--i) * 90deg))
+          translateZ(var(--cube-depth, 200px));
+        background: linear-gradient(
+          160deg,
+          rgba(130, 170, 220, 0.14),
+          rgba(20, 40, 70, 0.2)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        backdrop-filter: blur(4px) brightness(1.06);
+        -webkit-backdrop-filter: blur(4px) brightness(1.06);
+        border-radius: 0.75rem;
+        padding: clamp(1rem, 2.5vw, 1.75rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 0.75rem;
+        box-shadow: inset 0 0 calc(var(--cube-depth, 200px) * 0.15)
+            rgba(160, 200, 255, 0.1),
+          0 15px 35px -15px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        transition: border-color 0.2s ease;
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
       }
 
-      .project-name {
-        font-size: clamp(1rem, 2vw, 1.1rem);
-        font-weight: 500;
-        color: #e5e7eb;
+      /* diagonal specular streak on the glass */
+      .cube-face::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(
+          115deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.12) 45%,
+          rgba(255, 255, 255, 0.02) 55%,
+          transparent 70%
+        );
+      }
+
+      .cube-face:hover {
+        border-color: rgba(251, 191, 36, 0.35);
+      }
+
+      .cube-face:hover .face-name {
+        color: #fbbf24;
+      }
+
+      .cube-face-top,
+      .cube-face-bottom {
+        align-items: center;
+        justify-content: center;
+      }
+
+      .cube-face-top {
+        transform: rotateX(90deg) translateZ(var(--cube-depth, 200px));
+      }
+
+      .cube-face-bottom {
+        transform: rotateX(-90deg) translateZ(var(--cube-depth, 200px));
+      }
+
+      .cube-top-label {
+        font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+        font-weight: 600;
+        color: rgba(251, 191, 36, 0.8);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+
+      /* project info layout on the glass faces */
+      .face-icon {
+        width: 2.6rem;
+        height: 2.6rem;
+        flex: 0 0 auto;
+        border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.15rem;
+        color: #fbbf24;
+        background: rgba(251, 191, 36, 0.12);
+        border: 1px solid rgba(251, 191, 36, 0.25);
+      }
+
+      .face-name {
+        display: inline-block;
+        font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+        font-weight: 600;
+        color: #f3f4f6;
+        text-decoration: none;
+        line-height: 1.2;
+        margin-top: 0.75rem;
         transition: color 0.2s ease;
       }
 
-      .project-item:hover .project-name {
+      .face-name:hover {
         color: #fbbf24;
       }
 
-      .project-tech {
-        color: #9ca3af;
-        margin-top: 0.25rem;
-        font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+      .face-desc {
+        color: #aab6c6;
+        font-size: clamp(0.82rem, 1.6vw, 0.95rem);
+        line-height: 1.45;
+        margin: 0.35rem 0 0;
       }
 
-      .project-status {
-        background: rgba(251, 191, 36, 0.2);
+      .face-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+
+      .face-tags span {
+        font-size: 0.72rem;
+        letter-spacing: 0.02em;
+        color: #bcd3ea;
+        background: rgba(100, 200, 255, 0.08);
+        border: 1px solid rgba(148, 180, 220, 0.25);
+        border-radius: 999px;
+        padding: 0.2rem 0.65rem;
+        white-space: nowrap;
+      }
+
+      .face-visit {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        margin-top: 0.75rem;
+        font-size: 0.85rem;
+        font-weight: 500;
         color: #fbbf24;
-        padding: 0.25rem 0.75rem;
-        border-radius: 1rem;
-        font-size: clamp(0.7rem, 1.5vw, 0.8rem);
-        border: 1px solid rgba(251, 191, 36, 0.3);
+        text-decoration: none;
+        opacity: 0.85;
+        transition: opacity 0.2s ease, gap 0.2s ease;
+      }
+
+      .face-visit:hover {
+        opacity: 1;
+        gap: 0.7rem;
+        color: #fbbf24;
       }
 
       /* Animations */
-      @keyframes wave {
-        0% {
-          transform: translateX(0) translateY(0);
-        }
-        25% {
-          transform: translateX(-30px) translateY(8px);
-        }
-        50% {
-          transform: translateX(-60px) translateY(0);
-        }
-        75% {
-          transform: translateX(-90px) translateY(-6px);
-        }
-        100% {
-          transform: translateX(-120px) translateY(0);
-        }
-      }
-
       @keyframes slideUp {
         from {
           transform: translate3d(0, 100%, 0);
@@ -492,9 +393,6 @@
         .main-content {
           padding: 0.5rem 1rem;
         }
-        .projects-section {
-          max-height: none;
-        }
       }
 
       @media (max-width: 768px) {
@@ -504,10 +402,8 @@
           height: auto;
           min-height: 100vh;
         }
-        .projects-section {
-          max-height: none;
-        }
-        html, body {
+        html,
+        body {
           overflow-y: auto;
         }
       }
@@ -519,31 +415,10 @@
         .hero-subtitle {
           font-size: 1.3rem;
         }
-        .projects-section {
-          max-height: none;
-        }
-      }
-
-      /* Performance optimizations */
-      .fog-layer,
-      .leaf {
-        transform: translate3d(0, 0, 0);
-        backface-visibility: hidden;
-        perspective: 1000px;
       }
 
       /* Reduce motion for accessibility */
       @media (prefers-reduced-motion: reduce) {
-        .fog-layer,
-        .leaf {
-          animation: none !important;
-        }
-        .mouse-follower {
-          display: none !important;
-        }
-        body {
-          cursor: default !important;
-        }
         * {
           transition-duration: 0.01ms !important;
           animation-duration: 0.01ms !important;
@@ -559,25 +434,11 @@
   </head>
   <body>
     <div class="portfolio-container">
-      <!-- Mouse Follower -->
-      <div class="mouse-follower" id="mouseFollower"></div>
+      <!-- 3D Ocean Background -->
+      <canvas id="ocean" class="ocean-canvas" aria-hidden="true"></canvas>
 
-      <!-- Water Ripples Container -->
-      <div class="water-ripples" id="waterRipples"></div>
-
-      <!-- Floating Leaves -->
-      <div class="floating-leaves">
-        <div class="leaf leaf-1"></div>
-        <div class="leaf leaf-2"></div>
-      </div>
-
-      <!-- Fog Background -->
-      <div class="fog-container">
-        <div class="fog-layer fog-1"></div>
-        <div class="fog-layer fog-2"></div>
-        <div class="fog-layer fog-3"></div>
-        <div class="fog-layer fog-4"></div>
-      </div>
+      <!-- Lighthouse beam flash overlay -->
+      <div class="beam-flash" id="beamFlash" aria-hidden="true"></div>
 
       <!-- Main Content -->
       <div class="main-content">
@@ -650,64 +511,146 @@
 
             <!-- Right Side - Projects -->
             <div class="col-lg-6">
-              <div class="projects-section">
+              <div class="projects-heading">
                 <h3 class="projects-title">Recent projects I'm proud of</h3>
-                <small class="d-block mb-3">
+                <small class="d-block projects-hint">
                   Only showing publicly available information. ;)
                 </small>
+              </div>
 
-                <div class="project-item">
-                  <div class="d-flex justify-content-between align-items-start">
+              <div class="cube-viewport" id="cubeViewport">
+                <div class="cube" id="projectsCube">
+                  <div class="cube-face" style="--i: 0">
                     <div>
-                      <div class="project-name">
-                        <a href="https://buscaextrato.com.br">Busca Extrato</a>
-                        <small class="font-italic ml-2">
-                          (bank statement fetcher)
-                        </small>
+                      <div class="face-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
                       </div>
-                      <div class="project-tech">
-                        Angular, Stripe, OpenFinance, AI Agents
-                      </div>
+                      <a
+                        class="face-name"
+                        href="https://buscaextrato.com.br"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >Busca Extrato</a
+                      >
+                      <p class="face-desc">Bank statement fetcher.</p>
                     </div>
-                    <span class="project-status">Live</span>
+                    <div>
+                      <div class="face-tags">
+                        <span>Angular</span>
+                        <span>Stripe</span>
+                        <span>OpenFinance</span>
+                      </div>
+                      <a
+                        class="face-visit"
+                        href="https://buscaextrato.com.br"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >Visit site <i class="fas fa-arrow-right"></i
+                      ></a>
+                    </div>
                   </div>
-                </div>
 
-                <div class="project-item">
-                  <div class="d-flex justify-content-between align-items-start">
+                  <div class="cube-face" style="--i: 1">
                     <div>
-                      <div class="project-name">
-                        <a href="https://github.com/R0DR160HM/WebProxy">Mercúrio/WebProxy</a>
-                        <small class="font-italic ml-2"
-                          >(web-based distributed cache engine)</small
-                        >
+                      <div class="face-icon">
+                        <i class="fas fa-circle-nodes"></i>
                       </div>
-                      <div class="project-tech">
-                        Gleam, ETS, IndexedDB, WebRTC
-                      </div>
+                      <a
+                        class="face-name"
+                        href="https://github.com/R0DR160HM/webproxy_server"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >WebProxy</a
+                      >
+                      <p class="face-desc">Web-based distributed cache engine.</p>
                     </div>
-                    <span class="project-status"> Coming public soon </span>
+                    <div>
+                      <div class="face-tags">
+                        <span>Gleam</span>
+                        <span>ETS</span>
+                        <span>IndexedDB</span>
+                        <span>WebSockets</span>
+                      </div>
+                      <a
+                        class="face-visit"
+                        href="https://github.com/R0DR160HM/webproxy_server"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >View on GitHub <i class="fas fa-arrow-right"></i
+                      ></a>
+                    </div>
                   </div>
-                </div>
 
-                <div class="project-item">
-                  <div class="d-flex justify-content-between align-items-start">
+                  <div class="cube-face" style="--i: 2">
                     <div>
-                      <div class="project-name">
-                        <a
-                          href="https://hex.pm/packages/database"
-                          >Database</a
-                        >
-                        <small class="font-italic ml-2"
-                          >(DETS-based embedded database for Gleam)</small
-                        >
+                      <div class="face-icon">
+                        <i class="fas fa-database"></i>
                       </div>
-                      <div class="project-tech">
-                        Gleam, Erlang, DETS 
-                      </div>
+                      <a
+                        class="face-name"
+                        href="https://hex.pm/packages/database"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >Database</a
+                      >
+                      <p class="face-desc">
+                        DETS/ETS-based embedded database for Gleam.
+                      </p>
                     </div>
-                    <span class="project-status">Live</span>
+                    <div>
+                      <div class="face-tags">
+                        <span>Gleam</span>
+                        <span>Erlang</span>
+                        <span>DETS</span>
+                      </div>
+                      <a
+                        class="face-visit"
+                        href="https://hex.pm/packages/database"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >View on Hex <i class="fas fa-arrow-right"></i
+                      ></a>
+                    </div>
                   </div>
+
+                  <div class="cube-face" style="--i: 3">
+                    <div>
+                      <div class="face-icon">
+                        <i class="fas fa-robot"></i>
+                      </div>
+                      <a
+                        class="face-name"
+                        href="https://hex.pm/packages/database"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >Slopmachine</a
+                      >
+                      <p class="face-desc">
+                        Toy research-focused general-purpose AI agent that
+                        turned out surprisingly functional.
+                      </p>
+                    </div>
+                    <div>
+                      <div class="face-tags">
+                        <span>Python</span>
+                        <span>Ollama</span>
+                        <span>ddgs</span>
+                        <span>tool-calling</span>
+                      </div>
+                      <a
+                        class="face-visit"
+                        href="https://hex.pm/packages/database"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >Check it out <i class="fas fa-arrow-right"></i
+                      ></a>
+                    </div>
+                  </div>
+
+                  <div class="cube-face cube-face-top">
+                    <span class="cube-top-label">Projects</span>
+                  </div>
+                  <div class="cube-face cube-face-bottom"></div>
                 </div>
               </div>
             </div>
@@ -716,8 +659,14 @@
       </div>
     </div>
 
-
-    <script src="script.js"></script>
-
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+        }
+      }
+    </script>
+    <script type="module" src="ocean.js"></script>
+    <script src="script.js" defer></script>
   </body>
 </html>

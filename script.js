@@ -1,88 +1,75 @@
-const mouseFollower = document.getElementById("mouseFollower");
-  const waterRipplesContainer = document.getElementById("waterRipples");
-  let mouseX = 0;
-  let mouseY = 0;
-  let isMouseActive = false;
-  let lastRippleTime = 0;
-  const RIPPLE_DELAY = 150;
-  const RIPPLE_DURATION = 1800;
-  const MAX_RIPPLES = 10;
-  let rippleCount = 0;
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const supportsCustomCursor = !window.matchMedia("(hover: none) or (pointer: coarse)").matches && CSS.supports('cursor', 'none');
+// --- 3D rotating projects cube ---
+const cube = document.getElementById("projectsCube");
+const cubeViewport = document.getElementById("cubeViewport");
 
-  if (!supportsCustomCursor && mouseFollower) {
-    mouseFollower.style.display = 'none';
+if (cube && cubeViewport) {
+  const AUTO_ROTATE_MS = 5500;
+
+  function updateDepth() {
+    cubeViewport.style.setProperty("--cube-depth", `${cubeViewport.offsetWidth / 2}px`);
   }
+  updateDepth();
+  window.addEventListener("resize", updateDepth);
 
-  function initRipples() {
-    for (let i = 0; i < MAX_RIPPLES; i++) {
-      const ripple = document.createElement("div");
-      ripple.className = "ripple";
-      ripple.style.width = "200px";
-      ripple.style.height = "200px";
-      waterRipplesContainer.appendChild(ripple);
-    }
-  }
+  if (!reducedMotion) {
+    let index = 0; // cumulative quarter-turns, so the spin never unwinds
+    let angle = 0;
+    let angleVel = 0;
+    let hovered = false;
+    let dragging = false;
+    let dragStartX = 0;
+    let dragStartAngle = 0;
+    let lastMs = performance.now();
 
-  function createWaterRipple(x, y) {
-    const now = performance.now();
-    if (now - lastRippleTime < RIPPLE_DELAY) return;
-    lastRippleTime = now;
+    setInterval(() => {
+      if (!hovered && !dragging) index++;
+    }, AUTO_ROTATE_MS);
 
-    const ripples = waterRipplesContainer.querySelectorAll('.ripple');
-    const ripple = ripples[rippleCount % MAX_RIPPLES];
-    rippleCount++;
+    // pause while the pointer is over the cube so faces stay readable
+    cubeViewport.addEventListener("pointerenter", () => { hovered = true; });
+    cubeViewport.addEventListener("pointerleave", () => { hovered = false; });
 
-    ripple.style.left = x + 'px';
-    ripple.style.top = y + 'px';
-    ripple.style.animation = 'none';
-    ripple.style.opacity = '0';
-    void ripple.offsetWidth;
-    ripple.style.animation = `ripple-expand ${RIPPLE_DURATION / 1000}s ease-out forwards`;
-  }
-
-  function updateMouseFollower() {
-    if (supportsCustomCursor && mouseFollower) {
-      const scale = isMouseActive ? (mouseFollower.classList.contains('hover') ? 1.5 : 1) : 0;
-      mouseFollower.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) scale(${scale})`;
-      mouseFollower.style.opacity = isMouseActive ? '1' : '0';
-    }
-    requestAnimationFrame(updateMouseFollower);
-  }
-
-  document.addEventListener("mousemove", (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    isMouseActive = true;
-    createWaterRipple(mouseX, mouseY);
-    clearTimeout(mouseMoveTimeout);
-    mouseMoveTimeout = setTimeout(() => { isMouseActive = false; }, 100);
-  });
-
-  document.addEventListener("mouseleave", () => {
-    isMouseActive = false;
-    if (mouseFollower) mouseFollower.classList.remove('hover');
-  });
-
-  const interactiveElements = document.querySelectorAll(".btn-custom, .stat-item, .project-item");
-  interactiveElements.forEach((element) => {
-    element.addEventListener("mouseenter", () => {
-      if (isMouseActive && mouseFollower) mouseFollower.classList.add('hover');
+    // drag to spin manually; releases snap to the nearest face
+    cubeViewport.addEventListener("pointerdown", (e) => {
+      dragging = true;
+      dragStartX = e.clientX;
+      dragStartAngle = angle;
     });
-    element.addEventListener("mouseleave", () => {
-      if (mouseFollower) mouseFollower.classList.remove('hover');
+    window.addEventListener("pointermove", (e) => {
+      if (!dragging) return;
+      angle = dragStartAngle + (e.clientX - dragStartX) * 0.35;
+      angleVel = 0;
     });
-  });
+    const endDrag = () => {
+      if (!dragging) return;
+      dragging = false;
+      index = Math.round(-angle / 90);
+    };
+    window.addEventListener("pointerup", endDrag);
+    window.addEventListener("pointercancel", endDrag);
 
-  window.addEventListener("load", () => {
-    initRipples();
-    requestAnimationFrame(updateMouseFollower);
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      document.querySelectorAll(".fog-layer, .leaf").forEach(el => el.style.animation = "none");
-      if (mouseFollower) mouseFollower.style.display = "none";
+    function frame(nowMs) {
+      const t = nowMs / 1000;
+      const dt = Math.min((nowMs - lastMs) / 1000, 0.05);
+      lastMs = nowMs;
+
+      if (!dragging) {
+        // underdamped spring toward the target face -> bouncy settle
+        const target = index * -90;
+        angleVel += ((target - angle) * 40 - angleVel * 6) * dt;
+        angle += angleVel * dt;
+      }
+
+      // slow floating bounce
+      const bob = Math.sin(t * 1.1) * 9;
+      const tilt = -12 + Math.sin(t * 0.7) * 2.5;
+      cube.style.transform =
+        `translateY(${bob.toFixed(2)}px) rotateX(${tilt.toFixed(2)}deg) rotateY(${angle.toFixed(2)}deg)`;
+
+      requestAnimationFrame(frame);
     }
-  });
-  
-  let mouseMoveTimeout;
-
+    requestAnimationFrame(frame);
+  }
+}
