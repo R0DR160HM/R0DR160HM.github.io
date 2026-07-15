@@ -5,7 +5,11 @@ import * as THREE from "three";
 //  - A ping-pong wave-equation simulation (2 render targets) drives the
 //    mouse ripples, so they propagate, interfere and fade like real water.
 
-const SIM_RES = 256;
+// scale simulation/geometry down on small screens so phones keep a
+// smooth frame rate (the visual difference is negligible at that size)
+const IS_SMALL_SCREEN = Math.min(screen.width, screen.height) < 768;
+
+const SIM_RES = IS_SMALL_SCREEN ? 160 : 256;
 const SIM_BOUNDS = { minX: -60, minZ: -90, sizeX: 120, sizeZ: 110 };
 
 const SIM_SHADER = /* glsl */ `
@@ -176,7 +180,7 @@ function init() {
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, IS_SMALL_SCREEN ? 1.35 : 1.75));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor(0x030712, 1);
 
@@ -237,7 +241,9 @@ function init() {
     uFlash: { value: 0 },
   };
 
-  const geometry = new THREE.PlaneGeometry(260, 180, 256, 180);
+  const geometry = IS_SMALL_SCREEN
+    ? new THREE.PlaneGeometry(260, 180, 144, 100)
+    : new THREE.PlaneGeometry(260, 180, 256, 180);
   geometry.rotateX(-Math.PI / 2);
   const ocean = new THREE.Mesh(
     geometry,
@@ -367,7 +373,7 @@ function init() {
   }
 
   // --- stars: near-invisible until the pointer drifts close ---
-  const STAR_COUNT = 350;
+  const STAR_COUNT = IS_SMALL_SCREEN ? 180 : 350;
   const starPositions = new Float32Array(STAR_COUNT * 3);
   const starPhases = new Float32Array(STAR_COUNT);
   for (let i = 0; i < STAR_COUNT; i++) {
@@ -526,7 +532,7 @@ function init() {
     oceanUniforms.uRipples.value = rtA.texture;
   }
 
-  const clock = new THREE.Clock();
+  const startMs = performance.now();
 
   function renderFrame() {
     camera.position.x += (cameraBase.x + parallax.x * 0.9 - camera.position.x) * 0.04;
@@ -539,7 +545,7 @@ function init() {
 
   function animate() {
     requestAnimationFrame(animate);
-    const t = clock.getElapsedTime();
+    const t = (performance.now() - startMs) / 1000;
     const dt = Math.min(t - lastT, 0.05);
     lastT = t;
     oceanUniforms.uTime.value = t;
