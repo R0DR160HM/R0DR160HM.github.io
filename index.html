@@ -456,6 +456,28 @@
         }
       }
 
+      /* Tupi-Guarani constellations hint */
+      .sky-hint {
+        position: fixed;
+        right: 1.2rem;
+        bottom: 0.85rem;
+        z-index: 11;
+        max-width: 21rem;
+        font-size: 0.72rem;
+        line-height: 1.4;
+        color: var(--ink-dim);
+        text-align: right;
+        opacity: 0.85;
+        pointer-events: none;
+        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+      }
+
+      @media (max-width: 991px) {
+        .sky-hint {
+          display: none;
+        }
+      }
+
       /* Keyboard focus */
       :focus-visible {
         outline: 2px solid var(--gold);
@@ -666,6 +688,11 @@
         </section>
       </div>
     </main>
+
+    <p class="sky-hint">
+      The sky above holds the seven Tupi-Guarani constellations.
+      Drift your pointer through the stars to find them.
+    </p>
 
     <script type="importmap">
       {
