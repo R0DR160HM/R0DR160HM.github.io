@@ -457,7 +457,7 @@ function init() {
     starGlowAttr.needsUpdate = true;
   }
 
-  // --- the seven Tupi-Guarani constellations ---
+  // --- the six Tupi-Guarani constellations ---
   // Recorded among the Tupinambá by Claude d'Abbeville (1614) and mapped
   // again by the astronomer Germano Afonso with Guarani communities.
   // Shapes are authored in a local, screen-round coordinate space and
@@ -468,39 +468,55 @@ function init() {
   const TG_CONSTELLATIONS = [
     {
       name: "Guyra Nhandu", eng: "the Rhea",
-      anchor: [0.655, 0.36], scale: 0.082,
+      // traced from Germano Afonso's chart (jornal.usp.br): she stands tall,
+      // beak raised at the top, both three-toed feet stepping to the left,
+      // tail curled low at the right; α and β Centauri shine inside her body
+      anchor: [0.66, 0.37], scale: 0.058,
       stars: [
-        [1.3, -0.3, 0.55], // her eye
-        [0.95, -0.21, 1.4], [0.72, -0.13, 1.3], // α and β Centauri, in her neck
-        // the tail of Scorpius, where her feet rest
-        [-2.05, -0.02, 1.35, 1], [-1.9, -0.2, 0.8], [-1.74, -0.34, 0.8],
-        [-1.56, -0.44, 1.05], [-1.36, -0.7, 0.85], [-1.14, -0.86, 0.7],
+        [-0.415, 1.405, 0.9], // her head
+        [-0.663, 1.151, 1.0, 1],
+        [-0.868, 0.78, 0.7],
+        [-0.78, 0.098, 0.8], [-1.083, -0.205, 0.8], [-1.38, -0.063, 0.9], // upper leg
+        [-0.976, -0.512, 0.7], [-1.356, -0.546, 0.9], // lower leg
+        [-0.512, -0.693, 0.7], [-0.034, -1.063, 0.8], [0.566, -0.941, 0.7],
+        [1.063, -1.112, 1.0], [1.205, -1.517, 0.8], // under the tail
+        [1.478, -1.21, 1.2], [1.337, -0.985, 0.7], // the tail's curl
+        [0.761, -0.712, 0.8], [0.332, -0.693, 0.8], [0.122, 0.195, 0.7],
+        [0.61, -0.834, 1.5], [0.888, -0.839, 1.3], // α and β Centauri
       ],
       polys: [
-        [[1.42, -0.36], [1.58, -0.46]], // beak
-        [[1.16, -0.18], [0.52, 0.04]], // neck
-        [[1.22, -0.42], [0.6, -0.2]],
-        [[0.52, 0.04], [0.18, 0.18], [-0.22, 0.24], [-0.62, 0.36], [-0.88, 0.24],
-         [-0.74, 0.02], [-0.36, -0.08], [0.02, -0.13], [0.6, -0.2]], // body
-        [[-0.3, -0.08], [-0.95, -0.32], [-1.56, -0.44]], // legs to the scorpion's tail
-        [[-0.08, -0.12], [-0.7, -0.55], [-1.36, -0.7]],
-        [[-2.05, -0.02], [-1.9, -0.2], [-1.74, -0.34], [-1.56, -0.44],
-         [-1.36, -0.7], [-1.14, -0.86]], // the scorpion's hook
+        [[-0.415, 1.405], [-0.527, 1.551]], // beak
+        [[-0.415, 1.405], [-0.663, 1.151], [-0.78, 1.049], [-0.868, 0.78],
+         [-0.912, 0.512], [-0.888, 0.341], [-0.78, 0.098]], // neck, left side
+        [[-0.78, 0.098], [-0.624, -0.22], [-0.541, -0.571], [-0.512, -0.693],
+         [-0.39, -0.839], [-0.195, -0.951], [-0.034, -1.063]], // breast
+        [[-0.034, -1.063], [0.566, -0.941], [1.063, -1.112]], // underside
+        [[-0.415, 1.405], [-0.293, 1.098], [-0.122, 0.732], [0.122, 0.195],
+         [0.327, -0.293], [0.332, -0.693]], // neck and back, right side
+        [[0.332, -0.693], [0.761, -0.712]],
+        [[0.761, -0.712], [1.337, -0.985], [1.444, -1.132], [1.478, -1.21],
+         [1.434, -1.254], [1.376, -1.224]], // rump into the curled tail
+        [[1.415, -1.259], [1.205, -1.517], [1.063, -1.112]], // under the tail
+        [[-0.78, 0.098], [-1.083, -0.205], [-1.38, -0.063]], // upper leg
+        [[-1.38, -0.063], [-1.502, 0.151]], [[-1.38, -0.063], [-1.41, 0.195]], // its toes
+        [[-0.541, -0.571], [-0.976, -0.512], [-1.356, -0.546]], // lower leg
+        [[-1.356, -0.546], [-1.502, -0.312]], [[-1.356, -0.546], [-1.38, -0.283]], // its toes
       ],
-      circles: [[1.28, -0.3, 0.17]], // head, on the Coalsack
-      holes: [[1.28, -0.3, 0.02], [0.55, -0.08, 0.026], [0.1, 0.05, 0.03], [-0.45, 0.13, 0.028]],
-      label: [0, 0.85],
+      circles: [],
+      holes: [[-0.415, 1.405, 0.02], [-0.89, 0.42, 0.022], [-0.244, -0.098, 0.028],
+        [0.146, -0.683, 0.03], [0.585, -0.854, 0.026]],
+      label: [-1.2, 1.7],
     },
     {
       name: "Tuya’i", eng: "the Old Man",
       // traced from Germano Afonso's chart of the Homem Velho
       // (jornal.usp.br): triangular head in the Hyades, plume reaching the
-      // Pleiades, a raised arm, one line to Betelgeuse, the good leg with
-      // its knee bending at the Three Marys, and the severed leg drawn
-      // dashed down to Rigel
+      // Pleiades — the Wasps' Nest itself, which caps it (its anchor is
+      // attached to the plume's tip) — a raised arm, one line to Betelgeuse,
+      // the good leg with its knee bending at the Three Marys, and the
+      // severed leg drawn dashed down to Rigel
       anchor: [0.155, 0.3], scale: 0.14,
       stars: [
-        [0.6, 0.405, 0.9], // the plume's tip, toward the Wasps' Nest
         [0.321, 0.207, 1.0], [0.198, 0.102, 1.4, 1], [0.324, 0.072, 0.9], // head; Aldebaran
         [-0.54, -0.231, 1.6, 1], // Betelgeuse
         [-0.261, -0.261, 1.1], // Bellatrix, his hip
@@ -531,50 +547,84 @@ function init() {
     },
     {
       name: "Tapi’i", eng: "the Tapir",
-      // she walks the far end of the Milky Way, low by the horizon
+      // traced from Germano Afonso's chart of the Anta do Norte
+      // (jornal.usp.br): she walks the far end of the Milky Way, low by the
+      // horizon — snout on the bright star by the nebula, ears pricked,
+      // hind legs trailing behind her
       anchor: [0.985, 0.09], scale: 0.05,
-      // the W of Cassiopeia rests along the tapir's back — the lower three
-      // stars on her spine, the upper two rising just above it
       stars: [
-        [-0.9, 0.35, 1.0], [-0.45, 0.62, 1.0], [0, 0.4, 1.1],
-        [0.45, 0.66, 1.0], [0.9, 0.45, 1.0],
+        [-1.432, 0.412, 1.3], // her snout
+        [-1.332, 0.772, 0.9], [-1.144, 1.076, 0.8], [-0.844, 1.104, 0.8], // brow and ears
+        [-1.14, 0.592, 0.7], // her eye
+        [-0.572, 0.348, 0.8], [-0.16, 0.62, 0.8], [0.892, 0.468, 0.7], // neck and back
+        [1.452, -0.04, 1.1], // rump
+        [1.24, -0.452, 1.0, 1], [1.284, -0.572, 0.7], [0.892, -0.512, 1.2], // haunch and tail
+        [1.22, -0.8, 0.9], [1.448, -0.912, 0.9], [1.14, -1.136, 0.7], // hind feet
+        [-0.208, -0.272, 0.9], [-0.432, -0.128, 0.7], // chest
+        [-0.632, -0.668, 1.0], [0.08, -0.84, 0.9], // front feet
       ],
       polys: [
-        [[-1.4, -0.05], [-1.25, 0.22], [-1.05, 0.35], [-0.9, 0.35], [-0.45, 0.48],
-         [0, 0.4], [0.45, 0.5], [0.9, 0.45], [1.15, 0.25], [1.2, -0.05],
-         [1.0, -0.25], [0.6, -0.32], [0.1, -0.32], [-0.4, -0.3], [-0.85, -0.25],
-         [-1.15, -0.2], [-1.4, -0.05]], // body
-        [[-1.4, -0.05], [-1.58, -0.15]], // trunk
-        [[-1.05, 0.35], [-1.0, 0.55]], // ear
-        [[-0.85, -0.25], [-0.85, -0.9]], [[-0.4, -0.3], [-0.4, -0.95]],
-        [[0.15, -0.32], [0.15, -0.93]], [[0.65, -0.3], [0.68, -0.92]], // legs
+        [[-1.144, 1.076], [-1.092, 0.984], [-1.332, 0.772], [-1.356, 0.568],
+         [-1.432, 0.412]], // ear, brow, and face down to the snout
+        [[-1.092, 0.984], [-0.808, 0.972], [-0.844, 1.104]], // the other ear
+        [[-0.808, 0.972], [-0.16, 0.62], [0.892, 0.468], [1.452, -0.04]], // back
+        [[-1.432, 0.412], [-1.14, 0.592], [-1.136, 0.34]], // eye and cheek
+        [[-1.432, 0.412], [-1.396, 0.368], [-1.132, 0.336], [-0.572, 0.348],
+         [-0.432, -0.128], [-0.208, -0.272]], // jaw and neck to the chest
+        [[-0.208, -0.272], [0.892, -0.512]], // belly
+        [[1.452, -0.04], [1.24, -0.452], [0.892, -0.512]], // haunch
+        [[1.452, -0.04], [1.284, -0.572]], // tail
+        [[0.892, -0.512], [1.22, -0.8], [1.448, -0.912]], // hind legs, trailing
+        [[0.892, -0.512], [0.972, -0.856], [1.14, -1.136]],
+        [[-0.208, -0.272], [-0.632, -0.668]], // front legs
+        [[-0.208, -0.272], [0.08, -0.84]],
       ],
       circles: [],
-      label: [-0.2, 1.35],
+      label: [-0.2, 1.45],
     },
     {
       name: "Guaxu", eng: "the Deer",
-      // on the Milky Way just ahead of the Rhea, walking the same way she
-      // runs — head and antlers toward the lower right, like her beak
+      // traced from Germano Afonso's chart (jornal.usp.br): on the Milky Way
+      // just ahead of the Rhea, leaping the same way she runs — muzzle
+      // raised, antler swept back, all four legs trailing mid-stride
       anchor: [0.86, 0.25], scale: 0.045,
       stars: [
-        [0.85, 0.45, 1.0], [0.3, 0.7, 1.0], [-0.35, 0.6, 1.1],
-        [-0.8, 0.15, 1.0], [-0.45, -0.45, 0.9], [0.25, -0.4, 0.9],
+        [1.421, 0.843, 1.2], [0.975, 0.643, 0.7], // the antler
+        [0.886, 0.561, 1.0], // her head
+        [1.357, 0.436, 0.9], // muzzle
+        [0.918, 0.171, 1.0, 1], [0.489, 0.332, 0.8], // chest
+        [0.221, 0.207, 0.9], [0.243, 0.014, 0.7],
+        [0.296, -0.332, 1.1], [0.779, -0.75, 0.9], // leading leg
+        [0.554, 0.618, 0.7], [0.168, 0.732, 0.9], [-0.632, 0.632, 0.9], // back
+        [-1.161, 0.189, 0.8], [-1.4, 0.1, 0.8], // rump and tail
+        [-1.193, -0.004, 1.0], [-1.189, -0.107, 0.8],
+        [-0.943, -0.136, 1.2], [-0.793, -0.089, 0.8], [-0.171, 0.036, 1.1], // belly
+        [0.029, -0.321, 0.8], [-0.1, -0.689, 0.9], // second leg
+        [-0.768, -0.554, 0.7], [-0.686, -0.911, 0.8], // hind legs
+        [-0.982, -0.464, 0.7], [-0.757, -0.929, 0.8],
       ],
       polys: [
-        [[0.85, 0.45], [0.3, 0.7], [-0.35, 0.6], [-0.8, 0.15], [-0.45, -0.45],
-         [0.25, -0.4], [0.85, 0.45]], // body
-        [[0.85, 0.45], [1.05, 0.85], [1.2, 1.1]], // antlers
-        [[1.05, 0.85], [1.25, 0.95]],
-        [[0.85, 0.45], [0.75, 0.9], [0.65, 1.15]],
-        [[0.75, 0.9], [0.55, 1.0]],
-        [[0.25, -0.4], [0.28, -0.95]], [[-0.45, -0.45], [-0.5, -1.0]], // legs
+        [[0.886, 0.561], [0.975, 0.643], [1.421, 0.843]], // antler
+        [[0.886, 0.561], [1.357, 0.436]], // muzzle
+        [[0.886, 0.561], [0.554, 0.618], [0.168, 0.732], [-0.632, 0.632],
+         [-1.161, 0.189], [-1.4, 0.1]], // back to the tail
+        [[-1.161, 0.189], [-1.193, -0.004], [-1.189, -0.107]], // rump
+        [[-1.189, -0.107], [-0.943, -0.136], [-0.793, -0.089], [-0.171, 0.036],
+         [0.221, 0.207]], // belly
+        [[0.221, 0.207], [0.489, 0.332], [0.918, 0.171], [0.886, 0.561]], // chest and throat
+        [[0.221, 0.207], [0.243, 0.014], [0.296, -0.332], [0.779, -0.75]], // leading leg
+        [[-0.171, 0.036], [0.029, -0.321], [-0.1, -0.689]], // second leg
+        [[-1.189, -0.107], [-0.982, -0.464], [-0.757, -0.929]], // hind legs
+        [[-0.793, -0.089], [-0.768, -0.554], [-0.686, -0.911]],
       ],
       circles: [],
-      label: [0, 1.6],
+      label: [0, 1.2],
     },
     {
       name: "Eixu", eng: "the Wasps’ Nest", western: "Pleiades",
+      // the same cluster that tips the Old Man's plume: the two were named
+      // as separate constellations, so the nest is anchored to that point
+      attach: { to: "Tuya’i", at: [0.6, 0.405] },
       anchor: [0.3, 0.52], scale: 0.03,
       stars: [
         [-0.35, 0.25, 0.8], [0, 0.45, 0.9], [0.35, 0.3, 0.8], [-0.15, -0.05, 0.8],
@@ -585,12 +635,12 @@ function init() {
         [[-1.2, 0.9], [-1.55, 1.2]], // stray wasps
       ],
       circles: [[0, 0, 1.0]], // the nest
-      label: [0.3, -2.0],
+      label: [0.4, 2.1],
     },
     {
       name: "Curuxu", eng: "the Southern Cross",
       // just above and to the right of the Rhea's head, holding it shut
-      anchor: [0.74, 0.44], scale: 0.042,
+      anchor: [0.68, 0.6], scale: 0.042,
       stars: [
         [0.05, 1.0, 1.3], [0, -1.0, 1.5], [-0.75, 0.1, 1.3],
         [0.8, 0.25, 1.1], [0.3, 0.2, 0.6],
@@ -601,24 +651,13 @@ function init() {
       circles: [],
       label: [0.2, 1.7],
     },
-    {
-      name: "Nhanderu", eng: "the Great Father",
-      anchor: [0.22, 0.63], scale: 0.045,
-      stars: [[-1.3, 0.9, 0.7], [1.25, 0.75, 0.7], [1.1, -0.9, 0.6]],
-      polys: [
-        [[-0.2, 0.85], [-0.35, 1.2]], [[0, 0.85], [0, 1.25]],
-        [[0.2, 0.85], [0.35, 1.2]], // feather crown
-        [[0, 0.27], [0, -0.35]], // body
-        [[0, 0.1], [-0.65, -0.05]], [[0, 0.1], [0.7, -0.05]], // arms: the Sun and the Moon
-        [[-0.45, -0.75], [0.45, -0.75]], // his sacred bench
-        [[-0.35, -0.75], [-0.35, -1.0]], [[0.35, -0.75], [0.35, -1.0]],
-        [[0, -0.35], [-0.3, -0.75]], [[0, -0.35], [0.3, -0.75]],
-      ],
-      circles: [[0, 0.55, 0.28], [-0.85, -0.05, 0.16], [0.9, -0.05, 0.16]],
-      holes: [[0, 0, 0.045], [0.1, 0.6, 0.03]],
-      label: [0, -1.75],
-    },
   ];
+
+  // an attached constellation shares a point with its parent (the Wasps'
+  // Nest sits on the Old Man's plume tip), so resolve names to references
+  for (const c of TG_CONSTELLATIONS) {
+    if (c.attach) c.attach.cons = TG_CONSTELLATIONS.find((o) => o.name === c.attach.to);
+  }
 
   const SKY_R = 260;
   const SKY_NDC = { x0: -0.92, xSpan: 1.84, y0: 0.28, ySpan: 0.64 };
@@ -637,6 +676,12 @@ function init() {
 
   // local shape coords -> NDC; y is scaled by aspect so figures stay round
   function consLocalToNdc(c, lx, ly, out) {
+    if (c.attach) {
+      consLocalToNdc(c.attach.cons, c.attach.at[0], c.attach.at[1], out);
+      out.x += lx * c.scale;
+      out.y += ly * c.scale * camera.aspect;
+      return out;
+    }
     out.x = SKY_NDC.x0 + SKY_NDC.xSpan * c.anchor[0] + lx * c.scale;
     out.y = SKY_NDC.y0 + SKY_NDC.ySpan * c.anchor[1] + ly * c.scale * camera.aspect;
     return out;
@@ -732,7 +777,7 @@ function init() {
     for (let i = 0; i < nStars; i++) {
       starSize[i] = c.stars[i][2];
       starPhase[i] = (i * 0.37) % 1;
-      const red = c.stars[i][3] === 1; // red giants: Antares, Betelgeuse, Aldebaran
+      const red = c.stars[i][3] === 1; // reddish stars: Aldebaran and the charts' orange ones
       starTint[i * 3] = red ? 1.0 : 0.87;
       starTint[i * 3 + 1] = red ? 0.62 : 0.93;
       starTint[i * 3 + 2] = red ? 0.45 : 1.0;
@@ -833,8 +878,8 @@ function init() {
     }
   }
 
-  // --- the Milky Way: a faint band the figures live in; the Rhea and
-  //     Nhanderu are punched out of it as dark nebulae ---
+  // --- the Milky Way: a faint band the figures live in; the Rhea is
+  //     punched out of it as a dark nebula ---
   const mwCanvas = document.createElement("canvas");
   mwCanvas.width = 1024;
   mwCanvas.height = 512;
@@ -919,7 +964,7 @@ function init() {
       blob(u, v, 0.01 + rnd() * 0.02, 0.03 + rnd() * 0.03, true);
     }
 
-    // dark nebulae: the Great Rift, the Rhea's body, Nhanderu's shadow
+    // dark nebulae: the Great Rift and the Rhea's body
     ctx.globalCompositeOperation = "destination-out";
     // map through the quad's own NDC extents (see layoutMilkyWay), not the
     // sky panel's, so the dark nebulae land exactly on their figures
@@ -972,7 +1017,7 @@ function init() {
   }
 
   // reveal: hover glow like the ambient stars, plus a slow "attract" cycle
-  // through the seven figures whenever the pointer has been idle a while
+  // through the six figures whenever the pointer has been idle a while
   // (which is also how touch visitors get to see them all)
   const CONS_RANGE = 0.5; // NDC radius around the cursor
   const CONS_IDLE_MS = 9000;
