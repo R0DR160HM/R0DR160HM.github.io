@@ -6,7 +6,7 @@
     <title>Rodrigo Heinzen de Moraes — Software Engineer</title>
     <meta
       name="description"
-      content="Rodrigo Heinzen de Moraes is a software engineer with 6+ years of experience building web applications, distributed systems and AI-powered tools with Angular, Gleam, Erlang and Python."
+      content="Rodrigo Heinzen de Moraes is a software engineer with 6+ years of experience building web applications, distributed systems and AI-powered tools with Hive, Gleam, Angular, TypeScript and Python."
     />
     <link rel="canonical" href="https://rhm.dev/" />
 
@@ -19,7 +19,7 @@
     />
     <meta
       property="og:description"
-      content="Rodrigo Heinzen de Moraes is a software engineer crafting web applications, distributed systems and AI-powered tools."
+      content="Rodrigo Heinzen de Moraes is a software engineer working on web applications, distributed systems and language design."
     />
     <meta property="og:site_name" content="Rodrigo Heinzen de Moraes" />
     <meta name="twitter:card" content="summary" />
@@ -29,7 +29,7 @@
     />
     <meta
       name="twitter:description"
-      content="Rodrigo Heinzen de Moraes is a software engineer crafting web applications, distributed systems and AI-powered tools."
+      content="Rodrigo Heinzen de Moraes is a software engineer working on web applications, distributed systems and language design."
     />
 
     <!-- Structured data: tells search engines who this page is about -->
@@ -43,6 +43,8 @@
         "jobTitle": "Software Engineer",
         "email": "mailto:rodrigo.heinzen.moraes@gmail.com",
         "knowsAbout": [
+          "Hive",
+          "Hive Programming Language",
           "Software Engineering",
           "Web Development",
           "Distributed Systems",
@@ -76,16 +78,21 @@
       }
 
       :root {
-        --gold: #fbbf24;
-        --gold-soft: rgba(251, 191, 36, 0.35);
+        /* channels kept loose so every gold tint below has one source of truth */
+        --gold-rgb: 251 191 36;
+        --gold: rgb(var(--gold-rgb));
+        --gold-soft: rgb(var(--gold-rgb) / 0.35);
+        --cyan: #67e8f9;
         --ink: #f3f4f6;
         --ink-mid: #d1d5db;
         --ink-dim: #9ca3af;
-        --glass-border: rgba(255, 255, 255, 0.14);
-      }
-
-      html {
-        scroll-behavior: smooth;
+        --card-ink: #aab6c6;
+        --chip-ink: #bcd3ea;
+        --chip-bg: rgb(100 200 255 / 0.08);
+        --chip-border: rgb(148 180 220 / 0.25);
+        --glass-border: rgb(255 255 255 / 0.14);
+        /* text with no card behind it sits on a moving sea; this is its backing */
+        --text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
       }
 
       body {
@@ -95,8 +102,8 @@
           linear-gradient(to bottom, #030712 0%, #04101d 55%, #08192b 100%)
           fixed;
         color: var(--ink);
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        min-height: 100%;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
       }
 
       /* Lighthouse beam flash — brightens the whole page when the beam
@@ -158,16 +165,33 @@
       }
 
       /* ---------- Hero (left column) ---------- */
+      /* the hero copy has no card behind it, so it carries its own backing
+         against wave crests and the lighthouse beam */
+      .hero-section {
+        text-shadow: var(--text-shadow);
+      }
+
       .hero-title {
         font-size: clamp(2rem, 4.5vw, 3.4rem);
         font-weight: bold;
-        background: linear-gradient(45deg, var(--gold), aqua, var(--gold));
+        background: linear-gradient(45deg, var(--gold), var(--cyan), var(--gold));
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
+        /* the gradient is the glyph here; a shadow behind it only smears */
+        text-shadow: none;
         background-size: 200% 100%;
         line-height: 1.12;
         margin-bottom: 0.5rem;
+      }
+
+      /* forced colors strips the gradient, which would leave a transparent
+         fill over nothing at all - put the glyphs back */
+      @media (forced-colors: active) {
+        .hero-title {
+          background: none;
+          -webkit-text-fill-color: currentColor;
+        }
       }
 
       .hero-subtitle {
@@ -211,29 +235,9 @@
       .btn-custom:hover,
       .btn-custom:focus-visible {
         border-color: var(--gold);
-        background: rgba(251, 191, 36, 0.1);
+        background: rgb(var(--gold-rgb) / 0.1);
         color: var(--gold);
         transform: translateY(-2px);
-      }
-
-      /* Stats */
-      .stats-section {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.9rem 2.5rem;
-        margin-bottom: 1.75rem;
-      }
-
-      .stat-number {
-        font-size: clamp(1.25rem, 3vw, 1.6rem);
-        font-weight: bold;
-        color: var(--gold);
-        line-height: 1.2;
-      }
-
-      .stat-label {
-        font-size: clamp(0.75rem, 1.6vw, 0.9rem);
-        color: var(--ink-dim);
       }
 
       /* Skills / tech stack */
@@ -242,7 +246,7 @@
         font-weight: 600;
         letter-spacing: 0.14em;
         text-transform: uppercase;
-        color: rgba(251, 191, 36, 0.75);
+        color: rgb(var(--gold-rgb) / 0.75);
         margin-bottom: 0.6rem;
       }
 
@@ -253,15 +257,20 @@
         max-width: 34rem;
       }
 
+      /* one chip, two sizes: skills in the hero, tags on the cards */
+      .skill-chips span,
+      .card-tags span {
+        letter-spacing: 0.02em;
+        color: var(--chip-ink);
+        background: var(--chip-bg);
+        border: 1px solid var(--chip-border);
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+
       .skill-chips span {
         font-size: 0.8rem;
-        letter-spacing: 0.02em;
-        color: #bcd3ea;
-        background: rgba(100, 200, 255, 0.08);
-        border: 1px solid rgba(148, 180, 220, 0.25);
-        border-radius: 999px;
         padding: 0.3rem 0.8rem;
-        white-space: nowrap;
       }
 
       /* ---------- Projects (right column) ---------- */
@@ -269,26 +278,11 @@
         font-size: clamp(1.3rem, 2.6vw, 1.7rem);
         font-weight: 600;
         color: var(--gold);
-        margin-bottom: 0.25rem;
-      }
-
-      .projects-hint {
-        display: block;
-        font-size: 0.85rem;
-        color: var(--ink-dim);
-        margin-bottom: 1.25rem;
-      }
-
-      .project-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: clamp(0.8rem, 1.8vw, 1.1rem);
-      }
-
-      @media (min-width: 576px) {
-        .project-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
+        /* the cube centres itself in this column, so the heading centres too
+           and the two share an axis */
+        text-align: center;
+        /* carries the gap the removed hint line used to open up */
+        margin-bottom: 1.5rem;
       }
 
       /* whole card is one link — big touch target, no nested anchors */
@@ -298,18 +292,21 @@
         gap: 0.55rem;
         padding: clamp(0.9rem, 2vw, 1.2rem);
         border-radius: 0.9rem;
+        /* the gradient absorbs what brightness() used to add, leaving the
+           backdrop filter one pass instead of two over a canvas that
+           repaints every frame */
         background: linear-gradient(
           160deg,
-          rgba(130, 170, 220, 0.13),
-          rgba(20, 40, 70, 0.28)
+          rgba(130, 170, 220, 0.16),
+          rgba(20, 40, 70, 0.32)
         );
         border: 1px solid var(--glass-border);
-        backdrop-filter: blur(6px) brightness(1.05);
-        -webkit-backdrop-filter: blur(6px) brightness(1.05);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
         box-shadow: 0 15px 35px -18px rgba(0, 0, 0, 0.55);
         text-decoration: none;
         color: inherit;
-        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+        text-shadow: var(--text-shadow);
         transition: border-color 0.2s ease, transform 0.2s ease,
           background 0.2s ease;
       }
@@ -320,8 +317,8 @@
         transform: translateY(-4px);
         background: linear-gradient(
           160deg,
-          rgba(130, 170, 220, 0.18),
-          rgba(25, 48, 82, 0.32)
+          rgba(130, 170, 220, 0.21),
+          rgba(25, 48, 82, 0.36)
         );
       }
 
@@ -346,8 +343,8 @@
         justify-content: center;
         font-size: 1.05rem;
         color: var(--gold);
-        background: rgba(251, 191, 36, 0.12);
-        border: 1px solid rgba(251, 191, 36, 0.25);
+        background: rgb(var(--gold-rgb) / 0.12);
+        border: 1px solid rgb(var(--gold-rgb) / 0.25);
       }
 
       .card-name {
@@ -359,10 +356,9 @@
       }
 
       .card-desc {
-        color: #aab6c6;
+        color: var(--card-ink);
         font-size: clamp(0.82rem, 1.6vw, 0.92rem);
         line-height: 1.45;
-        flex-grow: 1;
       }
 
       .card-tags {
@@ -373,30 +369,325 @@
 
       .card-tags span {
         font-size: 0.7rem;
-        letter-spacing: 0.02em;
-        color: #bcd3ea;
-        background: rgba(100, 200, 255, 0.08);
-        border: 1px solid rgba(148, 180, 220, 0.25);
-        border-radius: 999px;
         padding: 0.18rem 0.6rem;
-        white-space: nowrap;
       }
 
+      /* pinned to the bottom, so cards with descriptions of unequal length
+         still line their call-to-action up across the row */
       .card-visit {
         display: inline-flex;
         align-items: center;
         gap: 0.4rem;
+        margin-top: auto;
         font-size: 0.82rem;
         font-weight: 500;
         color: var(--gold);
         opacity: 0.85;
-        transition: opacity 0.2s ease, gap 0.2s ease;
+        transition: opacity 0.2s ease;
+      }
+
+      /* the arrow slides on the compositor; animating `gap` relaid out the
+         whole card on every frame of the hover */
+      .card-visit i {
+        transition: transform 0.2s ease;
       }
 
       .project-card:hover .card-visit,
       .project-card:focus-visible .card-visit {
         opacity: 1;
-        gap: 0.7rem;
+      }
+
+      .project-card:hover .card-visit i,
+      .project-card:focus-visible .card-visit i {
+        transform: translateX(0.3rem);
+      }
+
+      /* ---------- Projects cube ----------
+         The four cards are the four side faces of a cube that turns on its
+         own and under the pointer (cube.js). A cube of side S sweeps a
+         diagonal of S x 1.41 as it turns, so the size is capped per
+         breakpoint against the space the column actually has - otherwise it
+         would overflow the page halfway through every quarter turn. */
+      .cube-stage {
+        --cube-size: min(20rem, 58vw);
+        --cube-half: calc(var(--cube-size) / 2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.9rem;
+      }
+
+      @media (min-width: 576px) {
+        .cube-stage {
+          --cube-size: min(21rem, 42vw);
+        }
+      }
+
+      @media (min-width: 992px) {
+        .cube-stage {
+          --cube-size: min(21rem, 26vw);
+        }
+      }
+
+      .cube-viewport {
+        /* translateZ brings the front face half a cube nearer, so perspective
+           paints it larger than its box; reserve that or it laps over the
+           heading above and the dots below */
+        width: calc(var(--cube-size) * 1.18);
+        height: calc(var(--cube-size) * 1.18);
+        display: grid;
+        place-items: center;
+        perspective: 1600px;
+        /* a vertical swipe still scrolls the page; only sideways turns it */
+        touch-action: pan-y;
+        cursor: grab;
+      }
+
+      .cube-viewport.is-grabbing {
+        cursor: grabbing;
+      }
+
+      .cube {
+        position: relative;
+        width: var(--cube-size);
+        height: var(--cube-size);
+        transform-style: preserve-3d;
+        transform: rotateX(-7deg) rotateY(var(--rot, 0deg));
+        will-change: transform;
+      }
+
+      .cube-face {
+        position: absolute;
+        inset: 0;
+        backface-visibility: hidden;
+        /* a drag across a face must turn the cube, not start a native link
+           drag or sweep a text selection through the card */
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-user-drag: none;
+        justify-content: center;
+        /* the three faces turned away would still sit under the pointer */
+        pointer-events: none;
+        transform: rotateY(var(--face-rot)) translateZ(var(--cube-half));
+        /* an opaque face keeps the inside of the box out of sight; with
+           nothing visible behind it, backdrop-filter has nothing to blur
+           and only costs a pass inside a preserve-3d context */
+        background: linear-gradient(
+            160deg,
+            rgba(130, 170, 220, 0.16),
+            rgba(20, 40, 70, 0.32)
+          ),
+          rgba(5, 14, 28, 0.94);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        padding: clamp(0.8rem, calc(var(--cube-size) * 0.06), 1.2rem);
+      }
+
+      .cube-face.is-front {
+        pointer-events: auto;
+      }
+
+      /* a square face is far taller than the content; the flat card pinned
+         its link to the bottom edge, which here would strand it */
+      .cube-face .card-visit {
+        margin-top: 0;
+      }
+
+      .cube-face:nth-child(1) {
+        --face-rot: 0deg;
+      }
+      .cube-face:nth-child(2) {
+        --face-rot: 90deg;
+      }
+      .cube-face:nth-child(3) {
+        --face-rot: 180deg;
+      }
+      .cube-face:nth-child(4) {
+        --face-rot: 270deg;
+      }
+
+      /* Both of these must outrank `.project-card:hover`, which is a class
+         plus a pseudo-class just like `.cube-face:hover` -- at equal
+         specificity the later rule wins, and that one sits further down the
+         sheet. Qualifying with both classes settles it by specificity
+         instead of by source order. */
+      .cube-face.project-card:hover,
+      .cube-face.project-card:focus-visible {
+        /* the flat card's lift would replace the face's own 3D placement and
+           drop it into the middle of the cube */
+        transform: rotateY(var(--face-rot)) translateZ(var(--cube-half));
+        /* and its hover background has no opaque base, so the face would turn
+           translucent and show the inside of the box */
+        background: linear-gradient(
+            160deg,
+            rgba(130, 170, 220, 0.21),
+            rgba(25, 48, 82, 0.36)
+          ),
+          rgba(5, 14, 28, 0.94);
+      }
+
+      /* type scales with the cube so a face stays readable at every size */
+      .cube-face .card-icon {
+        width: clamp(1.8rem, calc(var(--cube-size) * 0.115), 2.4rem);
+        height: clamp(1.8rem, calc(var(--cube-size) * 0.115), 2.4rem);
+      }
+
+      .cube-face .card-name {
+        font-size: clamp(0.95rem, calc(var(--cube-size) * 0.062), 1.25rem);
+      }
+
+      .cube-face .card-desc {
+        font-size: clamp(0.72rem, calc(var(--cube-size) * 0.043), 0.92rem);
+      }
+
+      .cube-face .card-tags span {
+        font-size: clamp(0.6rem, calc(var(--cube-size) * 0.032), 0.7rem);
+      }
+
+      .cube-face .card-visit {
+        font-size: clamp(0.7rem, calc(var(--cube-size) * 0.038), 0.82rem);
+      }
+
+      /* closes the box, so a tilted cube is not an open crate */
+      .cube-cap {
+        position: absolute;
+        inset: 0;
+        border-radius: 0.9rem;
+        border: 1px solid var(--glass-border);
+        background: linear-gradient(
+          160deg,
+          rgba(20, 40, 70, 0.6),
+          rgba(5, 14, 28, 0.85)
+        );
+        backface-visibility: hidden;
+      }
+
+      .cube-cap-top {
+        transform: rotateX(90deg) translateZ(var(--cube-half));
+      }
+
+      .cube-cap-bottom {
+        transform: rotateX(-90deg) translateZ(var(--cube-half));
+      }
+
+      .cube-dots {
+        display: flex;
+        gap: 0.35rem;
+      }
+
+      .cube-dot {
+        width: 1.5rem;
+        height: 1.5rem;
+        padding: 0;
+        border: 0;
+        background: none;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+      }
+
+      .cube-dot::before {
+        content: "";
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 999px;
+        border: 1px solid var(--chip-border);
+        transition: background 0.2s ease, border-color 0.2s ease;
+      }
+
+      .cube-dot:hover::before {
+        border-color: var(--gold);
+      }
+
+      .cube-dot[aria-current="true"]::before {
+        background: var(--gold);
+        border-color: var(--gold);
+      }
+
+      /* Motion off: no cube at all. The same four cards fall back to the flat
+         grid they used to be, a size down, and cube.js stands aside. */
+      @media (prefers-reduced-motion: reduce) {
+        .cube-stage {
+          display: block;
+        }
+
+        .cube-viewport {
+          width: auto;
+          height: auto;
+          perspective: none;
+          touch-action: auto;
+          cursor: auto;
+        }
+
+        .cube {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+          gap: 0.7rem;
+          width: auto;
+          height: auto;
+          transform: none;
+          transform-style: flat;
+          will-change: auto;
+        }
+
+        /* matches the qualified cube rule above, so the flat card gets its
+           ordinary hover behaviour back */
+        .cube-face.project-card:hover,
+        .cube-face.project-card:focus-visible {
+          transform: translateY(-4px);
+          background: linear-gradient(
+            160deg,
+            rgba(130, 170, 220, 0.21),
+            rgba(25, 48, 82, 0.36)
+          );
+        }
+
+        .cube-face {
+          position: static;
+          transform: none;
+          pointer-events: auto;
+          user-select: auto;
+          -webkit-user-select: auto;
+          backface-visibility: visible;
+          padding: 0.8rem;
+          gap: 0.45rem;
+          background: linear-gradient(
+            160deg,
+            rgba(130, 170, 220, 0.16),
+            rgba(20, 40, 70, 0.32)
+          );
+          backdrop-filter: blur(6px);
+          -webkit-backdrop-filter: blur(6px);
+        }
+
+        .cube-face .card-icon {
+          width: 1.9rem;
+          height: 1.9rem;
+          font-size: 0.85rem;
+          border-radius: 0.5rem;
+        }
+
+        .cube-face .card-name {
+          font-size: 0.98rem;
+        }
+
+        .cube-face .card-desc {
+          font-size: 0.78rem;
+        }
+
+        .cube-face .card-tags span {
+          font-size: 0.62rem;
+          padding: 0.12rem 0.45rem;
+        }
+
+        .cube-face .card-visit {
+          font-size: 0.74rem;
+        }
+
+        .cube-cap,
+        .cube-dots {
+          display: none;
+        }
       }
 
       /* ---------- Motion: strictly opt-in ----------
@@ -423,17 +714,16 @@
         .fade-rise.d3 {
           animation-delay: 0.45s;
         }
-        .fade-rise.d4 {
-          animation-delay: 0.6s;
-        }
       }
 
+      /* background-size is 200% 100%, so only x has anywhere to travel -
+         the old `100% 100%` animated a dimension with zero range */
       @keyframes gradient-title {
         0% {
           background-position: 0% 0%;
         }
         50% {
-          background-position: 100% 100%;
+          background-position: 100% 0%;
         }
         100% {
           background-position: 0% 0%;
@@ -451,44 +741,53 @@
         .btn-custom:hover,
         .btn-custom:focus-visible,
         .project-card:hover,
-        .project-card:focus-visible {
+        .project-card:focus-visible,
+        .project-card:hover .card-visit i,
+        .project-card:focus-visible .card-visit i {
           transform: none;
         }
       }
 
-      /* Tupi-Guarani constellations hint */
+      /* Tupi-Guarani constellations hint. Two things were wrong with it:
+         display:none below 992px hid it on exactly the devices that cannot
+         hover, and position:fixed let it sit on top of the bottom cards
+         whenever the page was tall enough to scroll. It is a flow item now,
+         parked in the corner of the layout rather than of the viewport. */
       .sky-hint {
-        position: fixed;
-        right: 1.2rem;
-        bottom: 0.85rem;
-        z-index: 11;
+        grid-column: 1 / -1;
+        justify-self: start;
         max-width: 21rem;
         font-size: 0.72rem;
         line-height: 1.4;
         color: var(--ink-dim);
-        text-align: right;
         opacity: 0.85;
         pointer-events: none;
-        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+        text-shadow: var(--text-shadow);
       }
 
-      @media (max-width: 991px) {
+      @media (min-width: 992px) {
         .sky-hint {
-          display: none;
+          justify-self: end;
+          text-align: right;
+          /* claw back most of the layout's row gap so this reads as a
+             caption under the content, not a stranded paragraph */
+          margin-top: calc(1.5rem - clamp(2rem, 5vw, 4rem));
         }
       }
 
       /* Keyboard focus */
+      /* the outline already follows each element's own border-radius; the
+         flat 0.25rem that used to be here re-shaped buttons and cards the
+         moment they took focus */
       :focus-visible {
         outline: 2px solid var(--gold);
         outline-offset: 3px;
-        border-radius: 0.25rem;
       }
 
       /* Selection */
       ::selection {
-        background: rgba(251, 191, 36, 0.3);
-        color: aqua;
+        background-color: rgb(var(--gold-rgb) / 0.3);
+        color: var(--ink);
       }
     </style>
   </head>
@@ -510,8 +809,9 @@
           </h1>
           <h2 class="hero-subtitle fade-rise d1">Software Engineer</h2>
           <p class="hero-description fade-rise d1">
-            Crafting digital experiences with modern technologies. Always
-            trying to build powerful, innovative and user-friendly solutions.
+            Six years building web applications and distributed systems.
+            Lately I’ve been drawn to language design — type systems,
+            compilers, and making concurrency something you can reason about.
           </p>
 
           <div class="social-links fade-rise d2">
@@ -542,20 +842,10 @@
             </a>
           </div>
 
-          <div class="stats-section fade-rise d3">
-            <div class="stat-item">
-              <div class="stat-number">Over 6</div>
-              <div class="stat-label">Years of experience</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-number">Multiple projects</div>
-              <div class="stat-label">Completed from start to finish</div>
-            </div>
-          </div>
-
-          <div class="skills-section fade-rise d4">
+          <div class="skills-section fade-rise d3">
             <h3 class="section-label">Technologies I work with</h3>
             <div class="skill-chips">
+              <span>Hive</span>
               <span>Gleam</span>
               <span>Angular</span>
               <span>TypeScript</span>
@@ -576,126 +866,155 @@
         <!-- Right: projects -->
         <section class="projects-section">
           <div class="fade-rise d2">
-            <h3 class="projects-title">Recent projects I'm proud of</h3>
-            <small class="projects-hint">
-              Only showing publicly available information. ;)
-            </small>
+            <h3 class="projects-title">Projects I'm proud of</h3>
           </div>
 
-          <div class="project-grid fade-rise d3">
-            <a
-              class="project-card"
-              href="https://hive-lang.run"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div class="card-head">
-                <div class="card-icon">
-                  <i class="fas fa-cubes" aria-hidden="true"></i>
-                </div>
-                <span class="card-name">Hive</span>
-              </div>
-              <p class="card-desc">
-                High level safety-first language built for distributed, highly concurrent systems.
-              </p>
-              <div class="card-tags">
-                <span>Go</span>
-                <span>Compilers</span>
-                <span>Type Systems</span>
-              </div>
-              <span class="card-visit">
-                Read the tour
-                <i class="fas fa-arrow-right" aria-hidden="true"></i>
-              </span>
-            </a>
+          <div class="cube-stage fade-rise d3">
+            <div class="cube-viewport">
+              <div class="cube">
+                <a
+                  class="project-card cube-face"
+                  href="https://hive-lang.run"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <div class="card-head">
+                    <div class="card-icon">
+                      <i class="fas fa-cubes" aria-hidden="true"></i>
+                    </div>
+                    <span class="card-name">Hive</span>
+                  </div>
+                  <p class="card-desc">
+                    High-level safety-first language built for distributed, highly concurrent systems.
+                  </p>
+                  <div class="card-tags">
+                    <span>Functional Programming</span>
+                    <span>Compilers</span>
+                    <span>Type Systems</span>
+                  </div>
+                  <span class="card-visit">
+                    Read the tour
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                  </span>
+                </a>
 
-            <a
-              class="project-card"
-              href="https://github.com/R0DR160HM/webproxy_server"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div class="card-head">
-                <div class="card-icon">
-                  <i class="fas fa-circle-nodes" aria-hidden="true"></i>
-                </div>
-                <span class="card-name">WebProxy</span>
-              </div>
-              <p class="card-desc">Web-based distributed cache engine.</p>
-              <div class="card-tags">
-                <span>Gleam</span>
-                <span>ETS</span>
-                <span>IndexedDB</span>
-                <span>WebSockets</span>
-              </div>
-              <span class="card-visit">
-                View on GitHub
-                <i class="fas fa-arrow-right" aria-hidden="true"></i>
-              </span>
-            </a>
+                <a
+                  class="project-card cube-face"
+                  href="https://github.com/R0DR160HM/webproxy_server"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <div class="card-head">
+                    <div class="card-icon">
+                      <i class="fas fa-circle-nodes" aria-hidden="true"></i>
+                    </div>
+                    <span class="card-name">WebProxy</span>
+                  </div>
+                  <p class="card-desc">Web-based distributed cache engine.</p>
+                  <div class="card-tags">
+                    <span>Gleam</span>
+                    <span>ETS</span>
+                    <span>IndexedDB</span>
+                    <span>WebSockets</span>
+                  </div>
+                  <span class="card-visit">
+                    View on GitHub
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                  </span>
+                </a>
 
-            <a
-              class="project-card"
-              href="https://hex.pm/packages/database"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div class="card-head">
-                <div class="card-icon">
-                  <i class="fas fa-database" aria-hidden="true"></i>
-                </div>
-                <span class="card-name">Database</span>
-              </div>
-              <p class="card-desc">
-                DETS/ETS-based embedded database for Gleam.
-              </p>
-              <div class="card-tags">
-                <span>Gleam</span>
-                <span>Erlang</span>
-                <span>DETS</span>
-              </div>
-              <span class="card-visit">
-                View on Hex
-                <i class="fas fa-arrow-right" aria-hidden="true"></i>
-              </span>
-            </a>
+                <a
+                  class="project-card cube-face"
+                  href="https://hex.pm/packages/database"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <div class="card-head">
+                    <div class="card-icon">
+                      <i class="fas fa-database" aria-hidden="true"></i>
+                    </div>
+                    <span class="card-name">Database</span>
+                  </div>
+                  <p class="card-desc">
+                    DETS/ETS-based embedded database for Gleam.
+                  </p>
+                  <div class="card-tags">
+                    <span>Gleam</span>
+                    <span>Erlang</span>
+                    <span>DETS</span>
+                  </div>
+                  <span class="card-visit">
+                    View on Hex
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                  </span>
+                </a>
 
-            <a
-              class="project-card"
-              href="https://github.com/R0DR160HM/Slopmachine"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div class="card-head">
-                <div class="card-icon">
-                  <i class="fas fa-robot" aria-hidden="true"></i>
-                </div>
-                <span class="card-name">Slopmachine</span>
+                <a
+                  class="project-card cube-face"
+                  href="https://github.com/R0DR160HM/Slopmachine"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <div class="card-head">
+                    <div class="card-icon">
+                      <i class="fas fa-robot" aria-hidden="true"></i>
+                    </div>
+                    <span class="card-name">Slopmachine</span>
+                  </div>
+                  <p class="card-desc">
+                    Toy research-focused general-purpose AI agent that turned out
+                    surprisingly functional.
+                  </p>
+                  <div class="card-tags">
+                    <span>Python</span>
+                    <span>Ollama</span>
+                    <span>ddgs</span>
+                    <span>tool-calling</span>
+                  </div>
+                  <span class="card-visit">
+                    View on GitHub
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                  </span>
+                </a>
+                <div class="cube-cap cube-cap-top" aria-hidden="true"></div>
+                <div
+                  class="cube-cap cube-cap-bottom"
+                  aria-hidden="true"
+                ></div>
               </div>
-              <p class="card-desc">
-                Toy research-focused general-purpose AI agent that turned out
-                surprisingly functional.
-              </p>
-              <div class="card-tags">
-                <span>Python</span>
-                <span>Ollama</span>
-                <span>ddgs</span>
-                <span>tool-calling</span>
-              </div>
-              <span class="card-visit">
-                View on GitHub
-                <i class="fas fa-arrow-right" aria-hidden="true"></i>
-              </span>
-            </a>
+            </div>
+            <div class="cube-dots">
+              <button
+                type="button"
+                class="cube-dot"
+                aria-label="Show Hive"
+              ></button>
+              <button
+                type="button"
+                class="cube-dot"
+                aria-label="Show WebProxy"
+              ></button>
+              <button
+                type="button"
+                class="cube-dot"
+                aria-label="Show Database"
+              ></button>
+              <button
+                type="button"
+                class="cube-dot"
+                aria-label="Show Slopmachine"
+              ></button>
+            </div>
           </div>
         </section>
+
+        <p class="sky-hint">
+          Six Tupi-Guarani constellations are hidden in the sky above. Sweep
+          across the stars to find them, or wait and they will reveal
+          themselves one by one.
+        </p>
       </div>
     </main>
-
-    <p class="sky-hint">
-      The sky above holds six Tupi-Guarani constellations.
-      Drift your pointer through the stars to find them.
-    </p>
 
     <script type="importmap">
       {
@@ -705,5 +1024,6 @@
       }
     </script>
     <script type="module" src="ocean.js"></script>
+    <script type="module" src="cube.js"></script>
   </body>
 </html>
