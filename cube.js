@@ -118,18 +118,23 @@ function setup() {
     startAngle = angle;
     startTime = performance.now();
     viewport.classList.add("is-grabbing");
-    // a pointer that is already gone throws here rather than returning
-    try {
-      viewport.setPointerCapture(e.pointerId);
-    } catch (err) {
-      /* carry on without capture; pointermove still reaches the viewport */
-    }
   });
 
   viewport.addEventListener("pointermove", (e) => {
     if (!dragging) return;
     const dx = e.clientX - startX;
     dragTravel = Math.max(dragTravel, Math.abs(dx));
+    // capture only once this is plainly a drag: a captured pointer's click is
+    // retargeted to the viewport, so capturing on pointerdown would keep an
+    // ordinary click from ever reaching the face's link
+    if (dragTravel > DRAG_SLOP && !viewport.hasPointerCapture(e.pointerId)) {
+      // a pointer that is already gone throws here rather than returning
+      try {
+        viewport.setPointerCapture(e.pointerId);
+      } catch (err) {
+        /* carry on without capture; pointermove still reaches the viewport */
+      }
+    }
     angle = startAngle + dx * DEG_PER_PX;
     apply();
   });
