@@ -189,6 +189,11 @@ function init() {
   const cameraBase = new THREE.Vector3(0, 5.5, 14);
   camera.position.copy(cameraBase);
   camera.lookAt(0, 0, -40);
+  // the constellations and the Milky Way are laid out through this camera,
+  // which never moves, so the page can fly the real one around (below)
+  // without dragging the sky along with it
+  const layoutCamera = camera.clone();
+  layoutCamera.updateMatrixWorld();
 
   // --- ripple simulation (ping-pong render targets) ---
   const rtOptions = {
@@ -505,7 +510,7 @@ function init() {
       circles: [],
       holes: [[-0.415, 1.405, 0.02], [-0.89, 0.42, 0.022], [-0.244, -0.098, 0.028],
         [0.146, -0.683, 0.03], [0.585, -0.854, 0.026]],
-      label: [-1.2, 1.7],
+      label: [-2.7, 1.25], // left of her head, clear of the Cross's arm
     },
     {
       name: "Tuya’i", eng: "the Old Man",
@@ -551,7 +556,7 @@ function init() {
       // (jornal.usp.br): she walks the far end of the Milky Way, low by the
       // horizon — snout on the bright star by the nebula, ears pricked,
       // hind legs trailing behind her
-      anchor: [0.985, 0.09], scale: 0.05,
+      anchor: [0.95, 0.09], scale: 0.05, // in from the edge, so the sky view never clips her tail
       stars: [
         [-1.432, 0.412, 1.3], // her snout
         [-1.332, 0.772, 0.9], [-1.144, 1.076, 0.8], [-0.844, 1.104, 0.8], // brow and ears
@@ -661,12 +666,34 @@ function init() {
 
   const SKY_R = 260;
   const SKY_NDC = { x0: -0.92, xSpan: 1.84, y0: 0.28, ySpan: 0.64 };
+  // the Milky Way's quad, in the same NDC as the panel
+  const MW_QUAD = { y0: 0.24, y1: 0.96 };
+  // A portrait screen is too narrow for the figures side by side, so there
+  // they stack in three rows over a taller stretch of sky (the page's sky
+  // view tilts up far enough to show all of it) and grow to a size the eye
+  // can read. Anything not given here keeps its landscape value.
+  const PORTRAIT_SKY = {
+    "Guyra Nhandu": { anchor: [0.55, 0.78], scale: 0.22, label: [2.4, 0.3] },
+    Curuxu: { anchor: [0.66, 0.98], scale: 0.16 },
+    "Tuya’i": { anchor: [0.42, 0.45], scale: 0.6 },
+    Eixu: { scale: 0.13 },
+    Guaxu: { anchor: [0.25, 0.12], scale: 0.22 },
+    "Tapi’i": { anchor: [0.75, 0.12], scale: 0.2 },
+  };
+  let portraitSky = false;
+
+  function fitSkyPanel() {
+    portraitSky = layoutCamera.aspect < 0.8;
+    SKY_NDC.y0 = portraitSky ? 0.4 : 0.28;
+    SKY_NDC.ySpan = portraitSky ? 1.2 : 0.64;
+    MW_QUAD.y1 = portraitSky ? 1.62 : 0.96;
+  }
   const consRaycaster = new THREE.Raycaster();
   const consNdcTmp = new THREE.Vector2();
 
   function ndcToDome(x, y, out) {
     consNdcTmp.set(x, y);
-    consRaycaster.setFromCamera(consNdcTmp, camera);
+    consRaycaster.setFromCamera(consNdcTmp, layoutCamera);
     const o = consRaycaster.ray.origin;
     const d = consRaycaster.ray.direction;
     const b = o.dot(d);
@@ -676,14 +703,17 @@ function init() {
 
   // local shape coords -> NDC; y is scaled by aspect so figures stay round
   function consLocalToNdc(c, lx, ly, out) {
+    const p = (portraitSky && PORTRAIT_SKY[c.name]) || c;
+    const scale = p.scale || c.scale;
     if (c.attach) {
       consLocalToNdc(c.attach.cons, c.attach.at[0], c.attach.at[1], out);
-      out.x += lx * c.scale;
-      out.y += ly * c.scale * camera.aspect;
+      out.x += lx * scale;
+      out.y += ly * scale * layoutCamera.aspect;
       return out;
     }
-    out.x = SKY_NDC.x0 + SKY_NDC.xSpan * c.anchor[0] + lx * c.scale;
-    out.y = SKY_NDC.y0 + SKY_NDC.ySpan * c.anchor[1] + ly * c.scale * camera.aspect;
+    const anchor = p.anchor || c.anchor;
+    out.x = SKY_NDC.x0 + SKY_NDC.xSpan * anchor[0] + lx * scale;
+    out.y = SKY_NDC.y0 + SKY_NDC.ySpan * anchor[1] + ly * scale * layoutCamera.aspect;
     return out;
   }
 
@@ -719,6 +749,18 @@ function init() {
   // English (or traditional Western) name leads; the Tupi name — and for
   // the Pleiades its translation too — follows dimmer
   function makeConsLabel(leading, rest) {
+    const sprite = new THREE.Sprite(
+      new THREE.SpriteMaterial({
+        transparent: true,
+        depthWrite: false,
+        opacity: 0,
+      })
+    );
+    paintConsLabel(sprite, leading, rest);
+    return sprite;
+  }
+
+  function paintConsLabel(sprite, leading, rest) {
     const c = document.createElement("canvas");
     const ctx = c.getContext("2d");
     const fontLead = '600 40px "Segoe UI", Tahoma, sans-serif';
@@ -737,18 +779,11 @@ function init() {
     ctx.font = fontRest;
     ctx.fillStyle = "rgba(190, 202, 218, 0.85)";
     ctx.fillText(restText, 12 + wLead, 30);
-    const texture = new THREE.CanvasTexture(c);
-    const sprite = new THREE.Sprite(
-      new THREE.SpriteMaterial({
-        map: texture,
-        transparent: true,
-        depthWrite: false,
-        opacity: 0,
-      })
-    );
+    if (sprite.material.map) sprite.material.map.dispose();
+    sprite.material.map = new THREE.CanvasTexture(c);
+    sprite.material.needsUpdate = true;
     const h = 5.2;
     sprite.scale.set(h * (c.width / c.height), h, 1);
-    return sprite;
   }
 
   // expand circles into polylines once, so layout only walks stars + polys
@@ -833,6 +868,7 @@ function init() {
 
     consItems.push({
       c,
+      id: c.name.toLowerCase().normalize("NFD").replace(/[^a-z]+/g, "-").replace(/^-|-$/g, ""),
       starPosAttr,
       linePosAttr,
       starMat,
@@ -843,7 +879,20 @@ function init() {
     });
   }
 
+  // names in the page's language: [leading, [rest]] per figure id
+  function relabel(labels, redraw) {
+    if (!labels) return;
+    for (const item of consItems) {
+      const l = labels[item.id];
+      if (l) paintConsLabel(item.label, l[0], l[1]);
+    }
+    if (redraw && reducedMotion) renderFrame();
+  }
+  window.addEventListener("lang:change", (e) => relabel(e.detail && e.detail.sky, true));
+  if (window.siteI18n) relabel(window.siteI18n.sky(), false);
+
   function layoutConstellations() {
+    fitSkyPanel();
     for (const item of consItems) {
       const c = item.c;
       const sp = item.starPosAttr.array;
@@ -873,7 +922,8 @@ function init() {
 
       consLocalToNdc(c, 0, 0, consTmpNdc);
       ndcToDome(consTmpNdc.x, consTmpNdc.y, item.center);
-      consLocalToNdc(c, c.label[0], c.label[1], consTmpNdc);
+      const at = (portraitSky && PORTRAIT_SKY[c.name] && PORTRAIT_SKY[c.name].label) || c.label;
+      consLocalToNdc(c, at[0], at[1], consTmpNdc);
       ndcToDome(consTmpNdc.x, consTmpNdc.y, item.label.position);
     }
   }
@@ -906,7 +956,9 @@ function init() {
   mwMesh.renderOrder = 1;
   scene.add(mwMesh);
 
-  const mwBandV = (u) => 0.1 + 0.75 * ((1.05 - u) / 1.1);
+  // landscape: the diagonal it always ran; portrait: the same slope, moved
+  // up so it still runs through the Rhea
+  const mwBandV = (u) => (portraitSky ? 0.79 - 0.68 * (u - 0.54) : 0.1 + 0.75 * ((1.05 - u) / 1.1));
 
   function mulberry32(seed) {
     return function () {
@@ -922,7 +974,7 @@ function init() {
     const ctx = mwCanvas.getContext("2d");
     const cw = mwCanvas.width;
     const ch = mwCanvas.height;
-    const aspect = camera.aspect;
+    const aspect = layoutCamera.aspect;
     ctx.clearRect(0, 0, cw, ch);
     const rnd = mulberry32(1614); // d'Abbeville's year
 
@@ -970,7 +1022,7 @@ function init() {
     // sky panel's, so the dark nebulae land exactly on their figures
     function hole(ndcX, ndcY, rNdc, strength) {
       const u = (ndcX + 1.05) / 2.1;
-      const v = (ndcY - 0.24) / 0.72;
+      const v = (ndcY - MW_QUAD.y0) / (MW_QUAD.y1 - MW_QUAD.y0);
       const rx = (rNdc / SKY_NDC.xSpan) * cw;
       const ry = ((rNdc * aspect) / SKY_NDC.ySpan) * ch;
       const g = ctx.createRadialGradient(0, 0, 0, 0, 0, 1);
@@ -1004,7 +1056,7 @@ function init() {
 
   function layoutMilkyWay() {
     const corners = [
-      [-1.05, 0.24], [1.05, 0.24], [1.05, 0.96], [-1.05, 0.96],
+      [-1.05, MW_QUAD.y0], [1.05, MW_QUAD.y0], [1.05, MW_QUAD.y1], [-1.05, MW_QUAD.y1],
     ];
     const arr = mwPosAttr.array;
     corners.forEach((pt, i) => {
@@ -1026,6 +1078,24 @@ function init() {
   let lastInteractionMs = performance.now();
   const consProj = new THREE.Vector3();
 
+  // the page's sky section turns the camera up (skyLook, 0..1, set by
+  // updateView) and may focus one figure by id ("sky:focus")
+  let skyLook = 0;
+  let skyQuiet = 0;
+  let focusId = null;
+  window.addEventListener("sky:focus", (e) => {
+    focusId = e.detail || null;
+    lastInteractionMs = performance.now();
+    if (reducedMotion) {
+      for (const item of consItems) {
+        item.glow = !focusId ? 0.5 : item.id === focusId ? 1 : 0.2;
+        applyConsGlow(item);
+        item.label.material.opacity = !focusId ? 0.6 : item.id === focusId ? 0.95 : 0.08;
+      }
+      renderFrame();
+    }
+  });
+
   function updateConstellations(t, dt) {
     const idle = performance.now() - lastInteractionMs > CONS_IDLE_MS;
     const cycled = Math.floor(t / 5.2) % consItems.length;
@@ -1044,7 +1114,14 @@ function init() {
         );
         target = s * s * (3 - 2 * s);
       }
-      if (idle && i === cycled) target = Math.max(target, 0.85);
+      if (idle && i === cycled && skyLook < 0.5) target = Math.max(target, 0.85);
+      if (skyLook > 0.01) {
+        // looking up, every figure shows; a focused one outshines the rest
+        if (!focusId) target = Math.max(target, 0.8 * skyLook);
+        else if (item.id === focusId) target = Math.max(target, skyLook);
+        else target = target * (1 - skyLook) + 0.28 * skyLook;
+      }
+      target *= 1 - skyQuiet;
       const g = item.glow;
       item.glow = g + (target - g) * (target > g ? kUp : kDown);
       applyConsGlow(item);
@@ -1138,12 +1215,103 @@ function init() {
     oceanUniforms.uRipples.value = rtA.texture;
   }
 
+  // --- the page flies the camera: every [data-scene] section has a view,
+  //     held while the section fills the screen and blended across the
+  //     screen of scrolling between one section and the next ---
+  const SCENE_VIEWS = {
+    // a portrait screen is too narrow to hold the lighthouse off to one
+    // side, so it is turned to stand over the name instead
+    hero: { pos: [0, 5.5, 14], look: [0, 0, -40], portrait: { look: [-14, -4, -40] } },
+    hive: { pos: [5, 3, 6], look: [8, 1.5, -40] }, // down near the water
+    projects: { pos: [-10, 4, -60], look: [-43, -10, -95] }, // in toward the lighthouse, framing it above the cards
+    sky: { pos: [0, 4, 12], look: [0, 18, -40] }, // up at the constellations
+    contact: { pos: [0, 5.5, 14], look: [0, 0, -40], portrait: { look: [-14, -4, -40] } }, // home again
+  };
+  const sceneEls = Array.from(document.querySelectorAll("[data-scene]")).filter(
+    (el) => SCENE_VIEWS[el.dataset.scene]
+  );
+  const viewPos = cameraBase.clone();
+  const viewLook = new THREE.Vector3(0, 0, -40);
+  const lookNow = viewLook.clone();
+  const viewTmp = new THREE.Vector3();
+
+  // snap: no blending, just the view of whichever section is nearer
+  function updateView(snap = false) {
+    if (!sceneEls.length) return;
+    const vh = window.innerHeight;
+    const probe = window.scrollY + vh / 2;
+    const portrait = camera.aspect < 0.8;
+    const spans = sceneEls.map((el) => {
+      // on a phone a section may name the part of it that holds the view
+      // (the sky's stage, below its heading), so the words are read first
+      // and the view arrives as they scroll away
+      const hold = (portrait && el.querySelector("[data-scene-hold]")) || el;
+      const r = hold.getBoundingClientRect();
+      const top = r.top + window.scrollY;
+      const a = top + vh / 2;
+      const v = SCENE_VIEWS[el.dataset.scene];
+      return {
+        view: portrait && v.portrait ? { ...v, ...v.portrait } : v,
+        a,
+        b: Math.max(a, top + r.height - vh / 2),
+        sky: el.dataset.scene === "sky",
+        // the reading sections, where a lit figure behind the words is noise
+        quiet: el.dataset.scene === "hive" || el.dataset.scene === "projects",
+      };
+    });
+    let from = spans[spans.length - 1];
+    let to = from;
+    let f = 0;
+    for (let i = 0; i < spans.length; i++) {
+      const sp = spans[i];
+      if (probe <= sp.b) {
+        if (probe >= sp.a || i === 0) {
+          from = to = sp;
+        } else {
+          from = spans[i - 1];
+          to = sp;
+          f = Math.min(Math.max((probe - from.b) / Math.max(sp.a - from.b, 1), 0), 1);
+          f = snap ? Math.round(f) : f * f * (3 - 2 * f);
+        }
+        break;
+      }
+    }
+    viewPos.fromArray(from.view.pos).lerp(viewTmp.fromArray(to.view.pos), f);
+    viewLook.fromArray(from.view.look).lerp(viewTmp.fromArray(to.view.look), f);
+    skyLook = (from.sky ? 1 - f : 0) + (to.sky && to !== from ? f : 0);
+    skyQuiet = (from.quiet ? 1 - f : 0) + (to.quiet && to !== from ? f : 0);
+    // a picked figure draws the camera round to face it
+    if (skyLook > 0.01 && focusId) {
+      const item = consItems.find((it) => it.id === focusId);
+      if (item) {
+        viewTmp.copy(item.center).sub(viewPos).normalize().multiplyScalar(55).add(viewPos);
+        viewLook.lerp(viewTmp, skyLook * 0.8);
+      }
+    }
+  }
+
   const startMs = performance.now();
 
-  function renderFrame() {
-    camera.position.x += (cameraBase.x + parallax.x * 0.9 - camera.position.x) * 0.04;
-    camera.position.y += (cameraBase.y - parallax.y * 0.35 - camera.position.y) * 0.04;
-    camera.lookAt(0, 0, -40);
+  let cutKey = "";
+
+  function renderFrame(force = true) {
+    if (reducedMotion) {
+      // no travel: the camera cuts to the view of the section being read,
+      // and a frame is drawn only when that view changes
+      updateView(true);
+      const key = viewPos.toArray().join() + viewLook.toArray().join();
+      if (!force && key === cutKey) return;
+      cutKey = key;
+      camera.position.copy(viewPos);
+      lookNow.copy(viewLook);
+    } else {
+      updateView();
+      camera.position.x += (viewPos.x + parallax.x * 0.9 - camera.position.x) * 0.04;
+      camera.position.y += (viewPos.y - parallax.y * 0.35 - camera.position.y) * 0.04;
+      camera.position.z += (viewPos.z - camera.position.z) * 0.04;
+      lookNow.lerp(viewLook, 0.04);
+    }
+    camera.lookAt(lookNow);
     renderer.render(scene, camera);
   }
 
@@ -1166,6 +1334,9 @@ function init() {
   window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
+    layoutCamera.aspect = camera.aspect;
+    layoutCamera.updateProjectionMatrix();
+    layoutCamera.updateMatrixWorld();
     renderer.setSize(window.innerWidth, window.innerHeight);
     layoutConstellations();
     layoutMilkyWay();
@@ -1184,6 +1355,9 @@ function init() {
       item.label.material.opacity = 0.6;
     }
     renderFrame();
+    window.addEventListener("scroll", () => requestAnimationFrame(() => renderFrame(false)), {
+      passive: true,
+    });
   } else {
     animate();
   }

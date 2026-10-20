@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>Category standard — sketch</title>
+<style>
+  :root { --bg:#0b0d12; --ink:#e8eaee; --mute:#8b93a1; --line:#1d2230; --gold:#f5b301; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html,body { width:1440px; height:900px; overflow:hidden; }
+  body { background:var(--bg); color:var(--ink); font-family:system-ui,"Segoe UI",sans-serif; }
+  header { display:flex; justify-content:space-between; align-items:center; padding:32px 120px; font-size:22px; }
+  header nav { display:flex; gap:32px; color:var(--mute); }
+  .hero { padding:70px 120px 40px; }
+  .hero h1 { font-size:68px; letter-spacing:-.03em; line-height:1.05; }
+  .hero p { font-size:26px; color:var(--mute); margin-top:18px; max-width:760px; }
+  .feat { margin:20px 120px 0; border:1px solid var(--line); border-radius:16px; padding:36px; display:grid; grid-template-columns:1fr 1fr; gap:36px; background:#10131a; }
+  .feat h2 { font-size:44px; }
+  .feat .k { color:var(--gold); font-size:22px; }
+  .feat pre { font-family:Consolas,monospace; font-size:18px; color:var(--mute); background:#0b0d12; border-radius:10px; padding:20px; }
+  .grid { margin:24px 120px 0; display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .grid div { border:1px solid var(--line); border-radius:14px; height:160px; padding:24px; font-size:28px; font-weight:600; }
+</style>
+</head>
+<body>
+<header><strong>rhm.dev</strong><nav><span>Projects</span><span>GitHub</span><span>Contact</span></nav></header>
+<section class="hero"><h1>Rodrigo Heinzen de Moraes</h1><p>Software engineer building a programming language.</p></section>
+<section class="feat"><div><div class="k">Featured</div><h2>Hive</h2></div><pre>proc main(): void {
+  echo "hello"
+}</pre></section>
+<section class="grid"><div>WebProxy</div><div>Database</div><div>Slopmachine</div></section>
+</body>
+</html>

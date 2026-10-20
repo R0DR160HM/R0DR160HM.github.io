@@ -1,0 +1,410 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-20T16:24:17+00:00",
+  "title": "Design System: rhm.dev",
+  "extensions": {
+    "colorMeta": {
+      "lighthouse-gold": {
+        "role": "primary",
+        "displayName": "Lighthouse Gold",
+        "canonical": "oklch(83.7% 0.164 84)",
+        "tonalRamp": [
+          "oklch(15% 0.16 84)",
+          "oklch(26% 0.16 84)",
+          "oklch(37% 0.16 84)",
+          "oklch(48% 0.16 84)",
+          "oklch(60% 0.16 84)",
+          "oklch(72% 0.16 84)",
+          "oklch(84% 0.16 84)",
+          "oklch(95% 0.16 84)"
+        ]
+      },
+      "lamp-gold-bright": {
+        "role": "primary",
+        "displayName": "Lamp Gold Bright",
+        "canonical": "oklch(88% 0.15 92)",
+        "tonalRamp": [
+          "oklch(15% 0.15 92)",
+          "oklch(26% 0.15 92)",
+          "oklch(37% 0.15 92)",
+          "oklch(48% 0.15 92)",
+          "oklch(60% 0.15 92)",
+          "oklch(72% 0.15 92)",
+          "oklch(84% 0.15 92)",
+          "oklch(95% 0.15 92)"
+        ]
+      },
+      "gold-ink": {
+        "role": "primary",
+        "displayName": "Gold Ink",
+        "canonical": "oklch(19% 0.03 80)",
+        "tonalRamp": [
+          "oklch(15% 0.03 80)",
+          "oklch(26% 0.03 80)",
+          "oklch(37% 0.03 80)",
+          "oklch(48% 0.03 80)",
+          "oklch(60% 0.03 80)",
+          "oklch(72% 0.03 80)",
+          "oklch(84% 0.03 80)",
+          "oklch(95% 0.03 80)"
+        ]
+      },
+      "sea-cyan": {
+        "role": "secondary",
+        "displayName": "Sea Cyan",
+        "canonical": "oklch(86.5% 0.127 207)",
+        "tonalRamp": [
+          "oklch(15% 0.12 207)",
+          "oklch(26% 0.12 207)",
+          "oklch(37% 0.12 207)",
+          "oklch(48% 0.12 207)",
+          "oklch(60% 0.12 207)",
+          "oklch(72% 0.12 207)",
+          "oklch(84% 0.12 207)",
+          "oklch(95% 0.12 207)"
+        ]
+      },
+      "refusal-coral": {
+        "role": "tertiary",
+        "displayName": "Refusal Coral",
+        "canonical": "oklch(71.2% 0.194 13)",
+        "tonalRamp": [
+          "oklch(15% 0.18 13)",
+          "oklch(26% 0.18 13)",
+          "oklch(37% 0.18 13)",
+          "oklch(48% 0.18 13)",
+          "oklch(60% 0.18 13)",
+          "oklch(72% 0.18 13)",
+          "oklch(84% 0.18 13)",
+          "oklch(95% 0.18 13)"
+        ]
+      },
+      "night": {
+        "role": "neutral",
+        "displayName": "Night",
+        "canonical": "oklch(13% 0.028 262)",
+        "tonalRamp": [
+          "oklch(15% 0.028 262)",
+          "oklch(26% 0.028 262)",
+          "oklch(37% 0.028 262)",
+          "oklch(48% 0.028 262)",
+          "oklch(60% 0.028 262)",
+          "oklch(72% 0.028 262)",
+          "oklch(84% 0.028 262)",
+          "oklch(95% 0.028 262)"
+        ]
+      },
+      "warm-white-ink": {
+        "role": "neutral",
+        "displayName": "Warm White Ink",
+        "canonical": "oklch(95.8% 0.01 85)",
+        "tonalRamp": [
+          "oklch(15% 0.01 85)",
+          "oklch(26% 0.01 85)",
+          "oklch(37% 0.01 85)",
+          "oklch(48% 0.01 85)",
+          "oklch(60% 0.01 85)",
+          "oklch(72% 0.01 85)",
+          "oklch(84% 0.01 85)",
+          "oklch(95% 0.01 85)"
+        ]
+      },
+      "mist-ink": {
+        "role": "neutral",
+        "displayName": "Mist Ink",
+        "canonical": "oklch(86.5% 0.017 260)",
+        "tonalRamp": [
+          "oklch(15% 0.017 260)",
+          "oklch(26% 0.017 260)",
+          "oklch(37% 0.017 260)",
+          "oklch(48% 0.017 260)",
+          "oklch(60% 0.017 260)",
+          "oklch(72% 0.017 260)",
+          "oklch(84% 0.017 260)",
+          "oklch(95% 0.017 260)"
+        ]
+      },
+      "dusk-ink": {
+        "role": "neutral",
+        "displayName": "Dusk Ink",
+        "canonical": "oklch(72% 0.025 260)",
+        "tonalRamp": [
+          "oklch(15% 0.025 260)",
+          "oklch(26% 0.025 260)",
+          "oklch(37% 0.025 260)",
+          "oklch(48% 0.025 260)",
+          "oklch(60% 0.025 260)",
+          "oklch(72% 0.025 260)",
+          "oklch(84% 0.025 260)",
+          "oklch(95% 0.025 260)"
+        ]
+      },
+      "deep-navy-panel": {
+        "role": "neutral",
+        "displayName": "Deep Navy Panel",
+        "canonical": "rgb(6 12 26 / 0.92)",
+        "tonalRamp": [
+          "oklch(15% 0.03 262)",
+          "oklch(26% 0.03 262)",
+          "oklch(37% 0.03 262)",
+          "oklch(48% 0.03 262)",
+          "oklch(60% 0.03 262)",
+          "oklch(72% 0.03 262)",
+          "oklch(84% 0.03 262)",
+          "oklch(95% 0.03 262)"
+        ]
+      },
+      "raised-navy-panel": {
+        "role": "neutral",
+        "displayName": "Raised Navy Panel",
+        "canonical": "rgb(12 22 42 / 0.94)",
+        "tonalRamp": [
+          "oklch(15% 0.04 262)",
+          "oklch(26% 0.04 262)",
+          "oklch(37% 0.04 262)",
+          "oklch(48% 0.04 262)",
+          "oklch(60% 0.04 262)",
+          "oklch(72% 0.04 262)",
+          "oklch(84% 0.04 262)",
+          "oklch(95% 0.04 262)"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "rgb(148 180 220 / 0.18)",
+        "tonalRamp": [
+          "oklch(15% 0.06 255)",
+          "oklch(26% 0.06 255)",
+          "oklch(37% 0.06 255)",
+          "oklch(48% 0.06 255)",
+          "oklch(60% 0.06 255)",
+          "oklch(72% 0.06 255)",
+          "oklch(84% 0.06 255)",
+          "oklch(95% 0.06 255)"
+        ]
+      },
+      "hairline-strong": {
+        "role": "neutral",
+        "displayName": "Strong Hairline",
+        "canonical": "rgb(148 180 220 / 0.32)",
+        "tonalRamp": [
+          "oklch(15% 0.06 255)",
+          "oklch(26% 0.06 255)",
+          "oklch(37% 0.06 255)",
+          "oklch(48% 0.06 255)",
+          "oklch(60% 0.06 255)",
+          "oklch(72% 0.06 255)",
+          "oklch(84% 0.06 255)",
+          "oklch(95% 0.06 255)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The name in the hero only; clamp(2.9rem, 12vw, 4.5rem) below 992px."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section h2s; the contact h2 one step larger at clamp(2.6rem, 6.5vw, 5rem)."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Project card names; smaller display titles at 1.25rem to 1.35rem."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "The line under a section heading and the hero role line."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All reading text, 34rem to 38rem measure, over the scene or on panels."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "File tabs, language letters (0.72rem), project tags (0.78rem)."
+      },
+      "code": {
+        "displayName": "Code",
+        "purpose": "Hive listings and terminal output, tab-size 3."
+      }
+    },
+    "shadows": [
+      {
+        "name": "demo-float",
+        "value": "0 2.5rem 5rem -1.5rem rgb(0 0 0 / 0.75), 0 0 0 1px rgb(0 0 0 / 0.3)",
+        "purpose": "The Hive editor window."
+      },
+      {
+        "name": "card-float",
+        "value": "0 1.5rem 3rem -1.5rem rgb(0 0 0 / 0.7)",
+        "purpose": "Project cards."
+      },
+      {
+        "name": "sea-backing",
+        "value": "text-shadow: 0 1px 10px rgb(0 0 0 / 0.7)",
+        "purpose": "Every block of text set straight on the scene with no panel behind it."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Exponential ease-out for state crossfades (0.3s), the tab fade-in (0.35s) and card depth and tilt (0.45s)."
+      },
+      {
+        "name": "state-quick",
+        "value": "0.2s ease",
+        "purpose": "Colour, border, opacity and the 2px button lift."
+      },
+      {
+        "name": "camera",
+        "value": "smoothstep blend between section views, then a per-frame ease (factor 0.04) toward the target",
+        "purpose": "The scroll-driven camera, with faint pointer parallax."
+      },
+      {
+        "name": "card-tilt",
+        "value": "up to 7deg toward a fine pointer",
+        "purpose": "Project cards only; the Hive demo is still."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "cut with no travel; one frame per view; transitions 0.01ms; no lift, no tab fade",
+        "purpose": "prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "split",
+        "value": "900px"
+      },
+      {
+        "name": "wide",
+        "value": "992px"
+      },
+      {
+        "name": "portrait-camera",
+        "value": "aspect < 0.8"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Gold-filled button for the single most important action in a group (Hive tour, email).",
+      "html": "<a class=\"ds-btn ds-btn-primary\" href=\"#\">Take the tour <svg width=\"14\" height=\"14\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M3 8h9M8.5 4.5 12 8l-3.5 3.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></a>",
+      "css": ":host{--gold-rgb:251 191 36;--gold:rgb(var(--gold-rgb));--gold-soft:rgb(var(--gold-rgb) / 0.35);--sea:#67e8f9;--refuse:#fb7185;--night:#030712;--ink:#f4f1ea;--ink-2:#ccd3de;--ink-3:#9ca6b6;--panel:rgb(6 12 26 / 0.92);--panel-2:rgb(12 22 42 / 0.94);--line:rgb(148 180 220 / 0.18);--line-2:rgb(148 180 220 / 0.32);--ease:cubic-bezier(0.16, 1, 0.3, 1);--display:\"Bricolage Grotesque\", system-ui, sans-serif;--sans:system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif;--mono:\"JetBrains Mono\", ui-monospace, Consolas, monospace} .ds-btn{display:inline-flex;align-items:center;gap:0.55rem;padding:0.6rem 1.15rem;border-radius:0.55rem;border:1px solid var(--gold-soft);font-family:var(--sans);font-size:0.97rem;font-weight:500;line-height:1.3;text-decoration:none;transition:border-color .2s ease,background .2s ease,color .2s ease,transform .2s ease} .ds-btn svg{transition:transform .2s ease} .ds-btn:hover svg,.ds-btn:focus-visible svg{transform:translateX(0.2rem)} .ds-btn:hover,.ds-btn:focus-visible{transform:translateY(-2px)} .ds-btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px} .ds-btn-primary{background:var(--gold);border-color:var(--gold);color:#1a1204;font-weight:650} .ds-btn-primary:hover,.ds-btn-primary:focus-visible{background:#fcd34d;color:#1a1204}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Default button over the sea: dim night fill, soft gold border, warms to gold on hover.",
+      "html": "<a class=\"ds-btn ds-btn-outline\" href=\"#\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z\"/></svg>GitHub</a>",
+      "css": ":host{--gold-rgb:251 191 36;--gold:rgb(var(--gold-rgb));--gold-soft:rgb(var(--gold-rgb) / 0.35);--sea:#67e8f9;--refuse:#fb7185;--night:#030712;--ink:#f4f1ea;--ink-2:#ccd3de;--ink-3:#9ca6b6;--panel:rgb(6 12 26 / 0.92);--panel-2:rgb(12 22 42 / 0.94);--line:rgb(148 180 220 / 0.18);--line-2:rgb(148 180 220 / 0.32);--ease:cubic-bezier(0.16, 1, 0.3, 1);--display:\"Bricolage Grotesque\", system-ui, sans-serif;--sans:system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif;--mono:\"JetBrains Mono\", ui-monospace, Consolas, monospace} .ds-btn{display:inline-flex;align-items:center;gap:0.55rem;padding:0.6rem 1.15rem;border-radius:0.55rem;border:1px solid var(--gold-soft);font-family:var(--sans);font-size:0.97rem;font-weight:500;line-height:1.3;text-decoration:none;transition:border-color .2s ease,background .2s ease,color .2s ease,transform .2s ease} .ds-btn svg{transition:transform .2s ease} .ds-btn:hover svg,.ds-btn:focus-visible svg{transform:translateX(0.2rem)} .ds-btn:hover,.ds-btn:focus-visible{transform:translateY(-2px)} .ds-btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px} .ds-btn-outline{background:rgb(3 7 18 / 0.45);color:var(--ink);text-shadow:0 1px 10px rgb(0 0 0 / 0.7)} .ds-btn-outline:hover,.ds-btn-outline:focus-visible{border-color:var(--gold);background:rgb(var(--gold-rgb) / 0.1);color:var(--gold)}"
+    },
+    {
+      "name": "Toggle Chip",
+      "kind": "chip",
+      "refersTo": "chip-toggle",
+      "description": "Pill toggle used by the sky picker and the demo's refused/accepted switch.",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip\" aria-pressed=\"true\">Guyra Nhandu <span>the Rhea</span></button><button class=\"ds-chip\" aria-pressed=\"false\">Tuya'i <span>the Old Man</span></button></div>",
+      "css": ":host{--gold-rgb:251 191 36;--gold:rgb(var(--gold-rgb));--gold-soft:rgb(var(--gold-rgb) / 0.35);--sea:#67e8f9;--refuse:#fb7185;--night:#030712;--ink:#f4f1ea;--ink-2:#ccd3de;--ink-3:#9ca6b6;--panel:rgb(6 12 26 / 0.92);--panel-2:rgb(12 22 42 / 0.94);--line:rgb(148 180 220 / 0.18);--line-2:rgb(148 180 220 / 0.32);--ease:cubic-bezier(0.16, 1, 0.3, 1);--display:\"Bricolage Grotesque\", system-ui, sans-serif;--sans:system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif;--mono:\"JetBrains Mono\", ui-monospace, Consolas, monospace} .ds-chips{display:flex;flex-wrap:wrap;gap:0.5rem} .ds-chip{font-family:var(--sans);font-size:0.9rem;color:var(--ink-2);background:rgb(255 255 255 / 0.03);border:1px solid var(--line-2);border-radius:999px;padding:0.4rem 0.85rem;cursor:pointer;transition:border-color .2s ease,color .2s ease,background .2s ease} .ds-chip span{color:var(--ink-3);margin-left:0.4em} .ds-chip:hover{border-color:var(--gold-soft);color:var(--ink)} .ds-chip[aria-pressed=true]{border-color:var(--gold);background:rgb(var(--gold-rgb) / 0.12);color:var(--ink)} .ds-chip:focus-visible{outline:2px solid var(--gold);outline-offset:3px}"
+    },
+    {
+      "name": "Toolbox Chip",
+      "kind": "chip",
+      "description": "Static technology chip, near-solid so it reads over the lamp's glitter on the water.",
+      "html": "<ul class=\"ds-tool\"><li>Gleam</li><li>Hive</li><li>WebSockets</li></ul>",
+      "css": ".ds-tool{list-style:none;display:flex;flex-wrap:wrap;gap:0.5rem;padding:0;margin:0} .ds-tool li{font-family:system-ui,sans-serif;font-size:0.86rem;padding:0.32rem 0.85rem;color:#bcd3ea;background:rgb(8 18 36 / 0.82);border:1px solid rgb(148 180 220 / 0.25);border-radius:999px;white-space:nowrap}"
+    },
+    {
+      "name": "Project Card",
+      "kind": "card",
+      "refersTo": "card-project",
+      "description": "Solid navy project panel; comes forward and turns gold-edged on hover, tilts toward a fine pointer up to 7 degrees.",
+      "html": "<a class=\"ds-card\" href=\"#\"><h3>WebProxy</h3><p>Web-based distributed cache engine.</p><ul class=\"ds-tags\"><li>Gleam</li><li>ETS</li><li>IndexedDB</li></ul><span class=\"ds-go\">View on GitHub <svg width=\"14\" height=\"14\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M3 8h9M8.5 4.5 12 8l-3.5 3.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></a>",
+      "css": ":host{--gold-rgb:251 191 36;--gold:rgb(var(--gold-rgb));--gold-soft:rgb(var(--gold-rgb) / 0.35);--sea:#67e8f9;--refuse:#fb7185;--night:#030712;--ink:#f4f1ea;--ink-2:#ccd3de;--ink-3:#9ca6b6;--panel:rgb(6 12 26 / 0.92);--panel-2:rgb(12 22 42 / 0.94);--line:rgb(148 180 220 / 0.18);--line-2:rgb(148 180 220 / 0.32);--ease:cubic-bezier(0.16, 1, 0.3, 1);--display:\"Bricolage Grotesque\", system-ui, sans-serif;--sans:system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif;--mono:\"JetBrains Mono\", ui-monospace, Consolas, monospace} .ds-card{display:flex;flex-direction:column;gap:0.7rem;max-width:22rem;padding:1.6rem 1.5rem 1.4rem;background:var(--panel);border:1px solid var(--line-2);border-radius:1rem;color:var(--ink);text-decoration:none;box-shadow:0 1.5rem 3rem -1.5rem rgb(0 0 0 / 0.7);transition:transform .45s var(--ease),border-color .2s ease} .ds-card h3{margin:0;font-family:var(--display);font-weight:750;font-size:2rem;line-height:1.02;letter-spacing:-0.02em;transition:color .2s ease} .ds-card p{margin:0;color:var(--ink-2);font-family:var(--sans);font-size:0.98rem;line-height:1.6} .ds-tags{list-style:none;display:flex;flex-wrap:wrap;gap:0.35rem 0.9rem;padding:0;margin:0;font-family:var(--mono);font-size:0.78rem;color:#a9c4dd} .ds-go{margin-top:auto;padding-top:0.6rem;display:inline-flex;align-items:center;gap:0.45rem;font-family:var(--sans);font-size:0.9rem;font-weight:600;color:var(--gold)} .ds-go svg{transition:transform .2s ease} .ds-card:hover,.ds-card:focus-visible{border-color:var(--gold-soft);transform:perspective(1400px) translateZ(18px) rotateX(-2deg) rotateY(3deg)} .ds-card:hover h3,.ds-card:focus-visible h3{color:var(--gold)} .ds-card:hover .ds-go svg,.ds-card:focus-visible .ds-go svg{transform:translateX(0.25rem)} .ds-card:focus-visible{outline:2px solid var(--gold);outline-offset:3px}"
+    },
+    {
+      "name": "Hive Demo Window",
+      "kind": "custom",
+      "refersTo": "panel-demo",
+      "description": "The still editor window: mono file tabs with a gold underline, a listing well and a terminal well with the compiler's verdict.",
+      "html": "<div class=\"ds-demo\"><div class=\"ds-bar\"><span class=\"ds-tab on\">guard.hive</span><span class=\"ds-tab\">token.hive</span></div><div class=\"ds-body\"><pre class=\"ds-listing\"><b>proc</b> main(): void {\n   xs := [1, 2, 3]\n   echo <span class=\"tok\">xs[i]</span>\n}</pre><div class=\"ds-term\"><samp><span class=\"p\">$</span> hive check guard.hive</samp><p class=\"ds-status\">Refused at compile time</p></div></div></div>",
+      "css": ":host{--gold-rgb:251 191 36;--gold:rgb(var(--gold-rgb));--gold-soft:rgb(var(--gold-rgb) / 0.35);--sea:#67e8f9;--refuse:#fb7185;--night:#030712;--ink:#f4f1ea;--ink-2:#ccd3de;--ink-3:#9ca6b6;--panel:rgb(6 12 26 / 0.92);--panel-2:rgb(12 22 42 / 0.94);--line:rgb(148 180 220 / 0.18);--line-2:rgb(148 180 220 / 0.32);--ease:cubic-bezier(0.16, 1, 0.3, 1);--display:\"Bricolage Grotesque\", system-ui, sans-serif;--sans:system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif;--mono:\"JetBrains Mono\", ui-monospace, Consolas, monospace} .ds-demo{background:var(--panel);border:1px solid var(--line-2);border-radius:1rem;box-shadow:0 2.5rem 5rem -1.5rem rgb(0 0 0 / 0.75),0 0 0 1px rgb(0 0 0 / 0.3);overflow:hidden;color:var(--ink);font-family:var(--sans)} .ds-bar{display:flex;border-bottom:1px solid var(--line);background:rgb(255 255 255 / 0.025)} .ds-tab{padding:0.8rem 1.15rem;font-family:var(--mono);font-size:0.86rem;color:var(--ink-3);border-right:1px solid var(--line);border-bottom:2px solid transparent;cursor:pointer;transition:color .2s ease} .ds-tab:hover{color:var(--ink)} .ds-tab.on{color:var(--ink);background:var(--panel-2);border-bottom-color:var(--gold)} .ds-body{display:grid;grid-template-columns:1.45fr 1fr;gap:1rem;padding:1.4rem} .ds-listing{margin:0;padding:1rem 1.1rem;background:rgb(0 0 0 / 0.28);border:1px solid var(--line);border-radius:0.65rem;font-family:var(--mono);font-size:0.84rem;line-height:1.7} .ds-listing b{color:#f9d77e;font-weight:600} .ds-listing .tok{text-decoration:underline wavy var(--refuse);text-decoration-thickness:1px;text-underline-offset:0.25em} .ds-term{padding:1rem 1.1rem;background:rgb(0 0 0 / 0.42);border:1px solid var(--line);border-radius:0.65rem;font-size:0.84rem} .ds-term samp{font-family:var(--mono)} .ds-term .p{color:#7d8899} .ds-status{margin:0.35rem 0 0;font-weight:600;font-size:0.92rem;color:var(--refuse)}"
+    },
+    {
+      "name": "Language Switch",
+      "kind": "nav",
+      "refersTo": "lang-switch",
+      "description": "The only fixed chrome: an EN · PT · DE pill top right, quiet until reached.",
+      "html": "<div class=\"ds-lang\"><button aria-pressed=\"true\">EN</button><button aria-pressed=\"false\">PT</button><button aria-pressed=\"false\">DE</button></div>",
+      "css": ":host{--gold-rgb:251 191 36;--gold:rgb(var(--gold-rgb));--gold-soft:rgb(var(--gold-rgb) / 0.35);--sea:#67e8f9;--refuse:#fb7185;--night:#030712;--ink:#f4f1ea;--ink-2:#ccd3de;--ink-3:#9ca6b6;--panel:rgb(6 12 26 / 0.92);--panel-2:rgb(12 22 42 / 0.94);--line:rgb(148 180 220 / 0.18);--line-2:rgb(148 180 220 / 0.32);--ease:cubic-bezier(0.16, 1, 0.3, 1);--display:\"Bricolage Grotesque\", system-ui, sans-serif;--sans:system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif;--mono:\"JetBrains Mono\", ui-monospace, Consolas, monospace} .ds-lang{display:inline-flex;padding:0.15rem;border:1px solid var(--line);border-radius:999px;background:rgb(3 7 18 / 0.55);opacity:0.72;transition:opacity .2s ease,border-color .2s ease} .ds-lang:hover,.ds-lang:focus-within{opacity:1;border-color:var(--line-2)} .ds-lang button{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.04em;color:var(--ink-3);background:none;border:0;border-radius:999px;padding:0.3rem 0.55rem;cursor:pointer;transition:color .2s ease,background .2s ease} .ds-lang button:hover{color:var(--ink)} .ds-lang button[aria-pressed=true]{color:#1a1204;background:var(--gold)} .ds-lang button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Lighthouse Keeper's Night Watch",
+    "overview": "The site is a single night: a WebGL sea under the Milky Way, a lighthouse sweeping its beam over the water, and six Tupi-Guarani constellations in the sky. The page does not sit on top of this scene as a backdrop; it moves through it. Five sections each own a camera view (horizon, down at the water, in toward the lighthouse, up at the sky, home again), and scrolling eases the camera from one to the next. Everything the visitor reads is either set straight on the scene with a dark text-shadow, or held on a solid deep-navy panel heavy enough that the moving sea never fights the words.\n\nColour is almost entirely night and ink. One warm accent, the lighthouse's gold, marks what can be acted on (primary buttons, focus, hover, the selected tab or toggle). Two signal colours belong to the compiler alone: sea cyan for \"compiles\" and coral for \"refused\". Display type is Bricolage Grotesque, heavy and tight; text is the system UI face, chosen to read at body sizes over a moving image; code and small labels are JetBrains Mono.\n\nDensity is moderate and portfolio-like: a big name over dark water, one editor-window demo, three project panels on an arc in depth, a sky picker docked at the bottom of the screen, and a closing contact view. The world was user-pinned on 2026-10-20 after a text-document direction was rejected; it must keep reading as a 3D place, not as a document over a wallpaper.",
+    "keyCharacteristics": [
+      "A full-viewport WebGL night sea that the camera flies through, one view per `[data-scene]` section.",
+      "Lighthouse gold as the only warm accent; cyan and coral reserved for compile results.",
+      "Solid deep-navy panels with hairline borders, 1rem corners and long soft shadows.",
+      "Bricolage Grotesque at weight 750 with negative tracking for every heading.",
+      "Text with no panel behind it always carries the dark text-shadow.",
+      "Motion is camera travel and small depth tilts; reduced motion cuts between still views."
+    ],
+    "rules": [
+      {
+        "name": "The One Lamp Rule",
+        "body": "Gold is the only warm colour in the interface and it always means \"you can act here\" or \"this is selected\". Never use it as decoration, a section tint or a heading colour at rest.",
+        "section": "colors"
+      },
+      {
+        "name": "The Compiler's Colours Rule",
+        "body": "Cyan and coral belong to compile results. They do not appear on buttons, tags, or anything outside the Hive demo.",
+        "section": "colors"
+      },
+      {
+        "name": "The Heavy Heading Rule",
+        "body": "Every h1 to h3 is Bricolage at 750 with negative tracking; display weight never drops to regular for a heading.",
+        "section": "typography"
+      },
+      {
+        "name": "The Plain Reading Rule",
+        "body": "Paragraphs are never set in the display face; Bricolage at 500 is allowed only for the lede and role lines.",
+        "section": "typography"
+      },
+      {
+        "name": "The Solid Panel Rule",
+        "body": "Text on a panel needs no backing; text off a panel always has the sea backing. There is no third case, and no backdrop blur.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Long Soft Shadow Rule",
+        "body": "Shadows are long, blurred and negatively spread, falling below the object like a light from above the sea. No hard offsets, no coloured glows.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep the WebGL night sea as the page's world, and give any new section its own camera view through `[data-scene]`.",
+      "Do put every block of text either on a solid navy panel (0.78 to 0.94 alpha) or under the sea backing text-shadow (`0 1px 10px rgb(0 0 0 / 0.7)`).",
+      "Do derive every gold tint from the `--gold-rgb` channels, and reserve gold for actions, focus and selection.",
+      "Do set headings in Bricolage Grotesque at 750 with negative tracking, and paragraphs in the system UI face at 34rem to 38rem measure.",
+      "Do use 1rem corners on panels, 0.65rem on inner wells, 0.55rem on buttons and full pills on toggles and chips.",
+      "Do place words so the scene's subject stays in view: copy to the right of the lighthouse from 992px, sky words at the top and bottom of the screen.",
+      "Do make every motion degrade under reduced motion to a still frame and an instant cut."
+    ],
+    "donts": [
+      "Don't use sea cyan or coral outside compile results.",
+      "Don't introduce a second warm accent or colour sections with tinted backgrounds; depth and mood come from the scene.",
+      "Don't add pointer tilt to the Hive demo; it stays still so the code reads (user decision). Only project cards tilt, and no more than 7°.",
+      "Don't use frosted glass or backdrop blur for panels; they are solid navy with hairline borders.",
+      "Don't let hive.ui's quoted theme colours (`#15181c`, `#1d9bf0`) leave the labelled UI preview; they are Hive's, not this site's.",
+      "Don't reintroduce the rotating project cube (retired by the user) or treat the scene as a static decorative background behind a card grid."
+    ]
+  }
+}

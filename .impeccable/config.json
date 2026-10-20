@@ -1,0 +1,62 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "content-hidden-at-rest",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-10-20T14:10:27.485Z",
+        "reason": "Claude, by design: the Hive demo stacks four example files, each with a refused and an accepted form, in one grid cell; only the selected one is visible, the rest wait behind its tabs and switches"
+      },
+      {
+        "rule": "radial-halo",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-10-20T16:08:48.664Z",
+        "reason": "Claude: the .beam-flash overlay is the incumbent lighthouse effect from the previous site, the screen brightening as the beam sweeps across the camera; literal and domain-appropriate, not a decorative glow"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-10-20T16:11:13.414Z",
+        "reason": "Claude: static-scan false positive; rendered detect at 1440x900 and 390x844 reports none. The flagged .demo/.demo-bar/.ex are the editor window, its tab strip flush to the window edge by design (each tab is padded), and a padded example body"
+      },
+      {
+        "rule": "tight-leading",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-10-20T16:11:13.638Z",
+        "reason": "Claude: static-scan false positive; rendered detect at 1440x900 and 390x844 reports none. Body text runs at 1.6; the tight values are display headings (the two-line name at 0.96, section titles at 1.02) set tight on purpose"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "latin modern roman",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-20T16:25:44.292Z",
+        "reason": "Claude: decision sketch for the rejected Preprint direction; never shipped, not part of the site's type system"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "latin modern mono",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-20T16:25:44.466Z",
+        "reason": "Claude: decision sketch for the rejected Preprint direction; never shipped, not part of the site's type system"
+      }
+    ]
+  }
+}

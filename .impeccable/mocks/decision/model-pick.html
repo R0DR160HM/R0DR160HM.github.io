@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>The Grammar Track — sketch</title>
+<style>
+  :root { --ground:#f4f6f2; --ink:#121212; --yellow:#ffd23f; --blue:#3a6ea5; --red:#e4572e; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html,body { width:1440px; height:900px; overflow:hidden; }
+  body { background:var(--ground); font-family:"Helvetica Neue",Arial,sans-serif; color:var(--ink); position:relative; }
+  svg { position:absolute; inset:0; }
+  .t { position:absolute; display:flex; align-items:center; justify-content:center; background:var(--yellow); border:3px solid var(--ink); border-radius:999px; font-weight:700; }
+  .n { position:absolute; display:flex; align-items:center; justify-content:center; background:#fff; border:3px solid var(--ink); }
+  .name { left:150px; top:120px; height:120px; padding:0 52px; font-size:72px; letter-spacing:-.02em; }
+  .role { left:970px; top:150px; height:64px; padding:0 30px; font-size:28px; background:#fff; border-radius:0; }
+  .hive { left:150px; top:360px; width:560px; height:250px; flex-direction:column; align-items:flex-start; padding:28px 36px; border-radius:0; background:#fff; }
+  .hive h2 { font-size:56px; }
+  .hive p { font-size:24px; margin-top:12px; max-width:470px; line-height:1.3; }
+  .tok { position:absolute; font-family:Consolas,monospace; font-size:24px; background:var(--ink); color:var(--ground); padding:6px 12px; border-radius:6px; }
+  .derail { position:absolute; left:1060px; top:470px; width:230px; font-size:24px; color:var(--red); font-weight:700; }
+  .cta { left:880px; top:700px; height:76px; padding:0 40px; font-size:28px; background:var(--blue); color:#fff; }
+</style>
+</head>
+<body>
+<svg width="1440" height="900" viewBox="0 0 1440 900" fill="none" stroke="#121212" stroke-width="3" stroke-linecap="round" aria-hidden="true">
+  <path d="M40 180 H150"/>
+  <path d="M640 180 H970"/>
+  <path d="M1296 182 H1360 Q1400 182 1400 222 V300 Q1400 330 1370 330 H100 Q70 330 70 360 V470 Q70 490 100 490 H150"/>
+  <path d="M710 490 H860 Q900 490 900 530 V700 Q900 738 880 738"/>
+  <path d="M860 490 Q900 490 900 450 Q900 410 940 410 H1040 Q1080 410 1080 450"/>
+  <path d="M1080 450 L1050 470" stroke="#e4572e"/>
+  <path d="M1250 738 H1390"/>
+  <path d="M1385 728 L1400 738 L1385 748"/>
+</svg>
+<div class="t name">Rodrigo Heinzen de Moraes</div>
+<div class="n role">software engineer</div>
+<div class="n hive"><h2>hive</h2><p>A compiled language that would rather refuse than guess.</p></div>
+<div class="tok" style="left:930px;top:388px">shelf[0]</div>
+<div class="derail">no guard in sight: refused</div>
+<div class="t cta">Ride the tour →</div>
+</body>
+</html>

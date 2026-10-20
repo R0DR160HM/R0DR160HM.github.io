@@ -6,30 +6,28 @@
     <title>Rodrigo Heinzen de Moraes — Software Engineer</title>
     <meta
       name="description"
-      content="Rodrigo Heinzen de Moraes is a software engineer with 6+ years of experience building web applications, distributed systems and AI-powered tools with Hive, Gleam, Angular, TypeScript and Python."
+      content="Rodrigo Heinzen de Moraes is a software engineer with seven years in web applications and distributed systems, and the author of Hive, a compiled language for distributed systems in which what would crash does not compile."
     />
     <link rel="canonical" href="https://rhm.dev/" />
+    <meta name="theme-color" content="#030712" />
 
     <!-- Open Graph / social sharing -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://rhm.dev/" />
-    <meta
-      property="og:title"
-      content="Rodrigo Heinzen de Moraes — Software Engineer"
-    />
+    <meta property="og:title" content="Rodrigo Heinzen de Moraes — Software Engineer" />
     <meta
       property="og:description"
-      content="Rodrigo Heinzen de Moraes is a software engineer working on web applications, distributed systems and language design."
+      content="Software engineer working on web applications, distributed systems and language design, and the author of Hive, a compiled language in which what would crash does not compile."
     />
     <meta property="og:site_name" content="Rodrigo Heinzen de Moraes" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="pt_BR" />
+    <meta property="og:locale:alternate" content="de_DE" />
     <meta name="twitter:card" content="summary" />
-    <meta
-      name="twitter:title"
-      content="Rodrigo Heinzen de Moraes — Software Engineer"
-    />
+    <meta name="twitter:title" content="Rodrigo Heinzen de Moraes — Software Engineer" />
     <meta
       name="twitter:description"
-      content="Rodrigo Heinzen de Moraes is a software engineer working on web applications, distributed systems and language design."
+      content="Software engineer working on web applications, distributed systems and language design, and the author of Hive, a compiled language in which what would crash does not compile."
     />
 
     <!-- Structured data: tells search engines who this page is about -->
@@ -42,9 +40,13 @@
         "url": "https://rhm.dev/",
         "jobTitle": "Software Engineer",
         "email": "mailto:rodrigo.heinzen.moraes@gmail.com",
+        "knowsLanguage": ["en", "pt", "de"],
         "knowsAbout": [
           "Hive",
           "Hive Programming Language",
+          "Programming Language Design",
+          "Compilers",
+          "Type Systems",
           "Software Engineering",
           "Web Development",
           "Distributed Systems",
@@ -58,19 +60,40 @@
           "SQL",
           "Git",
           "AWS",
+          "WebSockets",
           "AI Agents"
         ],
         "sameAs": [
           "https://github.com/R0DR160HM",
-          "https://www.linkedin.com/in/rodrigo-heinzen-de-moraes-754b67193/"
+          "https://www.linkedin.com/in/rodrigo-heinzen-de-moraes-754b67193/",
+          "https://hive-lang.run/"
         ]
       }
     </script>
+    <link rel="preload" href="fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
     />
     <style>
+      /* Bricolage Grotesque (display cut) for the headings, JetBrains Mono
+         for code; both SIL OFL, served from fonts/. Text is the system UI
+         face, which reads best at body sizes over a moving scene. */
+      @font-face {
+        font-family: "Bricolage Grotesque";
+        font-weight: 200 800;
+        font-style: normal;
+        font-display: swap;
+        src: url("fonts/bricolage-grotesque.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-weight: 100 800;
+        font-style: normal;
+        font-display: swap;
+        src: url("fonts/jetbrains-mono.woff2") format("woff2");
+      }
+
       * {
         margin: 0;
         padding: 0;
@@ -82,28 +105,74 @@
         --gold-rgb: 251 191 36;
         --gold: rgb(var(--gold-rgb));
         --gold-soft: rgb(var(--gold-rgb) / 0.35);
-        --cyan: #67e8f9;
-        --ink: #f3f4f6;
-        --ink-mid: #d1d5db;
-        --ink-dim: #9ca3af;
-        --card-ink: #aab6c6;
-        --chip-ink: #bcd3ea;
-        --chip-bg: rgb(100 200 255 / 0.08);
-        --chip-border: rgb(148 180 220 / 0.25);
-        --glass-border: rgb(255 255 255 / 0.14);
-        /* text with no card behind it sits on a moving sea; this is its backing */
-        --text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+        --sea: #67e8f9;
+        --refuse: #fb7185;
+        --night: #030712;
+        --ink: #f4f1ea;
+        --ink-2: #ccd3de;
+        --ink-3: #9ca6b6;
+        --panel: rgb(6 12 26 / 0.92);
+        --panel-2: rgb(12 22 42 / 0.94);
+        --line: rgb(148 180 220 / 0.18);
+        --line-2: rgb(148 180 220 / 0.32);
+        /* text with no panel behind it sits on a moving sea; this is its backing */
+        --text-shadow: 0 1px 10px rgb(0 0 0 / 0.7);
+        --display: "Bricolage Grotesque", system-ui, sans-serif;
+        --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        --mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+        --wrap: 74rem;
+        --gutter: clamp(1rem, 4.5vw, 3rem);
+        --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      html {
+        scrollbar-color: #2a3a5a var(--night);
+        -webkit-text-size-adjust: 100%;
       }
 
       body {
         /* gradient doubles as the fallback "night sky over sea" when WebGL
            is unavailable, so the page never renders flat black */
-        background: #030712
-          linear-gradient(to bottom, #030712 0%, #04101d 55%, #08192b 100%)
-          fixed;
+        background: var(--night) linear-gradient(to bottom, #030712 0%, #04101d 55%, #08192b 100%) fixed;
         color: var(--ink);
-        font-family: system-ui, -apple-system, "Segoe UI", Roboto,
-          "Helvetica Neue", Arial, sans-serif;
+        font-family: var(--sans);
+        font-size: 1.0625rem;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      ::selection {
+        background-color: rgb(var(--gold-rgb) / 0.3);
+        color: var(--ink);
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--gold);
+        outline-offset: 3px;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      p,
+      blockquote {
+        text-wrap: pretty;
+      }
+
+      code,
+      pre,
+      samp {
+        font-family: var(--mono);
+      }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
       }
 
       /* Lighthouse beam flash — brightens the whole page when the beam
@@ -125,7 +194,7 @@
         will-change: opacity;
       }
 
-      /* 3D ocean background */
+      /* 3D ocean background; the camera follows the page (ocean.js) */
       .ocean-canvas {
         position: fixed;
         top: 0;
@@ -136,658 +205,967 @@
         pointer-events: none;
       }
 
-      /* Main content sits above the ocean; on tall-enough screens the
-         margin:auto wrapper centers it in a single viewport, and when the
-         content is taller than the screen it simply scrolls */
-      .main-content {
+      main,
+      .contact {
         position: relative;
         z-index: 10;
-        min-height: 100vh;
-        min-height: 100dvh;
+      }
+
+      .wrap {
+        width: min(var(--wrap), 100% - 2 * var(--gutter));
+        margin-inline: auto;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--display);
+        font-weight: 750;
+        line-height: 1.02;
+        letter-spacing: -0.02em;
+        text-wrap: balance;
+      }
+
+      /* ---------- Language ---------- */
+      /* three letters in the corner, quiet until they are wanted */
+      .lang {
+        position: fixed;
+        top: 0.9rem;
+        right: 0.9rem;
+        z-index: 20;
         display: flex;
-        padding: clamp(1rem, 3vw, 2.5rem);
+        padding: 0.15rem;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgb(3 7 18 / 0.55);
+        opacity: 0.72;
+        transition: opacity 0.2s ease, border-color 0.2s ease;
+      }
+      .lang:hover,
+      .lang:focus-within {
+        opacity: 1;
+        border-color: var(--line-2);
+      }
+      .lang button {
+        font: inherit;
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.04em;
+        color: var(--ink-3);
+        background: none;
+        border: 0;
+        border-radius: 999px;
+        padding: 0.3rem 0.55rem;
+        cursor: pointer;
+        transition: color 0.2s ease, background 0.2s ease;
+      }
+      .lang button:hover {
+        color: var(--ink);
+      }
+      .lang button[aria-pressed="true"] {
+        color: #1a1204;
+        background: var(--gold);
       }
 
-      .layout {
-        width: 100%;
-        max-width: 1240px;
-        margin: auto;
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: clamp(2rem, 5vw, 4rem);
-        align-items: center;
-      }
-
-      @media (min-width: 992px) {
-        .layout {
-          grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-        }
-      }
-
-      /* ---------- Hero (left column) ---------- */
-      /* the hero copy has no card behind it, so it carries its own backing
-         against wave crests and the lighthouse beam */
-      .hero-section {
-        text-shadow: var(--text-shadow);
-      }
-
-      .hero-title {
-        font-size: clamp(2rem, 4.5vw, 3.4rem);
-        font-weight: bold;
-        background: linear-gradient(45deg, var(--gold), var(--cyan), var(--gold));
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        /* the gradient is the glyph here; a shadow behind it only smears */
-        text-shadow: none;
-        background-size: 200% 100%;
-        line-height: 1.12;
-        margin-bottom: 0.5rem;
-      }
-
-      /* forced colors strips the gradient, which would leave a transparent
-         fill over nothing at all - put the glyphs back */
-      @media (forced-colors: active) {
-        .hero-title {
-          background: none;
-          -webkit-text-fill-color: currentColor;
-        }
-      }
-
-      .hero-subtitle {
-        font-size: clamp(1.15rem, 2.6vw, 1.6rem);
-        font-weight: 500;
-        color: var(--ink-mid);
-        margin-bottom: 0.9rem;
-      }
-
-      .hero-description {
-        font-size: clamp(0.92rem, 2vw, 1.05rem);
-        color: var(--ink-dim);
-        line-height: 1.5;
-        max-width: 34rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .social-links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.6rem;
-        margin-bottom: 1.75rem;
-      }
-
-      .btn-custom {
+      /* ---------- Buttons and links ---------- */
+      .btn {
         border: 1px solid var(--gold-soft);
-        background: rgba(3, 7, 18, 0.35);
+        background: rgb(3 7 18 / 0.45);
         color: var(--ink);
         padding: 0.6rem 1.15rem;
-        border-radius: 0.5rem;
+        border-radius: 0.55rem;
         text-decoration: none;
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
-        transition: border-color 0.2s ease, background 0.2s ease,
-          color 0.2s ease, transform 0.2s ease;
-        font-size: clamp(0.85rem, 2vw, 0.95rem);
-        cursor: pointer;
+        gap: 0.55rem;
+        font-size: 0.97rem;
+        font-weight: 500;
+        line-height: 1.3;
+        transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease;
       }
-
-      .btn-custom:hover,
-      .btn-custom:focus-visible {
+      .btn:hover,
+      .btn:focus-visible {
         border-color: var(--gold);
         background: rgb(var(--gold-rgb) / 0.1);
         color: var(--gold);
         transform: translateY(-2px);
       }
-
-      /* Skills / tech stack */
-      .section-label {
-        font-size: 0.78rem;
-        font-weight: 600;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: rgb(var(--gold-rgb) / 0.75);
-        margin-bottom: 0.6rem;
+      .btn.primary {
+        background: var(--gold);
+        border-color: var(--gold);
+        color: #1a1204;
+        font-weight: 650;
+        /* dark letters on gold need no backing against the sea */
+        text-shadow: none;
       }
-
-      .skill-chips {
+      .btn.primary:hover,
+      .btn.primary:focus-visible {
+        background: #fcd34d;
+        color: #1a1204;
+      }
+      .btn i {
+        font-size: 0.95em;
+      }
+      .btn .fa-arrow-right {
+        transition: transform 0.2s ease;
+      }
+      .btn:hover .fa-arrow-right,
+      .btn:focus-visible .fa-arrow-right {
+        transform: translateX(0.2rem);
+      }
+      .links {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.45rem;
-        max-width: 34rem;
+        gap: 0.65rem;
       }
 
-      /* one chip, two sizes: skills in the hero, tags on the cards */
-      .skill-chips span,
-      .card-tags span {
-        letter-spacing: 0.02em;
-        color: var(--chip-ink);
-        background: var(--chip-bg);
-        border: 1px solid var(--chip-border);
+      /* ---------- Hero ---------- */
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        min-height: 100svh;
+        display: grid;
+        align-items: end;
+        padding: 6rem 0 clamp(5rem, 13vh, 8rem);
+        text-shadow: var(--text-shadow);
+      }
+      .hero-inner {
+        display: grid;
+      }
+      .hero-copy {
+        max-width: 38rem;
+      }
+      .name {
+        font-size: clamp(2.9rem, 12vw, 4.5rem);
+        line-height: 0.96;
+        letter-spacing: -0.035em;
+      }
+      /* the lighthouse stands left of centre on the horizon; on wide screens
+         the words take the darker water to its right and leave it in view */
+      @media (min-width: 992px) {
+        .hero {
+          align-items: center;
+          padding-bottom: 6rem;
+        }
+        .hero-copy {
+          justify-self: end;
+          width: min(46rem, 54%);
+          max-width: none;
+        }
+        .name {
+          font-size: clamp(3.4rem, 5.3vw, 5.25rem);
+        }
+      }
+      .role {
+        margin-top: 1rem;
+        font-family: var(--display);
+        font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+        font-weight: 500;
+        letter-spacing: -0.01em;
+        color: var(--ink-2);
+      }
+      .bio {
+        margin-top: 0.9rem;
+        color: var(--ink-2);
+        font-size: clamp(1rem, 1.6vw, 1.1rem);
+        max-width: 34rem;
+      }
+      .hero .links {
+        margin-top: 1.6rem;
+      }
+
+      .next {
+        position: absolute;
+        left: 50%;
+        bottom: 1.5rem;
+        transform: translateX(-50%);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        color: var(--ink-3);
+        text-decoration: none;
+        white-space: nowrap;
+        text-shadow: var(--text-shadow);
+        transition: color 0.2s ease;
+      }
+      .next:hover,
+      .next:focus-visible {
+        color: var(--gold);
+      }
+
+      /* ---------- Sections ---------- */
+      .section {
+        padding: clamp(5rem, 12vh, 8rem) 0;
+      }
+      .section-head {
+        display: grid;
+        gap: 1.25rem 3rem;
+        align-items: end;
+        margin-bottom: clamp(2rem, 4vw, 3rem);
+        text-shadow: var(--text-shadow);
+      }
+      .section h2 {
+        font-size: clamp(2.4rem, 6vw, 4.5rem);
+      }
+      .lede {
+        font-family: var(--display);
+        font-size: clamp(1.25rem, 2.4vw, 1.65rem);
+        font-weight: 500;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+        color: var(--ink);
+        margin-top: 0.75rem;
+        max-width: 34rem;
+        text-wrap: balance;
+      }
+      .hive-intro .body {
+        margin-top: 1rem;
+        color: var(--ink-2);
+        max-width: 38rem;
+      }
+
+      /* the sea stays in view between sections; under the reading parts it
+         is dimmed, not covered */
+      .scrim {
+        background: linear-gradient(
+          to bottom,
+          rgb(3 7 18 / 0) 0%,
+          rgb(3 7 18 / 0.62) 14%,
+          rgb(3 7 18 / 0.62) 86%,
+          rgb(3 7 18 / 0) 100%
+        );
+      }
+
+      /* ---------- Hive ---------- */
+      @media (min-width: 992px) {
+        .hive .section-head {
+          grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+        }
+      }
+      .hive-intro .links {
+        margin-top: 1.5rem;
+      }
+      .facts {
+        list-style: none;
+        display: grid;
+        gap: 1.1rem;
+      }
+      .facts li {
+        padding-top: 0.9rem;
+        border-top: 1px solid var(--line-2);
+      }
+      .facts b {
+        display: block;
+        font-family: var(--display);
+        font-weight: 650;
+        font-size: 1.15rem;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+        color: var(--ink);
+      }
+      .facts span {
+        color: var(--ink-2);
+        font-size: 0.97rem;
+      }
+
+      /* the demo: an editor window over the water, held still so the code
+         reads. Its states are radios and CSS alone. */
+      .demo {
+        background: var(--panel);
+        border: 1px solid var(--line-2);
+        border-radius: 1rem;
+        box-shadow: 0 2.5rem 5rem -1.5rem rgb(0 0 0 / 0.75), 0 0 0 1px rgb(0 0 0 / 0.3);
+        overflow: hidden;
+      }
+
+      .demo-bar {
+        display: flex;
+        align-items: stretch;
+        border-bottom: 1px solid var(--line);
+        background: rgb(255 255 255 / 0.025);
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .files {
+        display: flex;
+        border: 0;
+      }
+      .files label,
+      .form-switch label {
+        position: relative;
+        cursor: pointer;
+      }
+      .files input,
+      .form-switch input {
+        position: absolute;
+        opacity: 0;
+        width: 1px;
+        height: 1px;
+      }
+      .files span {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.8rem 1.15rem;
+        font-family: var(--mono);
+        font-size: 0.86rem;
+        color: var(--ink-3);
+        border-right: 1px solid var(--line);
+        border-bottom: 2px solid transparent;
+        white-space: nowrap;
+        transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      }
+      .files label:hover span {
+        color: var(--ink);
+      }
+      .files input:checked + span {
+        color: var(--ink);
+        background: var(--panel-2);
+        border-bottom-color: var(--gold);
+      }
+      .files input:focus-visible + span,
+      .form-switch input:focus-visible + span {
+        outline: 2px solid var(--gold);
+        outline-offset: -2px;
+      }
+
+      .stack {
+        display: grid;
+      }
+      .stack > * {
+        grid-area: 1 / 1;
+      }
+
+      .ex {
+        padding: clamp(1rem, 2.5vw, 1.6rem);
+        display: grid;
+        gap: 1.1rem;
+        align-content: start;
+      }
+      .ex-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem 1.5rem;
+      }
+      .ex-about {
+        font-size: 0.92rem;
+        color: var(--ink-3);
+      }
+      .ex-about a,
+      .term .why a {
+        color: var(--ink-2);
+        text-decoration: underline;
+        text-decoration-color: var(--line-2);
+        text-underline-offset: 0.2em;
+      }
+      .ex-about a:hover,
+      .term .why a:hover {
+        color: var(--gold);
+        text-decoration-color: var(--gold);
+      }
+
+      .form-switch {
+        border: 0;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+      }
+      .form-switch legend {
+        float: left;
+        color: var(--ink-3);
+        margin-right: 0.35rem;
+      }
+      .form-switch span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.4rem 0.75rem;
+        border: 1px solid var(--line-2);
         border-radius: 999px;
+        color: var(--ink-2);
+        transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+      }
+      .form-switch label:hover span {
+        border-color: var(--gold-soft);
+        color: var(--ink);
+      }
+      .form-switch input:checked + span {
+        border-color: var(--gold);
+        background: rgb(var(--gold-rgb) / 0.12);
+        color: var(--ink);
+      }
+      .form-switch code {
+        font-size: 0.82rem;
+      }
+
+      .ex-body {
+        display: grid;
+        gap: 1rem;
+      }
+      @media (min-width: 900px) {
+        .ex-body {
+          grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+        }
+      }
+
+      .listing {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 0 1.1rem;
+        padding: 1rem 1.1rem;
+        background: rgb(0 0 0 / 0.28);
+        border: 1px solid var(--line);
+        border-radius: 0.65rem;
+        font-size: 0.84rem;
+        line-height: 1.7;
+      }
+      .listing pre {
+        tab-size: 3;
+        -moz-tab-size: 3;
+        overflow-x: auto;
+        scrollbar-width: thin;
+      }
+      .listing .ln {
+        color: #5b6678;
+        text-align: right;
+        user-select: none;
+        -webkit-user-select: none;
+      }
+      .listing .ln .err {
+        color: var(--refuse);
+      }
+      .listing b {
+        color: #f9d77e;
+        font-weight: 600;
+      }
+      .listing .s {
+        color: #9ee6c8;
+      }
+      .listing i {
+        font-style: normal;
+        color: #7d8899;
+      }
+      /* the compiler's complaint, the way every editor shows one */
+      .listing .tok {
+        background: none;
+        color: inherit;
+        text-decoration: underline wavy var(--refuse);
+        text-decoration-thickness: 1px;
+        text-underline-offset: 0.25em;
+      }
+      .listing[data-when="accepted"] .tok {
+        text-decoration: underline solid rgb(103 232 249 / 0.6);
+      }
+
+      .term {
+        padding: 1rem 1.1rem;
+        background: rgb(0 0 0 / 0.42);
+        border: 1px solid var(--line);
+        border-radius: 0.65rem;
+        font-size: 0.84rem;
+        line-height: 1.65;
+      }
+      .term samp {
+        display: block;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      .term .prompt {
+        color: #7d8899;
+      }
+      .term .status {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0.35rem 0 0.5rem;
+        font-family: var(--sans);
+        font-weight: 600;
+        font-size: 0.92rem;
+      }
+      .term .status.no {
+        color: var(--refuse);
+      }
+      .term .status.yes {
+        color: var(--sea);
+      }
+      .term .why {
+        font-family: var(--sans);
+        color: var(--ink-3);
+        font-size: 0.86rem;
+      }
+      .term blockquote {
+        margin-top: 0.35rem;
+        padding-left: 0.85rem;
+        border-left: 1px solid var(--line-2);
+        color: var(--ink);
+        font-family: var(--sans);
+        font-size: 0.95rem;
+      }
+      .term samp + .why {
+        margin-top: 0.5rem;
+      }
+      .term.pane {
+        font-family: var(--sans);
+        font-size: 0.92rem;
+        color: var(--ink-2);
+        display: grid;
+        gap: 0.6rem;
+        align-content: start;
+      }
+      .pane-h {
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .term.pane a {
+        color: var(--ink-2);
+        text-decoration-color: var(--line-2);
+        text-underline-offset: 0.2em;
+      }
+      /* a sketch of the view beside it in hive.ui's own dark theme, from the
+         stylesheet hive.ui.page builds in (the tour's pages are drawn by it) */
+      .ui-preview {
+        display: grid;
+        gap: 12px;
+        padding: 24px;
+        background: #15181c;
+        color: #e7e9ea;
+        border: 1px solid #2f3336;
+        border-radius: 0.65rem;
+        font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+      .ui-title {
+        font-size: 20px;
+        font-weight: 700;
+      }
+      .ui-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .ui-input {
+        flex: 1;
+        min-width: 0;
+        border: 1px solid #2f3336;
+        border-radius: 8px;
+        padding: 8px 10px;
+        color: #8b98a5;
+      }
+      .ui-button {
+        border: 1px solid #1d9bf0;
+        background: #1d9bf0;
+        color: #fff;
+        border-radius: 999px;
+        padding: 6px 14px;
         white-space: nowrap;
       }
 
-      .skill-chips span {
-        font-size: 0.8rem;
-        padding: 0.3rem 0.8rem;
-      }
-
-      /* ---------- Projects (right column) ---------- */
-      .projects-title {
-        font-size: clamp(1.3rem, 2.6vw, 1.7rem);
-        font-weight: 600;
-        color: var(--gold);
-        /* the cube centres itself in this column, so the heading centres too
-           and the two share an axis */
-        text-align: center;
-        /* carries the gap the removed hint line used to open up */
-        margin-bottom: 1.5rem;
-      }
-
-      /* whole card is one link — big touch target, no nested anchors */
-      .project-card {
-        display: flex;
-        flex-direction: column;
-        gap: 0.55rem;
-        padding: clamp(0.9rem, 2vw, 1.2rem);
-        border-radius: 0.9rem;
-        /* the gradient absorbs what brightness() used to add, leaving the
-           backdrop filter one pass instead of two over a canvas that
-           repaints every frame */
-        background: linear-gradient(
-          160deg,
-          rgba(130, 170, 220, 0.16),
-          rgba(20, 40, 70, 0.32)
-        );
-        border: 1px solid var(--glass-border);
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-        box-shadow: 0 15px 35px -18px rgba(0, 0, 0, 0.55);
-        text-decoration: none;
-        color: inherit;
+      .demo-note {
+        margin-top: 1rem;
+        font-size: 0.86rem;
+        color: var(--ink-3);
+        max-width: 34rem;
         text-shadow: var(--text-shadow);
-        transition: border-color 0.2s ease, transform 0.2s ease,
-          background 0.2s ease;
+      }
+      .demo-note a {
+        color: var(--ink-2);
+        text-underline-offset: 0.2em;
       }
 
-      .project-card:hover,
-      .project-card:focus-visible {
-        border-color: var(--gold-soft);
-        transform: translateY(-4px);
-        background: linear-gradient(
-          160deg,
-          rgba(130, 170, 220, 0.21),
-          rgba(25, 48, 82, 0.36)
-        );
+      /* the states: each example and each form share one grid cell, so a
+         switch rewrites the panel in place without moving anything else */
+      [data-when] {
+        transition: opacity 0.3s var(--ease), visibility 0s linear 0.3s;
       }
-
-      .project-card:hover .card-name,
-      .project-card:focus-visible .card-name {
-        color: var(--gold);
+      .demo-stack > .ex {
+        animation: ex-in 0.35s var(--ease);
       }
-
-      .card-head {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-      }
-
-      .card-icon {
-        width: 2.4rem;
-        height: 2.4rem;
-        flex: 0 0 auto;
-        border-radius: 0.65rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.05rem;
-        color: var(--gold);
-        background: rgb(var(--gold-rgb) / 0.12);
-        border: 1px solid rgb(var(--gold-rgb) / 0.25);
-      }
-
-      .card-name {
-        font-size: clamp(1.05rem, 2.2vw, 1.25rem);
-        font-weight: 600;
-        color: var(--ink);
-        line-height: 1.2;
-        transition: color 0.2s ease;
-      }
-
-      .card-desc {
-        color: var(--card-ink);
-        font-size: clamp(0.82rem, 1.6vw, 0.92rem);
-        line-height: 1.45;
-      }
-
-      .card-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.35rem;
-      }
-
-      .card-tags span {
-        font-size: 0.7rem;
-        padding: 0.18rem 0.6rem;
-      }
-
-      /* pinned to the bottom, so cards with descriptions of unequal length
-         still line their call-to-action up across the row */
-      .card-visit {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        margin-top: auto;
-        font-size: 0.82rem;
-        font-weight: 500;
-        color: var(--gold);
-        opacity: 0.85;
-        transition: opacity 0.2s ease;
-      }
-
-      /* the arrow slides on the compositor; animating `gap` relaid out the
-         whole card on every frame of the hover */
-      .card-visit i {
-        transition: transform 0.2s ease;
-      }
-
-      .project-card:hover .card-visit,
-      .project-card:focus-visible .card-visit {
-        opacity: 1;
-      }
-
-      .project-card:hover .card-visit i,
-      .project-card:focus-visible .card-visit i {
-        transform: translateX(0.3rem);
-      }
-
-      /* ---------- Projects cube ----------
-         The four cards are the four side faces of a cube that turns on its
-         own and under the pointer (cube.js). A cube of side S sweeps a
-         diagonal of S x 1.41 as it turns, so the size is capped per
-         breakpoint against the space the column actually has - otherwise it
-         would overflow the page halfway through every quarter turn. */
-      .cube-stage {
-        --cube-size: min(20rem, 58vw);
-        --cube-half: calc(var(--cube-size) / 2);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.9rem;
-      }
-
-      @media (min-width: 576px) {
-        .cube-stage {
-          --cube-size: min(21rem, 42vw);
+      @keyframes ex-in {
+        from {
+          opacity: 0;
         }
       }
-
-      @media (min-width: 992px) {
-        .cube-stage {
-          --cube-size: min(21rem, 26vw);
+      @supports selector(:has(*)) {
+        .demo:has(#ex-tab-a:not(:checked)) #ex-a,
+        .demo:has(#ex-tab-b:not(:checked)) #ex-b,
+        .demo:has(#ex-tab-c:not(:checked)) #ex-c,
+        .demo:has(#ex-tab-d:not(:checked)) #ex-d {
+          display: none;
+        }
+        .ex:has(input[value="accepted"]:checked) [data-when="refused"],
+        .ex:has(input[value="refused"]:checked) [data-when="accepted"] {
+          opacity: 0;
+          visibility: hidden;
+        }
+        .ex:has(input[value="accepted"]:checked) [data-when="accepted"],
+        .ex:has(input[value="refused"]:checked) [data-when="refused"] {
+          transition-delay: 0.1s, 0s;
         }
       }
-
-      .cube-viewport {
-        /* translateZ brings the front face half a cube nearer, so perspective
-           paints it larger than its box; reserve that or it laps over the
-           heading above and the dots below */
-        width: calc(var(--cube-size) * 1.18);
-        height: calc(var(--cube-size) * 1.18);
-        display: grid;
-        place-items: center;
-        perspective: 1600px;
-        /* a vertical swipe still scrolls the page; only sideways turns it */
-        touch-action: pan-y;
-        cursor: grab;
-      }
-
-      .cube-viewport.is-grabbing {
-        cursor: grabbing;
-      }
-
-      .cube {
-        position: relative;
-        width: var(--cube-size);
-        height: var(--cube-size);
-        transform-style: preserve-3d;
-        transform: rotateX(-7deg) rotateY(var(--rot, 0deg));
-        will-change: transform;
-      }
-
-      .cube-face {
-        position: absolute;
-        inset: 0;
-        backface-visibility: hidden;
-        /* a drag across a face must turn the cube, not start a native link
-           drag or sweep a text selection through the card */
-        user-select: none;
-        -webkit-user-select: none;
-        -webkit-user-drag: none;
-        justify-content: center;
-        /* the three faces turned away would still sit under the pointer */
-        pointer-events: none;
-        transform: rotateY(var(--face-rot)) translateZ(var(--cube-half));
-        /* an opaque face keeps the inside of the box out of sight; with
-           nothing visible behind it, backdrop-filter has nothing to blur
-           and only costs a pass inside a preserve-3d context */
-        background: linear-gradient(
-            160deg,
-            rgba(130, 170, 220, 0.16),
-            rgba(20, 40, 70, 0.32)
-          ),
-          rgba(5, 14, 28, 0.94);
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        padding: clamp(0.8rem, calc(var(--cube-size) * 0.06), 1.2rem);
-      }
-
-      .cube-face.is-front {
-        pointer-events: auto;
-      }
-
-      /* a square face is far taller than the content; the flat card pinned
-         its link to the bottom edge, which here would strand it */
-      .cube-face .card-visit {
-        margin-top: 0;
-      }
-
-      .cube-face:nth-child(1) {
-        --face-rot: 0deg;
-      }
-      .cube-face:nth-child(2) {
-        --face-rot: 90deg;
-      }
-      .cube-face:nth-child(3) {
-        --face-rot: 180deg;
-      }
-      .cube-face:nth-child(4) {
-        --face-rot: 270deg;
-      }
-
-      /* Both of these must outrank `.project-card:hover`, which is a class
-         plus a pseudo-class just like `.cube-face:hover` -- at equal
-         specificity the later rule wins, and that one sits further down the
-         sheet. Qualifying with both classes settles it by specificity
-         instead of by source order. */
-      .cube-face.project-card:hover,
-      .cube-face.project-card:focus-visible {
-        /* the flat card's lift would replace the face's own 3D placement and
-           drop it into the middle of the cube */
-        transform: rotateY(var(--face-rot)) translateZ(var(--cube-half));
-        /* and its hover background has no opaque base, so the face would turn
-           translucent and show the inside of the box */
-        background: linear-gradient(
-            160deg,
-            rgba(130, 170, 220, 0.21),
-            rgba(25, 48, 82, 0.36)
-          ),
-          rgba(5, 14, 28, 0.94);
-      }
-
-      /* type scales with the cube so a face stays readable at every size */
-      .cube-face .card-icon {
-        width: clamp(1.8rem, calc(var(--cube-size) * 0.115), 2.4rem);
-        height: clamp(1.8rem, calc(var(--cube-size) * 0.115), 2.4rem);
-      }
-
-      .cube-face .card-name {
-        font-size: clamp(0.95rem, calc(var(--cube-size) * 0.062), 1.25rem);
-      }
-
-      .cube-face .card-desc {
-        font-size: clamp(0.72rem, calc(var(--cube-size) * 0.043), 0.92rem);
-      }
-
-      .cube-face .card-tags span {
-        font-size: clamp(0.6rem, calc(var(--cube-size) * 0.032), 0.7rem);
-      }
-
-      .cube-face .card-visit {
-        font-size: clamp(0.7rem, calc(var(--cube-size) * 0.038), 0.82rem);
-      }
-
-      /* closes the box, so a tilted cube is not an open crate */
-      .cube-cap {
-        position: absolute;
-        inset: 0;
-        border-radius: 0.9rem;
-        border: 1px solid var(--glass-border);
-        background: linear-gradient(
-          160deg,
-          rgba(20, 40, 70, 0.6),
-          rgba(5, 14, 28, 0.85)
-        );
-        backface-visibility: hidden;
-      }
-
-      .cube-cap-top {
-        transform: rotateX(90deg) translateZ(var(--cube-half));
-      }
-
-      .cube-cap-bottom {
-        transform: rotateX(-90deg) translateZ(var(--cube-half));
-      }
-
-      .cube-dots {
-        display: flex;
-        gap: 0.35rem;
-      }
-
-      .cube-dot {
-        width: 1.5rem;
-        height: 1.5rem;
-        padding: 0;
-        border: 0;
-        background: none;
-        display: grid;
-        place-items: center;
-        cursor: pointer;
-      }
-
-      .cube-dot::before {
-        content: "";
-        width: 0.5rem;
-        height: 0.5rem;
-        border-radius: 999px;
-        border: 1px solid var(--chip-border);
-        transition: background 0.2s ease, border-color 0.2s ease;
-      }
-
-      .cube-dot:hover::before {
-        border-color: var(--gold);
-      }
-
-      .cube-dot[aria-current="true"]::before {
-        background: var(--gold);
-        border-color: var(--gold);
-      }
-
-      /* Motion off: no cube at all. The same four cards fall back to the flat
-         grid they used to be, a size down, and cube.js stands aside. */
-      @media (prefers-reduced-motion: reduce) {
-        .cube-stage {
+      /* no :has(): every example and form shows, one after another */
+      @supports not selector(:has(*)) {
+        .stack {
           display: block;
         }
-
-        .cube-viewport {
-          width: auto;
-          height: auto;
-          perspective: none;
-          touch-action: auto;
-          cursor: auto;
+        .stack > * + * {
+          margin-top: 0.75rem;
         }
-
-        .cube {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
-          gap: 0.7rem;
-          width: auto;
-          height: auto;
-          transform: none;
-          transform-style: flat;
-          will-change: auto;
+        .demo-stack > .ex + .ex {
+          border-top: 1px solid var(--line);
         }
-
-        /* matches the qualified cube rule above, so the flat card gets its
-           ordinary hover behaviour back */
-        .cube-face.project-card:hover,
-        .cube-face.project-card:focus-visible {
-          transform: translateY(-4px);
-          background: linear-gradient(
-            160deg,
-            rgba(130, 170, 220, 0.21),
-            rgba(25, 48, 82, 0.36)
-          );
+        .demo-stack > .ex {
+          animation: none;
         }
-
-        .cube-face {
-          position: static;
-          transform: none;
-          pointer-events: auto;
-          user-select: auto;
-          -webkit-user-select: auto;
-          backface-visibility: visible;
-          padding: 0.8rem;
-          gap: 0.45rem;
-          background: linear-gradient(
-            160deg,
-            rgba(130, 170, 220, 0.16),
-            rgba(20, 40, 70, 0.32)
-          );
-          backdrop-filter: blur(6px);
-          -webkit-backdrop-filter: blur(6px);
-        }
-
-        .cube-face .card-icon {
-          width: 1.9rem;
-          height: 1.9rem;
-          font-size: 0.85rem;
-          border-radius: 0.5rem;
-        }
-
-        .cube-face .card-name {
-          font-size: 0.98rem;
-        }
-
-        .cube-face .card-desc {
-          font-size: 0.78rem;
-        }
-
-        .cube-face .card-tags span {
-          font-size: 0.62rem;
-          padding: 0.12rem 0.45rem;
-        }
-
-        .cube-face .card-visit {
-          font-size: 0.74rem;
-        }
-
-        .cube-cap,
-        .cube-dots {
+        .files,
+        .form-switch {
           display: none;
         }
       }
 
-      /* ---------- Motion: strictly opt-in ----------
-         Every element is fully visible by default; users who allow motion
-         get the gradient shimmer and staggered entrances on top. */
-      @media (prefers-reduced-motion: no-preference) {
-        .hero-title {
-          animation: gradient-title 16s ease infinite;
+      /* ---------- Other projects ---------- */
+      .projects .section-head {
+        /* the camera has flown in toward the lighthouse; it stands in the
+           open sky to the right of this heading */
+        min-height: clamp(8rem, 22vh, 13rem);
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+        gap: 1.25rem;
+        perspective: 1400px;
+      }
+      .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        padding: 1.6rem 1.5rem 1.4rem;
+        background: var(--panel);
+        border: 1px solid var(--line-2);
+        border-radius: 1rem;
+        text-decoration: none;
+        color: inherit;
+        box-shadow: 0 1.5rem 3rem -1.5rem rgb(0 0 0 / 0.7);
+        transform: translateZ(calc(var(--base-tz, 0px) + var(--tz, 0px))) rotateX(var(--rx, 0deg))
+          rotateY(calc(var(--base-ry, 0deg) + var(--ry, 0deg)));
+        transition: transform 0.45s var(--ease), border-color 0.2s ease;
+      }
+      /* three panels on an arc around the reader, the middle one forward
+         and lower, so the row has depth instead of three equal tiles */
+      @media (min-width: 992px) {
+        .cards {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          align-items: start;
+          gap: 1.5rem;
         }
-
-        .fade-rise {
-          opacity: 0;
-          transform: translate3d(0, 20px, 0);
-          animation: fadeRise 0.8s ease-out forwards;
-          will-change: transform, opacity;
+        .card:nth-child(1) {
+          --base-ry: 10deg;
+          --base-tz: -40px;
         }
-
-        .fade-rise.d1 {
-          animation-delay: 0.15s;
+        .card:nth-child(2) {
+          --base-tz: 30px;
+          margin-top: 3rem;
         }
-        .fade-rise.d2 {
-          animation-delay: 0.3s;
-        }
-        .fade-rise.d3 {
-          animation-delay: 0.45s;
+        .card:nth-child(3) {
+          --base-ry: -10deg;
+          --base-tz: -40px;
         }
       }
-
-      /* background-size is 200% 100%, so only x has anywhere to travel -
-         the old `100% 100%` animated a dimension with zero range */
-      @keyframes gradient-title {
-        0% {
-          background-position: 0% 0%;
-        }
-        50% {
-          background-position: 100% 0%;
-        }
-        100% {
-          background-position: 0% 0%;
-        }
+      .card:hover,
+      .card:focus-visible {
+        border-color: var(--gold-soft);
+        --tz: 18px;
+      }
+      .card h3 {
+        font-size: clamp(1.7rem, 3vw, 2.1rem);
+        transition: color 0.2s ease;
+      }
+      .card:hover h3,
+      .card:focus-visible h3 {
+        color: var(--gold);
+      }
+      .card p {
+        color: var(--ink-2);
+        font-size: 0.98rem;
+      }
+      .tags {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem 0.9rem;
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: #a9c4dd;
+      }
+      .card .go {
+        margin-top: auto;
+        padding-top: 0.6rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--gold);
+      }
+      .card .go i {
+        transition: transform 0.2s ease;
+      }
+      .card:hover .go i,
+      .card:focus-visible .go i {
+        transform: translateX(0.25rem);
       }
 
-      @keyframes fadeRise {
-        to {
-          opacity: 1;
-          transform: translate3d(0, 0, 0);
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .btn-custom:hover,
-        .btn-custom:focus-visible,
-        .project-card:hover,
-        .project-card:focus-visible,
-        .project-card:hover .card-visit i,
-        .project-card:focus-visible .card-visit i {
-          transform: none;
-        }
-      }
-
-      /* Tupi-Guarani constellations hint. Two things were wrong with it:
-         display:none below 992px hid it on exactly the devices that cannot
-         hover, and position:fixed let it sit on top of the bottom cards
-         whenever the page was tall enough to scroll. It is a flow item now,
-         parked in the corner of the layout rather than of the viewport. */
-      .sky-hint {
-        grid-column: 1 / -1;
-        justify-self: start;
-        max-width: 21rem;
-        font-size: 0.72rem;
-        line-height: 1.4;
-        color: var(--ink-dim);
-        opacity: 0.85;
-        pointer-events: none;
+      .toolbox {
+        margin-top: clamp(2.5rem, 5vw, 3.5rem);
         text-shadow: var(--text-shadow);
       }
+      .toolbox h3 {
+        font-size: 1.25rem;
+        letter-spacing: -0.01em;
+        margin-bottom: 0.9rem;
+      }
+      .chips {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .chips li {
+        font-size: 0.86rem;
+        padding: 0.32rem 0.85rem;
+        color: #bcd3ea;
+        /* solid enough to read over the lamp's glitter on the water */
+        background: rgb(8 18 36 / 0.82);
+        border: 1px solid rgb(148 180 220 / 0.25);
+        border-radius: 999px;
+        text-shadow: none;
+        white-space: nowrap;
+      }
 
-      @media (min-width: 992px) {
-        .sky-hint {
-          justify-self: end;
-          text-align: right;
-          /* claw back most of the layout's row gap so this reads as a
-             caption under the content, not a stranded paragraph */
-          margin-top: calc(1.5rem - clamp(2rem, 5vw, 4rem));
+      /* ---------- The sky ---------- */
+      /* the camera turns up while this section fills the screen; its words
+         keep to the top and the bottom so the figures have the middle */
+      .sky {
+        min-height: 135vh;
+        min-height: 135svh;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        padding: clamp(5rem, 11vh, 7rem) 0 clamp(3rem, 7vh, 4.5rem);
+        text-shadow: var(--text-shadow);
+      }
+      .sky-top {
+        position: sticky;
+        top: 1.5rem;
+        align-self: start;
+      }
+      .sky-top p {
+        margin-top: 0.9rem;
+        max-width: 38rem;
+        color: var(--ink-2);
+      }
+      /* the picker docks at the bottom of the screen, but never rides up
+         over the heading */
+      .sky-dock {
+        grid-row: 2 / 4;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        margin-top: 2rem;
+      }
+      .sky-bottom {
+        position: sticky;
+        bottom: 1rem;
+        display: grid;
+        gap: 0.9rem 2rem;
+        padding: 1rem 1.25rem;
+        background: rgb(3 7 18 / 0.78);
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        text-shadow: none;
+      }
+      @media (min-width: 900px) {
+        .sky-bottom {
+          bottom: 1.5rem;
+          grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+          align-items: center;
+        }
+      }
+      .sky-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .sky-list button {
+        font: inherit;
+        font-size: 0.9rem;
+        color: var(--ink-2);
+        background: rgb(255 255 255 / 0.03);
+        border: 1px solid var(--line-2);
+        border-radius: 999px;
+        padding: 0.4rem 0.85rem;
+        cursor: pointer;
+        transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+      }
+      .sky-list button:hover {
+        border-color: var(--gold-soft);
+        color: var(--ink);
+      }
+      .sky-list button[aria-pressed="true"] {
+        border-color: var(--gold);
+        background: rgb(var(--gold-rgb) / 0.12);
+        color: var(--ink);
+      }
+      .sky-list button span {
+        color: var(--ink-3);
+        margin-left: 0.4em;
+      }
+      .sky-note h3 {
+        font-size: 1.35rem;
+        letter-spacing: -0.01em;
+      }
+      .sky-note h3 small {
+        font-family: var(--sans);
+        font-size: 0.9rem;
+        font-weight: 400;
+        letter-spacing: 0;
+        color: var(--ink-3);
+        margin-left: 0.4rem;
+      }
+      .sky-note p {
+        margin-top: 0.35rem;
+        color: var(--ink-2);
+        font-size: 0.95rem;
+      }
+      /* on a phone the heading scrolls away first and the stage stays: the
+         names scroll sideways in a short dock, so the figures keep the screen */
+      @media (max-width: 899px) {
+        .sky {
+          min-height: 175vh;
+          min-height: 175svh;
+        }
+        .sky-top {
+          position: static;
+          /* the top figures sit behind these words until the reader scrolls on */
+          padding: 1rem 1.1rem;
+          background: rgb(3 7 18 / 0.66);
+          border: 1px solid var(--line);
+          border-radius: 1rem;
+        }
+        .sky-list {
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          scrollbar-width: none;
+          margin: 0 -1.25rem;
+          padding: 0 1.25rem 0.25rem;
+        }
+        .sky-list button {
+          flex: none;
+        }
+        .sky-note h3 {
+          font-size: 1.15rem;
+        }
+        .sky-note p {
+          font-size: 0.88rem;
+          display: -webkit-box;
+          -webkit-line-clamp: 4;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
       }
 
-      /* Keyboard focus */
-      /* the outline already follows each element's own border-radius; the
-         flat 0.25rem that used to be here re-shaped buttons and cards the
-         moment they took focus */
-      :focus-visible {
-        outline: 2px solid var(--gold);
-        outline-offset: 3px;
+      /* ---------- Contact ---------- */
+      .contact {
+        min-height: 100vh;
+        min-height: 100svh;
+        display: grid;
+        grid-template-rows: 1fr auto;
+        padding-top: 6rem;
+        text-shadow: var(--text-shadow);
+      }
+      .contact-inner {
+        align-self: center;
+        display: grid;
+      }
+      .contact-copy {
+        max-width: 38rem;
+      }
+      @media (min-width: 992px) {
+        .contact-copy {
+          justify-self: end;
+          width: min(38rem, 48%);
+        }
+      }
+      .contact h2 {
+        font-size: clamp(2.6rem, 6.5vw, 5rem);
+      }
+      .contact-copy > p {
+        margin-top: 1rem;
+        color: var(--ink-2);
+      }
+      .contact .mail {
+        margin-top: 1.6rem;
+        font-size: clamp(0.84rem, 3.5vw, 1.05rem);
+        padding: 0.85rem clamp(0.9rem, 3vw, 1.35rem);
+        white-space: nowrap;
+      }
+      .contact .links {
+        margin-top: 0.9rem;
+      }
+      /* the small print sits on its own band, clear of the lighthouse's
+         reflection on the water */
+      .fine-band {
+        background: rgb(3 7 18 / 0.85);
+        border-top: 1px solid var(--line);
+        text-shadow: none;
+      }
+      .fineprint {
+        padding: 1.4rem 0 1.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0.5rem 2rem;
+        font-size: 0.82rem;
+        color: var(--ink-3);
+      }
+      .fineprint span:first-child {
+        max-width: 42rem;
       }
 
-      /* Selection */
-      ::selection {
-        background-color: rgb(var(--gold-rgb) / 0.3);
-        color: var(--ink);
+      [id] {
+        scroll-margin-top: 1rem;
+      }
+
+      /* ---------- Motion ---------- */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+          transition-delay: 0s !important;
+        }
+        .btn:hover,
+        .btn:focus-visible {
+          transform: none;
+        }
+        .demo-stack > .ex {
+          animation: none;
+        }
+      }
+
+      /* high contrast drops the gold fills that mark what is chosen; an
+         outline in the system colour marks it instead */
+      @media (forced-colors: active) {
+        .lang button[aria-pressed="true"],
+        .sky-list button[aria-pressed="true"],
+        .files input:checked + span,
+        .form-switch input:checked + span {
+          outline: 2px solid Highlight;
+          outline-offset: -2px;
+        }
       }
     </style>
   </head>
@@ -798,224 +1176,419 @@
     <!-- Lighthouse beam flash overlay -->
     <div class="beam-flash" id="beamFlash" aria-hidden="true"></div>
 
-    <!-- Main Content -->
-    <main class="main-content">
-      <div class="layout">
-        <!-- Left: hero, stats, skills -->
-        <section class="hero-section">
-          <h1 class="hero-title fade-rise">
-            Rodrigo <br />
-            Heinzen de Moraes
-          </h1>
-          <h2 class="hero-subtitle fade-rise d1">Software Engineer</h2>
-          <p class="hero-description fade-rise d1">
-            Six years building web applications and distributed systems.
-            Lately I’ve been drawn to language design — type systems,
-            compilers, and making concurrency something you can reason about.
-          </p>
+    <nav class="lang" aria-label="Language" data-i18n-attr="aria-label:lang.aria">
+      <button type="button" data-lang="en" lang="en" title="English" aria-label="English" aria-pressed="true">EN</button>
+      <button type="button" data-lang="pt" lang="pt" title="Português" aria-label="Português" aria-pressed="false">PT</button>
+      <button type="button" data-lang="de" lang="de" title="Deutsch" aria-label="Deutsch" aria-pressed="false">DE</button>
+    </nav>
 
-          <div class="social-links fade-rise d2">
-            <a
-              href="https://github.com/R0DR160HM"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn-custom"
-            >
+    <main>
+      <header class="hero" data-scene="hero">
+        <div class="wrap hero-inner">
+          <div class="hero-copy">
+            <h1 class="name">Rodrigo<br />Heinzen de Moraes</h1>
+            <p class="role" data-i18n="hero.role">Software engineer</p>
+            <p class="bio" data-i18n="hero.bio">
+              Seven years building web applications and distributed systems. Lately I&rsquo;ve been drawn to
+              language design &mdash; type systems, compilers, and making concurrency something you can reason
+              about.
+            </p>
+            <div class="links">
+              <a class="btn" href="https://github.com/R0DR160HM" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-github" aria-hidden="true"></i>
+                GitHub
+              </a>
+              <a class="btn" href="https://www.linkedin.com/in/rodrigo-heinzen-de-moraes-754b67193/" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-linkedin" aria-hidden="true"></i>
+                LinkedIn
+              </a>
+              <a class="btn" href="mailto:rodrigo.heinzen.moraes@gmail.com">
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+                <span data-i18n="hero.contact">Contact</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <a class="next" href="#hive">
+          <span data-i18n="hero.next">Hive, my main project</span>
+          <i class="fas fa-arrow-down" aria-hidden="true"></i>
+        </a>
+      </header>
+
+      <section class="section hive scrim" id="hive" data-scene="hive" aria-labelledby="hive-h">
+        <div class="wrap">
+          <div class="section-head">
+            <div class="hive-intro">
+              <h2 id="hive-h">Hive</h2>
+              <p class="lede" data-i18n="hive.lede">A compiled language for distributed systems, in which what would crash does not compile.</p>
+              <p class="body" data-i18n="hive.body">
+                Hive is my main project: a small language I designed and built. There is no null, nothing is
+                thrown, and every index is proved in range before the program runs. It compiles to Go and ships as
+                a single native executable. It is young &mdash; not yet 1.0 &mdash; and its tour covers the whole
+                language in 74 short slides.
+              </p>
+              <div class="links">
+                <a class="btn primary" href="https://hive-lang.run" data-i18n-attr="href:href.tour" target="_blank" rel="noopener noreferrer">
+                  <span data-i18n="hive.tour">Take the tour</span>
+                  <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
+                <a class="btn" href="https://github.com/R0DR160HM/hive-lang" target="_blank" rel="noopener noreferrer">
+                  <i class="fab fa-github" aria-hidden="true"></i>
+                  <span data-i18n="hive.source">Source</span>
+                </a>
+              </div>
+            </div>
+            <ul class="facts">
+              <li>
+                <b data-i18n="hive.f1.t">No crashes in production</b>
+                <span data-i18n="hive.f1.d">No null, no exceptions, no out-of-range index: what would crash elsewhere does not compile.</span>
+              </li>
+              <li>
+                <b data-i18n="hive.f2.t">One process or many machines</b>
+                <span data-i18n="hive.f2.d">Services keep their state behind a mailbox, so nothing needs a lock, and calling one across the network looks exactly like calling one locally.</span>
+              </li>
+              <li>
+                <b data-i18n="hive.f3.t">Runs everywhere</b>
+                <span data-i18n="hive.f3.d">The same code on Windows, Linux, macOS, the browser, a container and Android.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="demo-stage">
+            <div class="demo">
+              <div class="demo-bar">
+                <fieldset class="files">
+                  <legend class="visually-hidden" data-i18n="demo.files">Example program</legend>
+                  <label><input type="radio" name="ex" id="ex-tab-a" value="a" checked /><span>guard.hive</span></label>
+                  <label><input type="radio" name="ex" id="ex-tab-b" value="b" /><span>token.hive</span></label>
+                  <label><input type="radio" name="ex" id="ex-tab-c" value="c" /><span>inbox.hive</span></label>
+                  <label><input type="radio" name="ex" id="ex-tab-d" value="d" /><span>page.hive</span></label>
+                </fieldset>
+              </div>
+
+              <div class="demo-stack">
+                <!-- (a) slide 18: an index worked out on the spot proves nothing -->
+                <div class="ex" id="ex-a">
+                  <div class="ex-head">
+                    <p class="ex-about" data-i18n="a.about">Every index is proved in range before the program runs &middot; <a href="https://hive-lang.run/18" target="_blank" rel="noopener noreferrer">tour, slide 18</a></p>
+                    <fieldset class="form-switch">
+                      <legend data-i18n="a.legend">Index the last element with</legend>
+                      <label><input type="radio" name="form-a" value="refused" checked /><span><code>v[len(v) - 1]</code></span></label>
+                      <label><input type="radio" name="form-a" value="accepted" /><span><code>if v bounds last</code></span></label>
+                    </fieldset>
+                  </div>
+                  <div class="ex-body">
+                    <div class="stack">
+                      <div class="listing" data-when="refused">
+                        <pre class="ln" aria-hidden="true">1
+2
+<span class="err">3</span>
+4</pre>
+                        <pre><code><b>proc</b> main(): void {
+	v := [<span class="s">"a"</span>, <span class="s">"b"</span>, <span class="s">"c"</span>]
+	<b>echo</b> <mark class="tok">v[len(v) - 1]</mark>
+}</code></pre>
+                      </div>
+                      <div class="listing" data-when="accepted">
+                        <pre class="ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7</pre>
+                        <pre><code><b>proc</b> main(): void {
+	v := [<span class="s">"a"</span>, <span class="s">"b"</span>, <span class="s">"c"</span>]
+	last := len(v) - 1
+	<b>if</b> v <b>bounds</b> last {
+		<b>echo</b> <mark class="tok">v[last]</mark>
+	}
+}</code></pre>
+                      </div>
+                    </div>
+                    <div class="stack" aria-live="polite">
+                      <div class="term" data-when="refused">
+                        <samp class="prompt">$ hive check guard.hive</samp>
+                        <p class="status no"><i class="fas fa-circle-xmark" aria-hidden="true"></i><span data-i18n="status.no">Refused at compile time</span></p>
+                        <samp>guard.hive:1: in `main`: cannot prove this index is in range: it is a computed expression, and there is nothing to hang a guard on. Bind it to a name first, then guard that</samp>
+                      </div>
+                      <div class="term" data-when="accepted">
+                        <samp class="prompt">$ hive run guard.hive</samp>
+                        <p class="status yes"><i class="fas fa-circle-check" aria-hidden="true"></i><span data-i18n="a.yes">Compiles: the guard proves the index</span></p>
+                        <samp>c</samp>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- (b) slide 60: a JWT is a codec, like JSON's -->
+                <div class="ex" id="ex-b">
+                  <div class="ex-head">
+                    <p class="ex-about" data-i18n="b.about">A JWT is a codec: sign a value of your own type, and check it before reading it back &middot; <a href="https://hive-lang.run/60" target="_blank" rel="noopener noreferrer">tour, slide 60</a></p>
+                  </div>
+                  <div class="ex-body">
+                    <div class="listing">
+                      <pre class="ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11</pre>
+                      <pre><code><b>type</b> Claims { user: Str }
+<b>proc</b> main(): void {
+	<b>if</b> hide(hive.crypto.randomHex(32)) <b>is</b> Result.Ok(key) {
+		jwt := hive.crypto.jwtCodec(key)
+		token := encode(Claims(<span class="s">"ada"</span>), jwt)
+		<i data-i18n="b.c1">// Checks the signature and the times, then reads the claims.</i>
+		<b>if</b> Claims.decode(token, jwt) <b>is</b> Result.Ok(claims) {
+			<b>echo</b> claims.user
+		}
+	}
+}</code></pre>
+                    </div>
+                    <div class="term">
+                      <samp class="prompt">$ hive run token.hive</samp>
+                      <p class="status yes"><i class="fas fa-circle-check" aria-hidden="true"></i><span data-i18n="b.yes">Signed, checked and read back</span></p>
+                      <samp>ada</samp>
+                      <p class="why" data-i18n="b.why">&ldquo;Only HS256 is accepted, which closes the classic algorithm-confusion attack outright.&rdquo; (<a href="https://hive-lang.run/60" target="_blank" rel="noopener noreferrer">slide 60</a>)</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- (c) slides 38 and 59: a service, and the same call to another node -->
+                <div class="ex" id="ex-c">
+                  <div class="ex-head">
+                    <p class="ex-about" data-i18n="c.about">A service handles one message at a time, here or on another machine &middot; tour, slides <a href="https://hive-lang.run/38" target="_blank" rel="noopener noreferrer">38</a> and <a href="https://hive-lang.run/59" target="_blank" rel="noopener noreferrer">59</a></p>
+                  </div>
+                  <div class="ex-body">
+                    <div class="listing">
+                      <pre class="ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17</pre>
+                      <pre><code><b>type</b> Note {
+	Say   { text: Str }
+	Heard { count: Int }
+}
+<i data-i18n="c.c1">// One message at a time: no lock, wherever it runs.</i>
+<b>proc</b> inbox(count: <b>mut</b> Int, note: Note): Note {
+	count += 1
+	<b>return</b> Note.Heard(count)
+}
+<b>proc</b> main(): void {
+	<b>if</b> hive.syslink.listen(<span class="s">"10.0.0.1:9100"</span>) <b>is</b> Result.Error(e) {
+		panic e
+	}
+	spawn(inbox, 0, #Inbox)
+	there := at(<span class="s">"10.0.0.2:9100"</span>, #Inbox)   <i data-i18n="c.c2">// on another machine</i>
+	<b>echo</b> there(Note.Say(<span class="s">"hi"</span>))
+}</code></pre>
+                    </div>
+                    <div class="term pane" data-i18n="c.pane">
+                      <p class="pane-h">Run it on both machines</p>
+                      <p>On the second one, swap the two addresses. A node is identified by where it can be reached, so nothing else about the two processes differs.</p>
+                      <p>Calling the service over there is the same line as calling one here, and messages between two nodes arrive in the order they were sent. &ldquo;Every connection between two nodes is TLS 1.3, mutually authenticated&rdquo; (<a href="https://hive-lang.run/59" target="_blank" rel="noopener noreferrer">slide 59</a>).</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- (d) slide 64: an interface is a value -->
+                <div class="ex" id="ex-d">
+                  <div class="ex-head">
+                    <p class="ex-about" data-i18n="d.about">An interface is a value: a tree of widgets, served as a page or shown in a window &middot; tour, slides <a href="https://hive-lang.run/64" target="_blank" rel="noopener noreferrer">64</a> and <a href="https://hive-lang.run/65" target="_blank" rel="noopener noreferrer">65</a></p>
+                  </div>
+                  <div class="ex-body">
+                    <div class="listing">
+                      <pre class="ln" aria-hidden="true">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12</pre>
+                      <pre><code><b>proc</b> main(): void {
+	view := hive.ui.column([hive.ui.pad(24), hive.ui.gap(12)], [
+		hive.ui.text([hive.ui.heading(1)], <span class="s">"Hive Tour"</span>),
+		hive.ui.row([hive.ui.gap(8)], [
+			hive.ui.input([hive.ui.placeholder(<span class="s">"your name"</span>)], <span class="s">""</span>),
+			hive.ui.button([hive.ui.tone(hive.ui.Tone.Good())], <span class="s">"Say hi"</span>),
+		]),
+	])
+	<i data-i18n="d.c1">// a whole document, served directly</i>
+	body := hive.ui.page(<span class="s">"Hive"</span>, view)
+	<b>echo</b> len(body)
+}</code></pre>
+                    </div>
+                    <div class="term pane">
+                      <p class="pane-h" data-i18n="d.label">Roughly how <code>hive.ui</code> draws it</p>
+                      <div class="ui-preview" role="img" aria-label="A heading reading Hive Tour, a field reading your name, and a Say hi button" data-i18n-attr="aria-label:d.aria">
+                        <span class="ui-title">Hive Tour</span>
+                        <span class="ui-row"><span class="ui-input">your name</span><span class="ui-button">Say hi</span></span>
+                      </div>
+                      <p class="why" data-i18n="d.why">&ldquo;Because a view is a value, an interface is testable without a browser&rdquo; (<a href="https://hive-lang.run/64" target="_blank" rel="noopener noreferrer">slide 64</a>).</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="demo-note" data-i18n="demo.note">Four small programs adapted from the Hive tour. The first comes in a form the compiler refuses and a form it accepts; its message is <code>hive check</code>&rsquo;s own, quoted from <a href="https://hive-lang.run/70" target="_blank" rel="noopener noreferrer">slide 70</a>.</p>
+        </div>
+      </section>
+
+      <section class="section projects" id="projects" data-scene="projects" aria-labelledby="projects-h">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 id="projects-h" data-i18n="projects.h">Other projects</h2>
+          </div>
+          <div class="cards">
+            <a class="card" data-tilt href="https://github.com/R0DR160HM/webproxy_server" target="_blank" rel="noopener noreferrer">
+              <h3>WebProxy</h3>
+              <p data-i18n="webproxy.d">Web-based distributed cache engine.</p>
+              <ul class="tags" aria-label="Built with" data-i18n-attr="aria-label:tags.aria">
+                <li>Gleam</li>
+                <li>ETS</li>
+                <li>IndexedDB</li>
+                <li>WebSockets</li>
+              </ul>
+              <span class="go"><span data-i18n="go.github">View on GitHub</span> <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+            </a>
+            <a class="card" data-tilt href="https://hex.pm/packages/database" target="_blank" rel="noopener noreferrer">
+              <h3>Database</h3>
+              <p data-i18n="database.d">DETS/ETS-based embedded database for Gleam.</p>
+              <ul class="tags" aria-label="Built with" data-i18n-attr="aria-label:tags.aria">
+                <li>Gleam</li>
+                <li>Erlang</li>
+                <li>DETS</li>
+              </ul>
+              <span class="go"><span data-i18n="go.hex">View on Hex</span> <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+            </a>
+            <a class="card" data-tilt href="https://github.com/R0DR160HM/Slopmachine" target="_blank" rel="noopener noreferrer">
+              <h3>Slopmachine</h3>
+              <p data-i18n="slop.d">Toy research-focused general-purpose AI agent that turned out surprisingly functional.</p>
+              <ul class="tags" aria-label="Built with" data-i18n-attr="aria-label:tags.aria">
+                <li>Python</li>
+                <li>Ollama</li>
+                <li>ddgs</li>
+                <li>tool-calling</li>
+              </ul>
+              <span class="go"><span data-i18n="go.github">View on GitHub</span> <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+            </a>
+          </div>
+
+          <div class="toolbox">
+            <h3 data-i18n="tools.h">Technologies I work with</h3>
+            <ul class="chips">
+              <li>Hive</li>
+              <li>Gleam</li>
+              <li>Angular</li>
+              <li>TypeScript</li>
+              <li>JavaScript</li>
+              <li>Java</li>
+              <li>Spring Boot</li>
+              <li>Python</li>
+              <li>SQL</li>
+              <li>Git</li>
+              <li>AWS</li>
+              <li>WebSockets</li>
+              <li data-i18n="chip.ds">Distributed Systems</li>
+              <li data-i18n="chip.ai">AI Agents</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="sky" id="sky" data-scene="sky" aria-labelledby="sky-h">
+        <div class="wrap sky-top">
+          <h2 id="sky-h" data-i18n="sky.h">The sky above</h2>
+          <p data-i18n="sky.p">
+            Six Tupi-Guarani constellations are drawn in this page&rsquo;s sky. They were recorded among the
+            Tupinamb&aacute; by Claude d&rsquo;Abbeville in 1614 and mapped again by the astronomer Germano Afonso
+            with Guarani communities. Sweep across the stars to light them, or pick one below.
+          </p>
+        </div>
+        <div class="wrap sky-dock" data-scene-hold>
+          <div class="sky-bottom">
+            <div class="sky-list" role="group" aria-label="Constellations" data-i18n-attr="aria-label:sky.aria">
+              <button type="button" data-figure="guyra-nhandu" aria-pressed="false">Guyra Nhandu<span data-i18n="sky.rhea">the Rhea</span></button>
+              <button type="button" data-figure="curuxu" aria-pressed="false">Curuxu<span data-i18n="sky.cross">the Southern Cross</span></button>
+              <button type="button" data-figure="tuya-i" aria-pressed="false">Tuya&rsquo;i<span data-i18n="sky.oldman">the Old Man</span></button>
+              <button type="button" data-figure="eixu" aria-pressed="false">Eixu<span data-i18n="sky.nest">the Wasps&rsquo; Nest</span></button>
+              <button type="button" data-figure="tapi-i" aria-pressed="false">Tapi&rsquo;i<span data-i18n="sky.tapir">the Tapir</span></button>
+              <button type="button" data-figure="guaxu" aria-pressed="false">Guaxu<span data-i18n="sky.deer">the Deer</span></button>
+            </div>
+            <div class="sky-note" id="sky-note" aria-live="polite"></div>
+            <!-- what each figure is, for the note above (page.js); i18n.js
+                 translates these in place, templates included -->
+            <template id="sky-figures">
+              <div data-figure="" data-i18n="sky.default"><h3>Six figures <small>pick one to bring it forward</small></h3><p>Each is traced from Germano Afonso&rsquo;s charts. The Rhea is a dark constellation, drawn in the gaps of the Milky Way as much as in its stars.</p></div>
+              <div data-figure="guyra-nhandu" data-i18n="fig.guyra"><h3>Guyra Nhandu <small>the Rhea</small></h3><p>A dark constellation: her head is the Coalsack nebula. She stands tall, beak raised, both three-toed feet stepping to the left and her tail curled low at the right, with &alpha; and &beta; Centauri shining inside her body.</p></div>
+              <div data-figure="curuxu" data-i18n="fig.curuxu"><h3>Curuxu <small>the Southern Cross</small></h3><p>Just above and to the right of the Rhea&rsquo;s head, holding it shut.</p></div>
+              <div data-figure="tuya-i" data-i18n="fig.tuya"><h3>Tuya&rsquo;i <small>the Old Man</small></h3><p>A triangular head in the Hyades, on Aldebaran; a plume reaching the Pleiades; a raised arm and one line to Betelgeuse. His good leg bends at the Three Marys, the stars of Orion&rsquo;s belt, and his severed leg is drawn dashed down to Rigel.</p></div>
+              <div data-figure="eixu" data-i18n="fig.eixu"><h3>Eixu <small>the Wasps&rsquo; Nest, the Pleiades</small></h3><p>The same cluster that tips the Old Man&rsquo;s plume. The two were named as separate constellations, so the nest sits on that point, with a few stray wasps around it.</p></div>
+              <div data-figure="tapi-i" data-i18n="fig.tapi"><h3>Tapi&rsquo;i <small>the Tapir</small></h3><p>She walks the far end of the Milky Way, low by the horizon: snout on the bright star by the nebula, ears pricked, hind legs trailing behind her.</p></div>
+              <div data-figure="guaxu" data-i18n="fig.guaxu"><h3>Guaxu <small>the Deer</small></h3><p>On the Milky Way just ahead of the Rhea, leaping the same way she runs: muzzle raised, antler swept back, all four legs trailing mid-stride.</p></div>
+            </template>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="contact" id="contact" data-scene="contact" aria-labelledby="contact-h">
+      <div class="wrap contact-inner">
+        <div class="contact-copy">
+          <h2 id="contact-h" data-i18n="contact.h">Get in touch</h2>
+          <p data-i18n="contact.p">
+            The quickest way to reach me is email. My code is on GitHub, and my work history is on LinkedIn.
+          </p>
+          <a class="btn primary mail" href="mailto:rodrigo.heinzen.moraes@gmail.com">
+            <i class="fas fa-envelope" aria-hidden="true"></i>
+            rodrigo.heinzen.moraes@gmail.com
+          </a>
+          <div class="links">
+            <a class="btn" href="https://github.com/R0DR160HM" target="_blank" rel="noopener noreferrer">
               <i class="fab fa-github" aria-hidden="true"></i>
               GitHub
             </a>
-            <a
-              href="https://www.linkedin.com/in/rodrigo-heinzen-de-moraes-754b67193/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn-custom"
-            >
+            <a class="btn" href="https://www.linkedin.com/in/rodrigo-heinzen-de-moraes-754b67193/" target="_blank" rel="noopener noreferrer">
               <i class="fab fa-linkedin" aria-hidden="true"></i>
               LinkedIn
             </a>
-            <a
-              href="mailto:rodrigo.heinzen.moraes@gmail.com"
-              class="btn-custom"
-            >
-              <i class="fas fa-envelope" aria-hidden="true"></i>
-              Contact
-            </a>
           </div>
-
-          <div class="skills-section fade-rise d3">
-            <h3 class="section-label">Technologies I work with</h3>
-            <div class="skill-chips">
-              <span>Hive</span>
-              <span>Gleam</span>
-              <span>Angular</span>
-              <span>TypeScript</span>
-              <span>JavaScript</span>
-              <span>Java</span>
-              <span>Spring Boot</span>
-              <span>Python</span>
-              <span>SQL</span>
-              <span>Git</span>
-              <span>AWS</span>
-              <span>WebSockets</span>
-              <span>Distributed Systems</span>
-              <span>AI Agents</span>
-            </div>
-          </div>
-        </section>
-
-        <!-- Right: projects -->
-        <section class="projects-section">
-          <div class="fade-rise d2">
-            <h3 class="projects-title">Projects I'm proud of</h3>
-          </div>
-
-          <div class="cube-stage fade-rise d3">
-            <div class="cube-viewport">
-              <div class="cube">
-                <a
-                  class="project-card cube-face"
-                  href="https://hive-lang.run"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div class="card-head">
-                    <div class="card-icon">
-                      <i class="fas fa-cubes" aria-hidden="true"></i>
-                    </div>
-                    <span class="card-name">Hive</span>
-                  </div>
-                  <p class="card-desc">
-                    High-level safety-first language built for distributed, highly concurrent systems.
-                  </p>
-                  <div class="card-tags">
-                    <span>Functional Programming</span>
-                    <span>Compilers</span>
-                    <span>Type Systems</span>
-                  </div>
-                  <span class="card-visit">
-                    Read the tour
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                  </span>
-                </a>
-
-                <a
-                  class="project-card cube-face"
-                  href="https://github.com/R0DR160HM/webproxy_server"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div class="card-head">
-                    <div class="card-icon">
-                      <i class="fas fa-circle-nodes" aria-hidden="true"></i>
-                    </div>
-                    <span class="card-name">WebProxy</span>
-                  </div>
-                  <p class="card-desc">Web-based distributed cache engine.</p>
-                  <div class="card-tags">
-                    <span>Gleam</span>
-                    <span>ETS</span>
-                    <span>IndexedDB</span>
-                    <span>WebSockets</span>
-                  </div>
-                  <span class="card-visit">
-                    View on GitHub
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                  </span>
-                </a>
-
-                <a
-                  class="project-card cube-face"
-                  href="https://hex.pm/packages/database"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div class="card-head">
-                    <div class="card-icon">
-                      <i class="fas fa-database" aria-hidden="true"></i>
-                    </div>
-                    <span class="card-name">Database</span>
-                  </div>
-                  <p class="card-desc">
-                    DETS/ETS-based embedded database for Gleam.
-                  </p>
-                  <div class="card-tags">
-                    <span>Gleam</span>
-                    <span>Erlang</span>
-                    <span>DETS</span>
-                  </div>
-                  <span class="card-visit">
-                    View on Hex
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                  </span>
-                </a>
-
-                <a
-                  class="project-card cube-face"
-                  href="https://github.com/R0DR160HM/Slopmachine"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div class="card-head">
-                    <div class="card-icon">
-                      <i class="fas fa-robot" aria-hidden="true"></i>
-                    </div>
-                    <span class="card-name">Slopmachine</span>
-                  </div>
-                  <p class="card-desc">
-                    Toy research-focused general-purpose AI agent that turned out
-                    surprisingly functional.
-                  </p>
-                  <div class="card-tags">
-                    <span>Python</span>
-                    <span>Ollama</span>
-                    <span>ddgs</span>
-                    <span>tool-calling</span>
-                  </div>
-                  <span class="card-visit">
-                    View on GitHub
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                  </span>
-                </a>
-                <div class="cube-cap cube-cap-top" aria-hidden="true"></div>
-                <div
-                  class="cube-cap cube-cap-bottom"
-                  aria-hidden="true"
-                ></div>
-              </div>
-            </div>
-            <div class="cube-dots">
-              <button
-                type="button"
-                class="cube-dot"
-                aria-label="Show Hive"
-              ></button>
-              <button
-                type="button"
-                class="cube-dot"
-                aria-label="Show WebProxy"
-              ></button>
-              <button
-                type="button"
-                class="cube-dot"
-                aria-label="Show Database"
-              ></button>
-              <button
-                type="button"
-                class="cube-dot"
-                aria-label="Show Slopmachine"
-              ></button>
-            </div>
-          </div>
-        </section>
-
-        <p class="sky-hint">
-          Six Tupi-Guarani constellations are hidden in the sky above. Sweep
-          across the stars to find them, or wait and they will reveal
-          themselves one by one.
-        </p>
+        </div>
       </div>
-    </main>
+      <div class="fine-band">
+        <div class="wrap fineprint">
+          <span data-i18n="fine.made">Hand-built: HTML, CSS and three.js, no build step. Constellations after d&rsquo;Abbeville (1614) and Germano Afonso.</span>
+          <span>&copy; 2026 Rodrigo Heinzen de Moraes</span>
+        </div>
+      </div>
+    </footer>
 
+    <script src="i18n.js"></script>
     <script type="importmap">
       {
         "imports": {
@@ -1024,6 +1597,6 @@
       }
     </script>
     <script type="module" src="ocean.js"></script>
-    <script type="module" src="cube.js"></script>
+    <script type="module" src="page.js"></script>
   </body>
 </html>
