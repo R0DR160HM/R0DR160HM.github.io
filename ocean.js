@@ -108,6 +108,8 @@ const OCEAN_FRAGMENT = /* glsl */ `
   uniform vec3 uLightDir;
   uniform vec3 uLightColor;
   uniform float uFlash;
+  uniform float uCoffee; // Java: the sea becomes coffee
+  uniform float uFacet; // Angular: the sea goes faceted
   varying vec3 vWorldPos;
   varying vec3 vNormal;
   varying vec2 vSimUv;
@@ -131,15 +133,24 @@ const OCEAN_FRAGMENT = /* glsl */ `
     float shimmer = sin(vWorldPos.x * 2.1 + uTime * 1.4) * sin(vWorldPos.z * 2.7 - uTime * 1.1);
     normal = normalize(normal + vec3(shimmer * 0.015, 0.0, shimmer * 0.02));
 
+    // snapping the normal to a few directions shades the swell in flat facets
+    if (uFacet > 0.001) {
+      vec3 snapped = normalize(floor(normal * 4.0 + 0.5));
+      normal = normalize(mix(normal, snapped, uFacet));
+    }
+
     vec3 viewDir = normalize(cameraPosition - vWorldPos);
     vec3 lightDir = normalize(uLightDir);
 
     float fresnel = 0.02 + 0.98 * pow(1.0 - max(dot(normal, viewDir), 0.0), 5.0);
 
     vec3 r = reflect(-viewDir, normal);
-    vec3 skyColor = mix(uSkyLow, uSkyHigh, smoothstep(-0.1, 0.6, r.y));
+    vec3 skyLow = mix(uSkyLow, vec3(0.3, 0.19, 0.1), uCoffee * 0.7);
+    vec3 skyColor = mix(skyLow, uSkyHigh, smoothstep(-0.1, 0.6, r.y));
 
-    vec3 waterColor = mix(uDeepColor, uShallowColor, smoothstep(-0.8, 1.2, vWorldPos.y));
+    vec3 deep = mix(uDeepColor, vec3(0.06, 0.03, 0.01), uCoffee);
+    vec3 shallow = mix(uShallowColor, vec3(0.3, 0.16, 0.06), uCoffee);
+    vec3 waterColor = mix(deep, shallow, smoothstep(-0.8, 1.2, vWorldPos.y));
     float diff = max(dot(normal, lightDir) * 0.5 + 0.5, 0.0);
     waterColor *= 0.55 + 0.45 * diff;
 
@@ -152,7 +163,7 @@ const OCEAN_FRAGMENT = /* glsl */ `
     color += uLightColor * pow(specBase, 24.0) * 0.06;
 
     // aqua glow along ripple fronts
-    color += vec3(0.25, 0.65, 0.9) * min(rippleGrad * 6.0, 0.55);
+    color += mix(vec3(0.25, 0.65, 0.9), vec3(0.85, 0.62, 0.38), uCoffee) * min(rippleGrad * 6.0, 0.55);
 
     // fade into the page background at the horizon
     float dist = length(cameraPosition - vWorldPos);
@@ -244,6 +255,8 @@ function init() {
     uLightDir: { value: new THREE.Vector3(-0.25, 0.5, -0.8).normalize() },
     uLightColor: { value: new THREE.Color(1.0, 0.85, 0.55) },
     uFlash: { value: 0 },
+    uCoffee: { value: 0 },
+    uFacet: { value: 0 },
   };
 
   const geometry = IS_SMALL_SCREEN
@@ -391,10 +404,25 @@ function init() {
     starPositions[i * 3 + 2] = -r * Math.cos(elev) * Math.cos(az);
     starPhases[i] = Math.random();
   }
+  // SQL: the same stars, seated in rows and columns across the sky
+  const starGrid = new Float32Array(STAR_COUNT * 3);
+  const GRID_COLS = IS_SMALL_SCREEN ? 15 : 25;
+  const GRID_ROWS = Math.ceil(STAR_COUNT / GRID_COLS);
+  for (let i = 0; i < STAR_COUNT; i++) {
+    const col = i % GRID_COLS;
+    const row = Math.floor(i / GRID_COLS);
+    // inside the band of sky the opening view shows
+    const az = (-38 + (76 * col) / (GRID_COLS - 1)) * (Math.PI / 180);
+    const elev = (4.5 + (15 * row) / Math.max(GRID_ROWS - 1, 1)) * (Math.PI / 180);
+    starGrid[i * 3] = 260 * Math.cos(elev) * Math.sin(az);
+    starGrid[i * 3 + 1] = 260 * Math.sin(elev);
+    starGrid[i * 3 + 2] = -260 * Math.cos(elev) * Math.cos(az);
+  }
   const starGlows = new Float32Array(STAR_COUNT);
   const starGeo = new THREE.BufferGeometry();
   starGeo.setAttribute("position", new THREE.BufferAttribute(starPositions, 3));
   starGeo.setAttribute("aPhase", new THREE.BufferAttribute(starPhases, 1));
+  starGeo.setAttribute("aGrid", new THREE.BufferAttribute(starGrid, 3));
   const starGlowAttr = new THREE.BufferAttribute(starGlows, 1);
   starGlowAttr.setUsage(THREE.DynamicDrawUsage);
   starGeo.setAttribute("aGlow", starGlowAttr);
@@ -402,6 +430,8 @@ function init() {
   const starUniforms = {
     uTime: { value: 0 },
     uPixelRatio: { value: renderer.getPixelRatio() },
+    uGleam: { value: 0 }, // Gleam: tiny pink stars
+    uGrid: { value: 0 }, // SQL: stars in a table
   };
   const stars = new THREE.Points(
     starGeo,
@@ -413,22 +443,48 @@ function init() {
       vertexShader: /* glsl */ `
         uniform float uTime;
         uniform float uPixelRatio;
+        uniform float uGleam;
+        uniform float uGrid;
         attribute float aPhase;
         attribute float aGlow;
+        attribute vec3 aGrid;
         varying float vAlpha;
 
         void main() {
           float twinkle = 0.7 + 0.3 * sin(uTime * (0.4 + aPhase * 1.6) + aPhase * 40.0);
-          vAlpha = (0.16 + 0.8 * aGlow) * twinkle;
-          gl_PointSize = (1.8 + 2.6 * aGlow) * uPixelRatio;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          // a star shape needs a few pixels to read, and enough light to see
+          vAlpha = (0.16 + 0.8 * aGlow + 0.6 * max(uGleam, uGrid)) * twinkle;
+          gl_PointSize = (1.8 + 2.6 * aGlow) * (1.0 + 2.4 * uGleam + 0.6 * uGrid) * uPixelRatio;
+          vec3 p = mix(position, aGrid, uGrid);
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
         }
       `,
       fragmentShader: /* glsl */ `
+        uniform float uGleam;
         varying float vAlpha;
+
+        // a five-pointed star's signed distance (after Inigo Quilez)
+        float star5(vec2 p, float r, float rf) {
+          const vec2 k1 = vec2(0.809016994375, -0.587785252292);
+          const vec2 k2 = vec2(-k1.x, k1.y);
+          p.x = abs(p.x);
+          p -= 2.0 * max(dot(k1, p), 0.0) * k1;
+          p -= 2.0 * max(dot(k2, p), 0.0) * k2;
+          p.x = abs(p.x);
+          p.y -= r;
+          vec2 ba = rf * vec2(-k1.y, k1.x) - vec2(0.0, 1.0);
+          float h = clamp(dot(p, ba) / dot(ba, ba), 0.0, r);
+          return length(p - ba * h) * sign(p.y * ba.x - p.x * ba.y);
+        }
+
         void main() {
-          float m = smoothstep(0.5, 0.1, length(gl_PointCoord - 0.5));
-          gl_FragColor = vec4(vec3(0.85, 0.92, 1.0), vAlpha * m);
+          vec2 q = (gl_PointCoord - 0.5) * vec2(1.0, -1.0);
+          float round = smoothstep(0.5, 0.1, length(q));
+          float pointed = smoothstep(0.05, -0.05, star5(q, 0.46, 0.45));
+          float m = mix(round, pointed, uGleam);
+          // Gleam's pink, the colour of its Lucy
+          vec3 col = mix(vec3(0.85, 0.92, 1.0), vec3(1.0, 0.686, 0.953), uGleam);
+          gl_FragColor = vec4(col, vAlpha * m);
         }
       `,
     })
@@ -1315,6 +1371,28 @@ function init() {
     renderer.render(scene, camera);
   }
 
+  // the technology buttons (fx.js): one effect at a time, eased in and out
+  const FX_UNIFORMS = {
+    gleam: starUniforms.uGleam,
+    sql: starUniforms.uGrid,
+    java: oceanUniforms.uCoffee,
+    angular: oceanUniforms.uFacet,
+  };
+  let fxOn = null;
+  window.addEventListener("fx:change", (e) => {
+    fxOn = (e.detail && e.detail.id) || null;
+    if (reducedMotion) {
+      for (const [id, u] of Object.entries(FX_UNIFORMS)) u.value = id === fxOn ? 1 : 0;
+      renderFrame(true);
+    }
+  });
+  function updateFx(dt) {
+    const k = 1 - Math.exp(-2.5 * dt);
+    for (const [id, u] of Object.entries(FX_UNIFORMS)) {
+      u.value += ((id === fxOn ? 1 : 0) - u.value) * k;
+    }
+  }
+
   let lastT = 0;
 
   function animate() {
@@ -1327,6 +1405,7 @@ function init() {
     updateStars(dt);
     updateConstellations(t, dt);
     updateLighthouse(t);
+    updateFx(dt);
     stepSimulation();
     renderFrame();
   }

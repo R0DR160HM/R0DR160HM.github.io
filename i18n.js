@@ -69,6 +69,7 @@
       "go.hex": "Ver no Hex",
       "tags.aria": "Feito com",
       "tools.h": "Tecnologias com que trabalho",
+      "tools.hint": "Aperte uma: cada uma muda a página.",
       "chip.ds": "Sistemas distribuídos",
       "chip.ai": "Agentes de IA",
 
@@ -154,6 +155,7 @@
       "go.hex": "Auf Hex ansehen",
       "tags.aria": "Gebaut mit",
       "tools.h": "Technologien, mit denen ich arbeite",
+      "tools.hint": "Drücken Sie eine: Jede verändert die Seite.",
       "chip.ds": "Verteilte Systeme",
       "chip.ai": "KI-Agenten",
 

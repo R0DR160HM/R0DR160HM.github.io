@@ -2,7 +2,7 @@
 version: 1
 slug: "index-html"
 primary_target: "index.html"
-related_targets: ["ocean.js","page.js","i18n.js"]
+related_targets: ["ocean.js","page.js","i18n.js","fx.js"]
 ---
 
 # rhm.dev home
@@ -19,7 +19,8 @@ The whole of rhm.dev: `index.html`, `ocean.js` (WebGL scene), `page.js`, `i18n.j
 ## Proof and content
 
 - Hive demo (user, 2026-10-20: one index example, one JWT, one service + syslink, one UI, all small): `guard.hive` in a refused and an accepted form, its message quoted from slide 70 (slide 18); `token.hive` signing and checking a JWT (slide 60); `inbox.hive`, a service called on another node with the same `at(...)` line (slides 38, 59), with notes quoted from slide 59 and no invented output; `page.hive`, a hive.ui view (slide 64) beside a labelled preview drawn with hive.ui's own dark-theme styles. Facts quoted from the tour's front page.
-- Other projects: WebProxy, Database, Slopmachine, with their real links and tags; "Technologies I work with" list.
+- Other projects: WebProxy, Database, Slopmachine, with their real links and tags.
+- Technologies I work with (user, 2026-10-20: "more ludic", bigger, real buttons that change the page): fourteen toggle buttons, one effect at a time, each a pun on its technology (fx.js; scene effects through ocean.js "fx:change"; CSS through html.fx-<id>). Hive bees, Gleam pink stars, Angular square corners and faceted sea, TypeScript type annotations, JavaScript falsy bubbles, Java coffee sea, Spring Boot leaves, Python snake, SQL star table, Git commit graphs, AWS clouds, WebSockets ping/pong, Distributed Systems replica cursors, AI Agents page-reading agent. Each button carries its technology's own accent colour, an exception to gold as the one accent. Reduced motion: a still frame. Escape or a second press stops it.
 - Sky: the six Tupi-Guarani constellations in the WebGL sky, with names, descriptions from the authored data's notes, and sourcing (d'Abbeville 1614; Germano Afonso with Guarani communities).
 
 ## Constraints
