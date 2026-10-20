@@ -5,6 +5,7 @@
 // [data-i18n-attr] attribute) for the visitor's language: their saved choice,
 // else the first of their browser's languages the page has, else English.
 // It also hands the 3D sky its figures' names ("lang:change"; ocean.js).
+// motion.html (the reduced-motion notice) loads it too, for its own strings.
 //
 // Hive's rules are quoted from the tour, whose Portuguese edition is the
 // author's own (hive-lang.run/?lang=pt); the German quotes are translations,
@@ -104,6 +105,34 @@
         "Feito à mão: HTML, CSS e three.js, sem etapa de build. Constelações segundo d&rsquo;Abbeville (1614) e Germano Afonso.",
       "lang.aria": "Idioma",
       "href.tour": `${TOUR_PT}/?lang=pt`,
+
+      // motion.html, for visitors whose device asks for reduced motion
+      "motion.title": "Animações desligadas — Rodrigo Heinzen de Moraes",
+      "motion.h": "Este site fica melhor em movimento",
+      "motion.lede":
+        "Ele se passa num mar noturno em 3D: a câmera voa sobre a água enquanto você rola a página, um farol varre o seu feixe e as constelações se acendem quando você passa.",
+      "motion.p":
+        "Seu dispositivo está pedindo aos sites que reduzam o movimento, então tudo isso ficaria parado. Se você configurou isso de propósito, pode entrar: tudo funciona, só que parado.",
+      "motion.how": "Ligue as animações",
+      "motion.live": "Esta página percebe a mudança e deixa você entrar; se não perceber, recarregue-a.",
+      "motion.mine": "seu sistema",
+      "os.windows":
+        "Abra <b>Configurações › Acessibilidade › Efeitos visuais</b> e ative <b>Efeitos de animação</b>.",
+      "os.windows10":
+        "No Windows 10: <b>Configurações › Facilidade de Acesso › Vídeo</b>, e ative <b>Mostrar animações no Windows</b>.",
+      "os.macos": "Abra <b>Ajustes do Sistema › Acessibilidade › Tela</b> e desative <b>Reduzir movimento</b>.",
+      "os.ios.name": "iPhone e iPad",
+      "os.ios": "Abra <b>Ajustes › Acessibilidade › Movimento</b> e desative <b>Reduzir Movimento</b>.",
+      "os.android":
+        "Abra <b>Configurações › Acessibilidade</b> e desative <b>Remover animações</b>. Nos Pixel mais recentes fica em <b>Cor e movimento</b>; nos Samsung, em <b>Melhorias de visibilidade</b>.",
+      "os.gnome":
+        "GNOME: em <b>Configurações › Acessibilidade</b>, desative a opção que reduz as animações. Em versões antigas, ative <b>Ajustes › Geral › Animações</b>.",
+      "os.kde":
+        "KDE Plasma: nas <b>Configurações do sistema</b>, em Comportamento geral, tire a velocidade da animação de &ldquo;Instantânea&rdquo;.",
+      "motion.firefox":
+        "O Firefox também pode reduzir o movimento por conta própria. Se esta página continuar depois que você mudar o sistema, abra <code>about:config</code> e defina <code>ui.prefersReducedMotion</code> como 0, ou apague-o.",
+      "motion.enter": "Entrar mesmo assim",
+      "motion.kept": "Sua escolha fica lembrada neste dispositivo.",
     },
 
     de: {
@@ -188,6 +217,35 @@
       "fine.made":
         "Von Hand gebaut: HTML, CSS und three.js, ohne Build-Schritt. Sternbilder nach d&rsquo;Abbeville (1614) und Germano Afonso.",
       "lang.aria": "Sprache",
+
+      "motion.title": "Animationen aus — Rodrigo Heinzen de Moraes",
+      "motion.h": "Diese Seite lebt von Bewegung",
+      "motion.lede":
+        "Sie spielt auf einem nächtlichen Meer in 3D: Beim Scrollen fliegt die Kamera über das Wasser, ein Leuchtturm lässt seinen Strahl kreisen, und die Sternbilder leuchten auf, wenn Sie vorbeikommen.",
+      "motion.p":
+        "Ihr Gerät bittet Websites, Bewegung zu reduzieren, also stünde all das still. Wenn Sie das bewusst so eingestellt haben, kommen Sie einfach herein: Alles funktioniert, nur ohne Bewegung.",
+      "motion.how": "Animationen einschalten",
+      "motion.live": "Diese Seite bemerkt die Änderung und lässt Sie herein; falls nicht, laden Sie sie neu.",
+      "motion.mine": "Ihr System",
+      "os.windows":
+        "Öffnen Sie <b>Einstellungen › Barrierefreiheit › Visuelle Effekte</b> und schalten Sie <b>Animationseffekte</b> ein.",
+      "os.windows10":
+        "Unter Windows 10: <b>Einstellungen › Erleichterte Bedienung › Bildschirm</b>, dann <b>Animationen in Windows anzeigen</b> einschalten.",
+      "os.macos":
+        "Öffnen Sie <b>Systemeinstellungen › Bedienungshilfen › Anzeige</b> und schalten Sie <b>Bewegung reduzieren</b> aus.",
+      "os.ios.name": "iPhone und iPad",
+      "os.ios":
+        "Öffnen Sie <b>Einstellungen › Bedienungshilfen › Bewegung</b> und schalten Sie <b>Bewegung reduzieren</b> aus.",
+      "os.android":
+        "Öffnen Sie <b>Einstellungen › Bedienungshilfen</b> und schalten Sie <b>Animationen entfernen</b> aus. Auf neueren Pixel-Geräten liegt die Option unter <b>Farbe und Bewegung</b>, bei Samsung unter den Optionen zur Sichtbarkeit.",
+      "os.gnome":
+        "GNOME: Unter <b>Einstellungen › Barrierefreiheit</b> die Option zum Reduzieren von Animationen ausschalten. In älteren Versionen <b>Optimierungen › Allgemein › Animationen</b> einschalten.",
+      "os.kde":
+        "KDE Plasma: In den <b>Systemeinstellungen</b> unter Allgemeines Verhalten die Animationsgeschwindigkeit von &bdquo;Sofort&ldquo; wegschieben.",
+      "motion.firefox":
+        "Firefox kann Bewegung auch selbst reduzieren. Bleibt diese Seite, nachdem Sie das System umgestellt haben, öffnen Sie <code>about:config</code> und setzen Sie <code>ui.prefersReducedMotion</code> auf 0 oder löschen Sie den Eintrag.",
+      "motion.enter": "Trotzdem weiter",
+      "motion.kept": "Ihre Wahl wird auf diesem Gerät gespeichert.",
     },
   };
 
@@ -272,9 +330,12 @@
       }
     }
     document.documentElement.lang = lang;
-    document.title = META[lang].title;
-    const description = document.querySelector('meta[name="description"]');
-    if (description) description.setAttribute("content", META[lang].description);
+    // a page that translates its own <title> (motion.html) keeps its own meta
+    if (!document.querySelector("title[data-i18n]")) {
+      document.title = META[lang].title;
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", META[lang].description);
+    }
     for (const b of document.querySelectorAll(".lang button[data-lang]")) {
       b.setAttribute("aria-pressed", String(b.dataset.lang === lang));
     }

@@ -248,6 +248,9 @@ A docked bar at the bottom of the sky section (night at 0.78, hairline border, 1
 ### Motion
 The camera eases toward each section's view as the page scrolls (smoothstep between views, then a per-frame ease toward the target) with a faint pointer parallax; the lighthouse beam sweeps and briefly brightens the page when it crosses the camera. Interface transitions are 0.2s ease for colour and border, 0.3s to 0.45s on the exponential ease-out for state and depth. Under reduced motion the camera cuts between still views with no travel and renders one frame per view, the button lift and the demo's tab fade are removed, and every transition is effectively instant.
 
+### Motion Notice (`motion.html`)
+Where a reduced-motion visitor lands first (user, 2026-10-20). Fully still: the night gradient with a few static stars, no transitions. From 960px it is two columns: on the left the heading, lede, a sentence offering the still site, and the one gold primary button ("Enter anyway"); on the right a Deep Navy Panel of per-system steps as an exclusive `<details>` list, the visitor's own system opened first with a hairline "your system" pill. Below 960px it stacks in that order, so the way in is never below the steps.
+
 ## Do's and Don'ts
 
 ### Do:

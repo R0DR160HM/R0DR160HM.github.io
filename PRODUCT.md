@@ -72,3 +72,5 @@ Honest limits the Hive site states and this site must not contradict: not yet 1.
 ## Accessibility & Inclusion
 
 The current site already honours `prefers-reduced-motion` (static scene, flat project grid) and `forced-colors`; the redesign keeps both, plus full keyboard access and WCAG 2.2 AA contrast for all text over any animated background.
+
+A device that asks for reduced motion is first sent to `motion.html` (user, 2026-10-20): it says the site is better in motion, gives the steps to turn animations on for the visitor's system (Windows, macOS, iPhone/iPad, Android, Linux, plus Firefox's own override), and lets them in anyway to the still version. That choice is remembered (`localStorage` `rhm.motion`), and the notice lets the visitor in by itself if they change the setting while reading it.

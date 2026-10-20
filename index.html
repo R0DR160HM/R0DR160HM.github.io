@@ -3,6 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // The moving scene is the site. A device that asks for reduced motion
+      // is first sent to motion.html, which says how to turn animations on
+      // and lets the visitor in anyway (./?still, remembered from then on).
+      // Run before anything paints, so the page never flashes first.
+      (function () {
+        if (!window.matchMedia || !matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        var KEY = "rhm.motion";
+        var url = new URL(location.href);
+        if (url.searchParams.has("still")) {
+          try {
+            localStorage.setItem(KEY, "still");
+          } catch (e) {
+            // storage blocked: the choice holds for this visit
+          }
+          url.searchParams.delete("still");
+          history.replaceState(null, "", url.pathname + url.search + url.hash);
+          return;
+        }
+        try {
+          if (localStorage.getItem(KEY) === "still") return;
+        } catch (e) {
+          // storage blocked: ask again
+        }
+        location.replace("motion.html" + location.hash);
+      })();
+    </script>
     <title>Rodrigo Heinzen de Moraes — Software Engineer</title>
     <meta
       name="description"

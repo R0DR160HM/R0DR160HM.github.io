@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-i18n="motion.title">Animations are off — Rodrigo Heinzen de Moraes</title>
+    <meta name="description" content="rhm.dev is set in a moving 3D scene; this page explains how to turn animations on, or enter without them." />
+    <!-- only reached by the redirect in index.html; nothing here to index -->
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#030712" />
+    <link rel="preload" href="fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin />
+    <style>
+      /* the same night, ink and gold as index.html, held still: everyone who
+         sees this page has asked their device for less motion */
+      @font-face {
+        font-family: "Bricolage Grotesque";
+        font-weight: 200 800;
+        font-style: normal;
+        font-display: swap;
+        src: url("fonts/bricolage-grotesque.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-weight: 100 800;
+        font-style: normal;
+        font-display: swap;
+        src: url("fonts/jetbrains-mono.woff2") format("woff2");
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --gold-rgb: 251 191 36;
+        --gold: rgb(var(--gold-rgb));
+        --gold-soft: rgb(var(--gold-rgb) / 0.35);
+        --night: #030712;
+        --ink: #f4f1ea;
+        --ink-2: #ccd3de;
+        --ink-3: #9ca6b6;
+        --panel: rgb(6 12 26 / 0.92);
+        --line: rgb(148 180 220 / 0.18);
+        --line-2: rgb(148 180 220 / 0.32);
+        --text-shadow: 0 1px 10px rgb(0 0 0 / 0.7);
+        --display: "Bricolage Grotesque", system-ui, sans-serif;
+        --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        --mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+        --gutter: clamp(1rem, 4.5vw, 3rem);
+      }
+
+      html {
+        scrollbar-color: #2a3a5a var(--night);
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        min-height: 100vh;
+        min-height: 100svh;
+        display: grid;
+        background: var(--night) linear-gradient(to bottom, #030712 0%, #04101d 55%, #08192b 100%) fixed;
+        color: var(--ink);
+        font-family: var(--sans);
+        font-size: 1.0625rem;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* a few still stars over the night, where the scene would be */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 2px;
+        height: 2px;
+        border-radius: 50%;
+        pointer-events: none;
+        box-shadow: 6vw 9vh 0 0 rgb(255 255 255 / 0.55), 14vw 22vh 0 -0.5px rgb(255 255 255 / 0.4),
+          23vw 6vh 0 0 rgb(255 255 255 / 0.7), 31vw 31vh 0 -0.5px rgb(255 255 255 / 0.35),
+          38vw 14vh 0 0 rgb(255 240 210 / 0.6), 46vw 4vh 0 -0.5px rgb(255 255 255 / 0.45),
+          53vw 19vh 0 0 rgb(255 255 255 / 0.5), 61vw 8vh 0 0.5px rgb(255 255 255 / 0.75),
+          68vw 27vh 0 -0.5px rgb(255 255 255 / 0.4), 74vw 12vh 0 0 rgb(220 235 255 / 0.6),
+          82vw 5vh 0 -0.5px rgb(255 255 255 / 0.45), 89vw 18vh 0 0 rgb(255 255 255 / 0.55),
+          95vw 29vh 0 -0.5px rgb(255 255 255 / 0.35), 3vw 38vh 0 -0.5px rgb(255 255 255 / 0.3),
+          18vw 44vh 0 0 rgb(255 255 255 / 0.4), 43vw 37vh 0 -0.5px rgb(255 255 255 / 0.3),
+          57vw 41vh 0 0 rgb(220 235 255 / 0.4), 78vw 36vh 0 -0.5px rgb(255 255 255 / 0.35),
+          92vw 45vh 0 0 rgb(255 255 255 / 0.3), 27vw 52vh 0 -0.5px rgb(255 255 255 / 0.25),
+          65vw 55vh 0 -0.5px rgb(255 255 255 / 0.25), 10vw 61vh 0 -0.5px rgb(255 255 255 / 0.2),
+          86vw 63vh 0 -0.5px rgb(255 255 255 / 0.2);
+      }
+
+      ::selection {
+        background-color: rgb(var(--gold-rgb) / 0.3);
+        color: var(--ink);
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--gold);
+        outline-offset: 3px;
+      }
+
+      code {
+        font-family: var(--mono);
+        font-size: 0.9em;
+      }
+
+      /* ---------- Language ---------- */
+      .lang {
+        position: fixed;
+        top: 0.9rem;
+        right: 0.9rem;
+        z-index: 20;
+        display: flex;
+        padding: 0.15rem;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgb(3 7 18 / 0.55);
+        opacity: 0.72;
+      }
+      .lang:hover,
+      .lang:focus-within {
+        opacity: 1;
+        border-color: var(--line-2);
+      }
+      .lang button {
+        font: inherit;
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.04em;
+        color: var(--ink-3);
+        background: none;
+        border: 0;
+        border-radius: 999px;
+        padding: 0.3rem 0.55rem;
+        cursor: pointer;
+      }
+      .lang button:hover {
+        color: var(--ink);
+      }
+      .lang button[aria-pressed="true"] {
+        color: #1a1204;
+        background: var(--gold);
+      }
+
+      /* ---------- The page ---------- */
+      .gate {
+        position: relative;
+        width: min(40rem, 100% - 2 * var(--gutter));
+        margin: auto;
+        padding: 5rem 0 3rem;
+      }
+      /* wide screens: the words and the way in on the left, the steps on the
+         right, all in one view */
+      @media (min-width: 960px) {
+        .gate {
+          width: min(70rem, 100% - 2 * var(--gutter));
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          gap: clamp(2.5rem, 5vw, 4.5rem);
+          align-items: center;
+        }
+        .gate .panel {
+          margin-top: 0;
+        }
+      }
+      .gate-head {
+        text-shadow: var(--text-shadow);
+      }
+      .site {
+        font-family: var(--mono);
+        font-size: 0.86rem;
+        color: var(--ink-3);
+      }
+      h1,
+      h2 {
+        font-family: var(--display);
+        font-weight: 750;
+        line-height: 1.02;
+        letter-spacing: -0.02em;
+        text-wrap: balance;
+      }
+      h1 {
+        margin-top: 0.6rem;
+        font-size: clamp(2.4rem, 7vw, 3.6rem);
+        line-height: 0.98;
+        letter-spacing: -0.03em;
+      }
+      .lede {
+        margin-top: 1.1rem;
+        font-family: var(--display);
+        font-size: clamp(1.15rem, 2.4vw, 1.35rem);
+        font-weight: 500;
+        line-height: 1.35;
+        letter-spacing: -0.01em;
+        color: var(--ink-2);
+        text-wrap: pretty;
+      }
+      .gate-head > p:not(.site, .lede) {
+        margin-top: 0.9rem;
+        color: var(--ink-2);
+        text-wrap: pretty;
+      }
+
+      .panel {
+        margin-top: 2rem;
+        padding: clamp(1rem, 2.5vw, 1.6rem);
+        background: var(--panel);
+        border: 1px solid var(--line-2);
+        border-radius: 1rem;
+        box-shadow: 0 1.5rem 3rem -1.5rem rgb(0 0 0 / 0.7);
+      }
+      .panel h2 {
+        font-size: 1.35rem;
+        letter-spacing: -0.01em;
+      }
+      .panel-sub {
+        margin-top: 0.35rem;
+        font-size: 0.92rem;
+        color: var(--ink-3);
+        text-wrap: pretty;
+      }
+
+      .systems {
+        margin-top: 1rem;
+        border-bottom: 1px solid var(--line);
+      }
+      .systems details {
+        border-top: 1px solid var(--line);
+      }
+      .systems summary {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.75rem 0.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        list-style: none;
+      }
+      .systems summary::-webkit-details-marker {
+        display: none;
+      }
+      .systems summary::after {
+        content: "+";
+        margin-left: auto;
+        font-family: var(--mono);
+        font-weight: 400;
+        color: var(--ink-3);
+      }
+      .systems details[open] summary::after {
+        content: "\2212";
+      }
+      .systems summary:hover::after {
+        color: var(--ink);
+      }
+      .mine {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        color: var(--ink-2);
+        border: 1px solid var(--line-2);
+        border-radius: 999px;
+        padding: 0.1rem 0.5rem;
+      }
+      .systems details p {
+        padding: 0 0.1rem 0.9rem;
+        font-size: 0.97rem;
+        color: var(--ink-2);
+        text-wrap: pretty;
+      }
+      .systems details p + p {
+        margin-top: -0.4rem;
+      }
+      .systems b {
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .aside {
+        margin-top: 1rem;
+        font-size: 0.86rem;
+        color: var(--ink-3);
+        text-wrap: pretty;
+      }
+
+      .actions {
+        margin-top: 1.75rem;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem 1.1rem;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.6rem 1.15rem;
+        border: 1px solid var(--gold);
+        border-radius: 0.55rem;
+        background: var(--gold);
+        color: #1a1204;
+        font-size: 0.97rem;
+        font-weight: 650;
+        line-height: 1.3;
+        text-decoration: none;
+      }
+      .btn:hover,
+      .btn:focus-visible {
+        background: #fcd34d;
+      }
+      .btn svg {
+        width: 1em;
+        height: 1em;
+      }
+      .kept {
+        font-size: 0.86rem;
+        color: var(--ink-3);
+        text-shadow: var(--text-shadow);
+      }
+
+      @media (forced-colors: active) {
+        .lang button[aria-pressed="true"] {
+          outline: 2px solid Highlight;
+          outline-offset: -2px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="lang" aria-label="Language" data-i18n-attr="aria-label:lang.aria">
+      <button type="button" data-lang="en" lang="en" title="English" aria-label="English" aria-pressed="true">EN</button>
+      <button type="button" data-lang="pt" lang="pt" title="Português" aria-label="Português" aria-pressed="false">PT</button>
+      <button type="button" data-lang="de" lang="de" title="Deutsch" aria-label="Deutsch" aria-pressed="false">DE</button>
+    </nav>
+
+    <main class="gate">
+      <div class="gate-copy">
+        <div class="gate-head">
+          <p class="site">rhm.dev</p>
+          <h1 data-i18n="motion.h">This site is better in motion</h1>
+          <p class="lede" data-i18n="motion.lede">
+            It is set in a 3D night sea: the camera flies over the water as you scroll, a lighthouse sweeps its
+            beam, and the constellations light up as you pass.
+          </p>
+          <p data-i18n="motion.p">
+            Your device is asking websites to reduce motion, so all of that would hold still. If you set that on
+            purpose, go right in: everything works, it just stays still.
+          </p>
+        </div>
+
+        <div class="actions">
+          <!-- ?still tells index.html to stop sending this visitor here -->
+          <a class="btn" id="enter" href="./?still">
+            <span data-i18n="motion.enter">Enter anyway</span>
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" />
+            </svg>
+          </a>
+          <p class="kept" data-i18n="motion.kept">Your choice is remembered on this device.</p>
+        </div>
+      </div>
+
+      <section class="panel" aria-labelledby="how-h">
+        <h2 id="how-h" data-i18n="motion.how">Turn animations on</h2>
+        <p class="panel-sub" data-i18n="motion.live">This page notices the change and takes you in; if it doesn&rsquo;t, reload it.</p>
+
+        <div class="systems">
+          <details name="os" data-os="windows">
+            <summary>Windows <span class="mine" data-i18n="motion.mine" hidden>your system</span></summary>
+            <p data-i18n="os.windows">
+              Open <b>Settings &rsaquo; Accessibility &rsaquo; Visual effects</b> and turn on <b>Animation effects</b>.
+            </p>
+            <p data-i18n="os.windows10">
+              On Windows 10: <b>Settings &rsaquo; Ease of Access &rsaquo; Display</b>, then turn on <b>Show animations in Windows</b>.
+            </p>
+          </details>
+          <details name="os" data-os="macos">
+            <summary>macOS <span class="mine" data-i18n="motion.mine" hidden>your system</span></summary>
+            <p data-i18n="os.macos">
+              Open <b>System Settings &rsaquo; Accessibility &rsaquo; Display</b> and turn off <b>Reduce motion</b>.
+            </p>
+          </details>
+          <details name="os" data-os="ios">
+            <summary><span data-i18n="os.ios.name">iPhone and iPad</span> <span class="mine" data-i18n="motion.mine" hidden>your system</span></summary>
+            <p data-i18n="os.ios">
+              Open <b>Settings &rsaquo; Accessibility &rsaquo; Motion</b> and turn off <b>Reduce Motion</b>.
+            </p>
+          </details>
+          <details name="os" data-os="android">
+            <summary>Android <span class="mine" data-i18n="motion.mine" hidden>your system</span></summary>
+            <p data-i18n="os.android">
+              Open <b>Settings &rsaquo; Accessibility</b> and turn off <b>Remove animations</b>. On recent Pixel
+              phones it is under <b>Color and motion</b>; on Samsung phones, under <b>Visibility enhancements</b>.
+            </p>
+          </details>
+          <details name="os" data-os="linux">
+            <summary>Linux <span class="mine" data-i18n="motion.mine" hidden>your system</span></summary>
+            <p data-i18n="os.gnome">
+              GNOME: open <b>Settings &rsaquo; Accessibility &rsaquo; Seeing</b> and turn off <b>Reduce Animation</b>.
+              On older versions, turn on <b>Tweaks &rsaquo; General &rsaquo; Animations</b>.
+            </p>
+            <p data-i18n="os.kde">
+              KDE Plasma: open <b>System Settings &rsaquo; Workspace Behavior &rsaquo; General Behavior</b> and move
+              <b>Animation speed</b> away from <b>Instant</b>.
+            </p>
+          </details>
+        </div>
+
+        <p class="aside" data-i18n="motion.firefox">
+          Firefox can also be told to reduce motion on its own. If this page stays after you change your system,
+          open <code>about:config</code> and set <code>ui.prefersReducedMotion</code> to 0, or delete it.
+        </p>
+      </section>
+    </main>
+
+    <script src="i18n.js"></script>
+    <script>
+      // Lets the visitor in as soon as their device allows motion (now, or
+      // when they change the setting while reading), and opens the steps for
+      // the system they seem to be on.
+      (function () {
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const onward = () => {
+          if (!reduce.matches) location.replace("./" + location.hash);
+        };
+        onward();
+        if (reduce.addEventListener) reduce.addEventListener("change", onward);
+        else if (reduce.addListener) reduce.addListener(onward);
+
+        // keep the section they were headed to (rhm.dev/#contact)
+        document.getElementById("enter").href = "./?still" + location.hash;
+
+        const ua = navigator.userAgent;
+        const platform = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
+        let os = null;
+        if (/Android/i.test(ua)) os = "android";
+        // iPadOS asks for the desktop site and calls itself a Mac with touch
+        else if (/iPhone|iPad|iPod/.test(ua) || (/Mac/.test(platform) && navigator.maxTouchPoints > 1)) os = "ios";
+        else if (/CrOS|Chrome OS/.test(ua + platform)) os = null;
+        else if (/Win/.test(platform)) os = "windows";
+        else if (/Mac/.test(platform)) os = "macos";
+        else if (/Linux|X11/.test(platform + ua)) os = "linux";
+
+        const mine = os && document.querySelector(`.systems details[data-os="${os}"]`);
+        if (mine) {
+          mine.open = true;
+          mine.querySelector(".mine").hidden = false;
+          mine.parentNode.prepend(mine);
+        }
+      })();
+    </script>
+  </body>
+</html>
