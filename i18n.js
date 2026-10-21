@@ -24,7 +24,7 @@
     pt: {
       "hero.role": "Engenheiro de software",
       "hero.bio":
-        "Sete anos construindo aplicações web e sistemas distribuídos. Ultimamente tenho me interessado por design de linguagens — sistemas de tipos, compiladores e tornar a concorrência algo sobre o que se consegue raciocinar.",
+        "Sete anos construindo aplicações web e sistemas distribuídos. Ultimamente tenho me interessado por design de linguagens: sistemas de tipos, compiladores e tornar a concorrência algo sobre o que se consegue raciocinar.",
       "hero.contact": "Contato",
       "hero.next": "Hive, meu projeto principal",
 
@@ -138,7 +138,7 @@
     de: {
       "hero.role": "Softwareentwickler",
       "hero.bio":
-        "Sieben Jahre Webanwendungen und verteilte Systeme. In letzter Zeit zieht es mich zum Sprachdesign – zu Typsystemen, Compilern und zu Nebenläufigkeit, über die man vernünftig nachdenken kann.",
+        "Sieben Jahre Webanwendungen und verteilte Systeme. In letzter Zeit zieht es mich zum Sprachdesign: zu Typsystemen, Compilern und zu Nebenläufigkeit, über die man vernünftig nachdenken kann.",
       "hero.contact": "Kontakt",
       "hero.next": "Hive, mein Hauptprojekt",
 
